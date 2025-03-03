@@ -29,6 +29,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return The User associated with the provided token, or null if not found.
      */
     User findByVerificationToken(String token);
+
+    /**
+     * Retrieves a User by their reset token.
+     * Used in the reset password system.
+     * @param token The reset token.
+     * @return The User associated with the provided token, or null if not found.
+     */
+    User findByResetToken(String token);
 }
 
 // Standard CRUD methods provided by JpaRepository:

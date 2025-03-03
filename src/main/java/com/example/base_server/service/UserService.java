@@ -5,6 +5,7 @@ import com.example.base_server.enums.Role;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.UserRepository;
 import com.example.base_server.utils.EmailValidator;
+import com.example.base_server.utils.NameValidator;
 import com.example.base_server.utils.PasswordValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,6 +34,13 @@ public class UserService {
         if (!EmailValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format!");
         }
+        //Name validation
+        String nameMessage = NameValidator.isValid(name);
+        if (nameMessage != null){
+            throw new IllegalArgumentException(nameMessage);
+        }
+
+        //Password validation
         String passMessage = PasswordValidator.isValid(password);
         if (passMessage != null){
             throw new IllegalArgumentException(passMessage);
@@ -43,14 +51,10 @@ public class UserService {
         }
 
         String hashedPassword = passwordEncoder.encode(password); //Password cryptography
-        String verificationToken = generateVerificationToken(); //Token generation
 
-        User newUser = new User(name, email, hashedPassword, role); //User creation
-        newUser.setVerificationToken(verificationToken); //Set token
-        newUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(15)); //Set token time
+        User newUser = new User(name.trim(), email, hashedPassword, role); //User creation
+        generateVerificationToken(newUser); //Set token
         newUser.setIsActive(false); //Manipulate activation
-
-        sendVerificationEmail(newUser); //Email verification sending
         return userRepository.save(newUser);
     }
 
@@ -110,8 +114,82 @@ public class UserService {
         System.out.println("Subject: Verify your account");
         System.out.println("Body: Click the link to verify your account: http://localhost:8080/users/verify?token=" + user.getVerificationToken());
     }
+
     //7- Auxiliary method to generate a unique verification token
-    private String generateVerificationToken() {
-        return UUID.randomUUID().toString();
+    private void generateVerificationToken(User user) {
+        user.setVerificationToken(UUID.randomUUID().toString());
+        user.setTokenExpirationTime(LocalDateTime.now().plusMinutes(60));
+        sendVerificationEmail(user); //Email verification sending
+    }
+
+    //8- Reset user password using reset token
+    public boolean resetPassword(String token, String password){
+        User user = userRepository.findByResetToken(token);
+        if (user == null || user.getResetTokenExpirationTime().isBefore(LocalDateTime.now())) {
+            return false; // invalid or expired token
+        }
+        //Password Validation
+        String passMessage = PasswordValidator.isValid(password);
+        if (passMessage != null){
+            throw new IllegalArgumentException(passMessage);
+        }
+        //Hashing password
+        String hashedPassword = passwordEncoder.encode(password);
+        user.setPassword(hashedPassword);
+        user.setResetToken(null); //Make token null for security
+        userRepository.save(user); //Update user password, which is now valid
+        return true;
+    }
+
+    //9- Request password reset.
+    public void requestReset(String email) {
+        Optional<User> optionalUser = findByEmail(email);
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            user.setResetToken(UUID.randomUUID().toString());
+            user.setResetTokenExpirationTime(LocalDateTime.now().plusMinutes(15));
+            sendResetEmail(user); //Email verification sending
+            userRepository.save(user);
+        }
+        else {
+            throw new NoSuchElementException("No user found with the provided email!");
+        }
+    }
+
+    //10- Send reset token message
+    private void sendResetEmail(User user) {
+        System.out.println("📧 Simulated Email Sent:");
+        System.out.println("To: " + user.getEmail());
+        System.out.println("Subject: Reset password");
+        System.out.println("Body: Click the link to reset the password of your account: http://localhost:8080/users/reset?token=" + user.getResetToken());
+    }
+
+    //11- Update User
+    public boolean updateUser(String email, String name, String password){
+        Optional<User> optionalUser = findByEmail(email);
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            //Name validation
+            String nameMessage = NameValidator.isValid(name);
+            if (nameMessage != null){
+                throw new IllegalArgumentException(nameMessage);
+            }
+
+            //Password validation
+            String passMessage = PasswordValidator.isValid(password);
+            if (passMessage != null){
+                throw new IllegalArgumentException(passMessage);
+            }
+            String hashedPassword = passwordEncoder.encode(password); //Password cryptography
+            //Update
+            user.setName(name.trim());
+            user.setPassword(hashedPassword);
+
+            userRepository.save(user);
+            return true;
+        }
+        else {
+            throw new NoSuchElementException("No user found with the provided email!");
+        }
     }
 }

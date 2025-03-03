@@ -86,4 +86,38 @@ public class UserController {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.ok("You have been logged out successfully!");
     }
+
+    //7- Request password reset
+    @PostMapping("/request-reset")
+    public ResponseEntity<String> requestReset(@RequestParam String email) {
+        userService.requestReset(email);
+        return ResponseEntity.ok("If an account with this email exists, you will receive a password reset link shortly. Please check your inbox and spam folder.");
+    }
+
+    //8- Reset password
+    @PutMapping("/reset")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String password) {
+        boolean canReset = userService.resetPassword(token, password);
+        return canReset ? ResponseEntity.ok("Password has been reset successfully!")
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired reset token.");
+    }
+
+    //9- Update User
+    @PutMapping("/update")
+    public ResponseEntity<String> updateUser(Authentication authentication, @RequestParam String name, @RequestParam String password) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authenticated.");
+        }
+        //Retrieve the currently authenticated user from the security context.
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails userDetails) { //Extracts UserDetails from Authentication
+            //Calls the service layer to update the user based on User Email.
+            boolean success = userService.updateUser(userDetails.getUsername(), name, password);
+            return success ? ResponseEntity.ok("User has been updated")
+                    : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data. Update failed");
+
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error has occurred!");
+    }
 }

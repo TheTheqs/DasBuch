@@ -1,5 +1,6 @@
 package com.example.base_server.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,8 +26,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)// Exclude the CSRF requirement
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/api/hello", "/users/verify").permitAll() // Let this routes open with no authentication
+                        .requestMatchers("/users/register", "/users/login", "/api/hello", "/users/verify", "/users/request-reset", "/users/reset").permitAll() // Let this routes open with no authentication
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/users/update").authenticated()
                         .anyRequest().authenticated() // For any other routes, authentication is required.
                 )
                 .sessionManagement(session -> session
@@ -34,7 +36,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/users/login") // Redirect to login after logout.
+                        .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .permitAll()
                 );
 

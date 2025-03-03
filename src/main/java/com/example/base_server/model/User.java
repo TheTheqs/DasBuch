@@ -30,6 +30,12 @@ public class User {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    //Reset password attributes
+    @Column(unique = true)
+    private String resetToken = null;
+    @Column
+    private LocalDateTime resetTokenExpirationTime;
+
 
     //Config Methods
     @PrePersist //This function will be called everytime before it is persisted. A Hibernate feature
@@ -75,6 +81,12 @@ public class User {
 
     public LocalDateTime getTokenExpirationTime() { return tokenExpirationTime; }
     public void setTokenExpirationTime(LocalDateTime tokenExpirationTime) { this.tokenExpirationTime = tokenExpirationTime; }
+
+    public String getResetToken() {return resetToken;}
+    public void setResetToken (String resetToken) {this.resetToken = resetToken;}
+
+    public LocalDateTime getResetTokenExpirationTime() { return resetTokenExpirationTime; }
+    public void setResetTokenExpirationTime(LocalDateTime resetTokenExpirationTime) { this.resetTokenExpirationTime = resetTokenExpirationTime; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
