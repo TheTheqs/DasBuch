@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-//This class is necessary due to Spring Security.
+//This class is necessary due to Spring Security. It's a translation layer between your User class and an UserClass (User Detail) that Spring Security can understand.
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired

@@ -68,7 +68,7 @@ public class UserService {
 
     //3- Retrieve user by email (used for login)
     public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email));
+       return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
     //4- Login method (validates email and compares password)

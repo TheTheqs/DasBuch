@@ -11,8 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController //Type declaration
 @RequestMapping("/users") //Base EndPoint address
@@ -57,12 +60,23 @@ public class UserController {
         return ResponseEntity.ok("User deleted successfully.");
     }
 
-    //5- Authentication test
-    @GetMapping("/validation")
-    public ResponseEntity<String> isValid(Authentication authentication) {
+    //5- Get logged User
+    @GetMapping("/me")
+    public ResponseEntity<?> getLoggedUser(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authenticated.");
         }
+        //Retrieve the currently authenticated user from the security context.
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails userDetails) { //Extracts UserDetails from Authentication
+            //Calls the service layer to retrieve the full User entity based on the email (used as username)
+            Optional<User> optionalUser = userService.findByEmail(userDetails.getUsername());
+            if(optionalUser.isPresent()){
+               return ResponseEntity.ok(new UserDTO(optionalUser.get()));
+            }
+        }
+        //If user not found, but authenticated (Which is an error) returns the authentication name.
         return ResponseEntity.ok("You are now validated as: " + authentication.getName());
     }
 
