@@ -5,6 +5,7 @@ import com.example.base_server.enums.Role;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.UserRepository;
 import com.example.base_server.utils.EmailValidator;
+import com.example.base_server.utils.PasswordValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,10 @@ public class UserService {
     public User registerUser(String name, String email, String password, Role role){
         if (!EmailValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format!");
+        }
+        String passMessage = PasswordValidator.isValid(password);
+        if (passMessage != null){
+            throw new IllegalArgumentException(passMessage);
         }
 
         if (userRepository.existsByEmail(email)) {

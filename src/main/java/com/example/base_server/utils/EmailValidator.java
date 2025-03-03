@@ -1,7 +1,10 @@
 package com.example.base_server.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.regex.Pattern;
 //This class will check the email format and validate it.
+@Component
 public class EmailValidator {
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
