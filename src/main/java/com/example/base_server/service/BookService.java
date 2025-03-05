@@ -1,5 +1,6 @@
 package com.example.base_server.service;
 
+import com.example.base_server.client.GoogleBooksClient;
 import com.example.base_server.model.Author;
 import com.example.base_server.model.Book;
 import com.example.base_server.model.KeyWord;
@@ -19,10 +20,18 @@ public class BookService {
     private BookRepository bookRepository;
 
     @Autowired
+    private final GoogleBooksClient googleBooksClient;
+
+    @Autowired
     private AuthorService authorService;
 
     @Autowired
     private KeyWordService keyWordService;
+
+    //Basic constructor necessary for GoogleBooksClient dependency injection
+    public BookService(GoogleBooksClient googleBooksClient) {
+        this.googleBooksClient = googleBooksClient;
+    }
 
     //1- Save new book
     public Book saveBook (String title, List<String> sAuthors, String description, List<String> sKeyWords, LocalDateTime publishedDate, String isbn, String coverURL, String externalLinks) {
@@ -42,5 +51,10 @@ public class BookService {
                 .toList();
 
         return bookRepository.save(new Book(title, authors, description, keyWords, publishedDate, isbn, coverURL, externalLinks));
+    }
+
+    //2- Get book from Google Books.
+    public String getBooksFromGoogle(String search) {
+        return googleBooksClient.searchBooks(search);
     }
 }
