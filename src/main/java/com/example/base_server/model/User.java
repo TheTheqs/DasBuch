@@ -3,6 +3,8 @@ package com.example.base_server.model;
 import com.example.base_server.enums.Role;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @Entity //Entity declaration
 @Table(name = "users") //Table name declaration
@@ -30,6 +32,16 @@ public class User {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    //Non-authentication attributes
+    @ManyToMany
+    @JoinTable(
+            name = "user_read_books",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> readBooks;
+
     //Reset password attributes
     @Column(unique = true)
     private String resetToken = null;
@@ -90,4 +102,32 @@ public class User {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
+
+    //List Methods
+
+    public List<Book> getReadBooks() {
+        return readBooks;
+    }
+
+    public void addBook(Book book){
+        this.readBooks.add(book);
+    }
+
+    public void removeBook(Book book){
+        this.readBooks.remove(book);
+    }
+
+    //Hashcode and Equals
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
+    }
 }
