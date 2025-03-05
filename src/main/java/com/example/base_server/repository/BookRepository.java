@@ -7,10 +7,14 @@ import com.example.base_server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
+    //Find by ISBN, another unique attribute
+    Book findByIsbn(String isbn);
 
     //The following method returns a list with books which titles contains the argument
     @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%'))")
