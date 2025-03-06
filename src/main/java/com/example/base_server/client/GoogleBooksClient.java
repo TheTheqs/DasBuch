@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -95,9 +96,10 @@ public class GoogleBooksClient {
     }
 
     //Get all books in Google Books by category.
-    public boolean fetchBooksByCategory(String category) {
+    public boolean fetchBooksByCategory() {
         int startIndex = 0;
         int maxResults = 40; //Max allowed by Google Books
+        String category = getNextGenre();
         ObjectMapper objectMapper = new ObjectMapper();
 
         while (true) {
@@ -191,5 +193,13 @@ public class GoogleBooksClient {
             }
         }
         return null;
+    }
+    //Iteration function
+    public String getNextGenre() {
+        //Getting the progress
+        String actualProgress = TxtFileUtil.read("progress.txt");
+        String lastGenre = Arrays.stream(actualProgress.split(";")).map(String::trim).toList().getLast();
+        System.out.println(lastGenre);
+        return BOOK_CATEGORIES.get(BOOK_CATEGORIES.indexOf(lastGenre) + 1);
     }
 }
