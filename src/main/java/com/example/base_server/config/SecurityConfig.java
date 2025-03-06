@@ -12,15 +12,24 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.List;
 
 @Configuration //This is necessary for the Bean declaration system
 public class SecurityConfig {
+
+    private final AutomationAuthFilter automationAuthFilter;
+
+    public SecurityConfig(AutomationAuthFilter automationAuthFilter) {
+        this.automationAuthFilter = automationAuthFilter;
+    }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean //This bean randle the authentication by session system
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -28,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/register", "/users/login", "/api/hello", "/users/verify", "/users/request-reset", "/users/reset").permitAll() // Let this routes open with no authentication
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/books/populate").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/books/populate").hasRole("AUTOMATION")
                         .requestMatchers(HttpMethod.PUT, "/users/update").authenticated()
                         .anyRequest().authenticated() // For any other routes, authentication is required.
                 )
@@ -39,7 +48,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                         .permitAll()
-                );
+                )
+                .addFilterBefore(automationAuthFilter, UsernamePasswordAuthenticationFilter.class); //This will include the Automation Authentication system.
 
         return http.build();
     }

@@ -1,16 +1,17 @@
 package com.example.base_server.client;
 
 import com.example.base_server.service.BookService;
+import com.example.base_server.service.KeyWordService;
 import com.example.base_server.utils.TxtFileUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,51 +21,18 @@ public class GoogleBooksClient {
 
     private final WebClient webClient;
     private final String apikey;
+    private final BookService bookService;
+    private final KeyWordService keyWordService;
+    private List<String> BOOK_CATEGORIES = new ArrayList<>();
 
-    @Autowired
-    private BookService bookService;
-
-    //The following attribute is for development only
-    private static final List<String> BOOK_CATEGORIES = List.of(
-            //General Fiction & Drama
-            "Fiction", "Drama", "Literary Fiction", "Historical Fiction", "Coming of Age",
-            "Young Adult Fiction", "Children's Fiction", "Middle Grade Fiction",
-            //Fantasy & Magic
-            "Fantasy", "Dark Fantasy", "Urban Fantasy", "Epic Fantasy", "Sword and Sorcery",
-            "Mythology", "Fairy Tales", "Folklore", "Magical Realism", "Alternate History",
-            //Science Fiction
-            "Science Fiction", "Hard Science Fiction", "Soft Science Fiction", "Cyberpunk",
-            "Steampunk", "Dystopian", "Post-Apocalyptic", "Time Travel", "Space Opera",
-            "Alien Invasion", "Speculative Fiction", "Social Science Fiction",
-            //Horror, Mystery & Thriller
-            "Horror", "Gothic Fiction", "Lovecraftian Horror", "Supernatural", "Ghost Stories",
-            "Mystery", "Detective", "Crime", "Thriller", "Suspense", "Psychological Thriller",
-            "Noir", "Espionage", "Legal Thriller", "Police Procedural",
-            //Romance & Relationships
-            "Romance", "Contemporary Romance", "Historical Romance", "Paranormal Romance",
-            "Erotica", "Chick Lit", "New Adult Romance",
-            //Other Fiction Subgenres
-            "Short Stories", "Anthologies", "Graphic Novels", "Comic Books", "Manga", "Light Novels",
-            "Satire", "Paranormal", "Western", "Metafiction", "Weird Fiction",
-            "Political Fiction", "Philosophical Fiction",
-            //Non-fiction Categories
-            "Biography", "Autobiography", "Memoir", "Self-Help", "History",
-            "Science", "Mathematics", "Physics", "Astronomy", "Technology",
-            "Psychology", "Philosophy", "Sociology", "Politics", "Economics",
-            "Business", "Leadership", "Entrepreneurship", "Finance",
-            "Religion", "Spirituality", "Mythology", "Anthropology",
-            "Health", "Medicine", "Fitness", "Nutrition",
-            "Cooking", "Travel", "Art", "Photography", "Music",
-            "Education", "Linguistics", "Language Learning", "Reference",
-            "True Crime", "Law", "Military History", "Sports",
-            "Nature", "Environmental Science", "Climate Change"
-    );
-    //Dependency injection constructor
+    //Constructor Dependency
     public GoogleBooksClient(WebClient.Builder webClientBuilder,
-                             @Value("${google.books.api.key}") String apiKey) {
+                             @Value("${google.books.api.key}") String apiKey,
+                             BookService bookService, KeyWordService keyWordService) {
         this.webClient = webClientBuilder.baseUrl("https://www.googleapis.com/books/v1").build();
         this.apikey = apiKey;
-
+        this.bookService = bookService;
+        this.keyWordService = keyWordService;
     }
 
     public String searchBooks(String query) {
@@ -196,10 +164,12 @@ public class GoogleBooksClient {
     }
     //Iteration function
     public String getNextGenre() {
+        if(BOOK_CATEGORIES.isEmpty()) {
+            BOOK_CATEGORIES = keyWordService.getAllKeywordValues();
+        }
         //Getting the progress
         String actualProgress = TxtFileUtil.read("progress.txt");
         String lastGenre = Arrays.stream(actualProgress.split(";")).map(String::trim).toList().getLast();
-        System.out.println(lastGenre);
         return BOOK_CATEGORIES.get(BOOK_CATEGORIES.indexOf(lastGenre) + 1);
     }
 }

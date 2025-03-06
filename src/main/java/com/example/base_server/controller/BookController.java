@@ -13,6 +13,6 @@ public class BookController {
 
     @PostMapping("/populate")
     public String populate() {
-        return googleBooksClient.fetchBooksByCategory() ? "Populate succeeded" : "Populate failed";
+        return googleBooksClient.fetchBooksByCategory() ? "Populate succeeded!" : "Populate failed!";
     }
 }

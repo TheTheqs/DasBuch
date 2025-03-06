@@ -32,7 +32,7 @@ public class BookService {
         }
         Optional<Book> optionalBook = Optional.ofNullable(bookRepository.findByIsbn(isbn));
         if(optionalBook.isPresent()){
-            writeLog("The book is already in database, retrieving it... \n" + optionalBook.get().toString());
+            writeLog("The book is already in database, retrieving it... \n" + optionalBook.get().getTitle());
             return optionalBook.get();
         }
         List<Author> authors = sAuthors.stream()
@@ -43,13 +43,18 @@ public class BookService {
                 .map(keyWordService::saveKeyWord)
                 .toList();
         Book newBook = bookRepository.save(new Book(title, authors, description, keyWords, publishedDate, isbn, coverURL, externalLinks));
-        writeLog("New book saved in database, retrieving it... \n" + newBook.toString());
+        writeLog("New book saved in database, retrieving it... \n" + newBook.getTitle());
         return newBook;
     }
     //2- Create log messages
     private void writeLog(String message) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         TxtFileUtil.write("book-service-log.txt", false, "[" + timestamp + "] " + message);
+    }
+
+    //3- Get total books in database
+    public Long getTotalBooksNumber(){
+        return bookRepository.count();
     }
 
 }
