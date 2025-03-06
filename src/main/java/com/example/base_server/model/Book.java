@@ -3,6 +3,7 @@ package com.example.base_server.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class Book {
     )
     private List<Author> authors; //A list because a book can have more than one author.
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String description;
 
     @ManyToMany
@@ -191,5 +192,33 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(id, isbn);
+    }
+    //To String
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", authors=" + getAuthorsNames() +
+                ", keyWords=" + getKeyWordValues() +
+                ", publishedDate=" + publishedDate +
+                ", isbn='" + isbn + '\'' +
+                ", coverURL='" + coverURL + '\'' +
+                ", externalLinks='" + externalLinks + '\'' +
+                '}';
+    }
+    private String getAuthorsNames (){
+        List<String> authorsName = new ArrayList<>();
+        for(Author author: authors){
+            authorsName.add(author.getName());
+        }
+        return String.join(", ", authorsName);
+    }
+
+    private String getKeyWordValues (){
+        List<String> kValues = new ArrayList<>();
+        for(KeyWord keyWord: keyWords){
+            kValues.add(keyWord.getValue());
+        }
+        return String.join(", ", kValues);
     }
 }

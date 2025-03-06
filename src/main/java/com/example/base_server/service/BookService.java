@@ -1,15 +1,15 @@
 package com.example.base_server.service;
 
-import com.example.base_server.client.GoogleBooksClient;
 import com.example.base_server.model.Author;
 import com.example.base_server.model.Book;
 import com.example.base_server.model.KeyWord;
 import com.example.base_server.repository.BookRepository;
+import com.example.base_server.utils.TxtFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,18 +20,10 @@ public class BookService {
     private BookRepository bookRepository;
 
     @Autowired
-    private final GoogleBooksClient googleBooksClient;
-
-    @Autowired
     private AuthorService authorService;
 
     @Autowired
     private KeyWordService keyWordService;
-
-    //Basic constructor necessary for GoogleBooksClient dependency injection
-    public BookService(GoogleBooksClient googleBooksClient) {
-        this.googleBooksClient = googleBooksClient;
-    }
 
     //1- Save new book
     public Book saveBook (String title, List<String> sAuthors, String description, List<String> sKeyWords, LocalDateTime publishedDate, String isbn, String coverURL, String externalLinks) {
@@ -40,6 +32,7 @@ public class BookService {
         }
         Optional<Book> optionalBook = Optional.ofNullable(bookRepository.findByIsbn(isbn));
         if(optionalBook.isPresent()){
+            writeLog("The book is already in database, retrieving it... \n" + optionalBook.get().toString());
             return optionalBook.get();
         }
         List<Author> authors = sAuthors.stream()
@@ -49,12 +42,14 @@ public class BookService {
         List<KeyWord> keyWords = sKeyWords.stream()
                 .map(keyWordService::saveKeyWord)
                 .toList();
-
-        return bookRepository.save(new Book(title, authors, description, keyWords, publishedDate, isbn, coverURL, externalLinks));
+        Book newBook = bookRepository.save(new Book(title, authors, description, keyWords, publishedDate, isbn, coverURL, externalLinks));
+        writeLog("New book saved in database, retrieving it... \n" + newBook.toString());
+        return newBook;
+    }
+    //2- Create log messages
+    private void writeLog(String message) {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        TxtFileUtil.write("book-service-log.txt", false, "[" + timestamp + "] " + message);
     }
 
-    //2- Get book from Google Books.
-    public String getBooksFromGoogle(String search) {
-        return googleBooksClient.searchBooks(search);
-    }
 }

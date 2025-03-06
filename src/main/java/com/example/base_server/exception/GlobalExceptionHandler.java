@@ -41,6 +41,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
+    //TXT storage exception
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<String> handleFileStorageException(FileStorageException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
 
     //Any kind of error
     @ExceptionHandler(Exception.class)

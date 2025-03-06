@@ -1,7 +1,10 @@
 package com.example.base_server.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.regex.Pattern;
 
+@Component
 public class NameValidator {
     private static final int MIN_LENGTH = 2;
     private static final int MAX_LENGTH = 50;

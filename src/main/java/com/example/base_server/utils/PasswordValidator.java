@@ -3,6 +3,7 @@ package com.example.base_server.utils;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
+
 @Component
 public class PasswordValidator {
     //Standards
