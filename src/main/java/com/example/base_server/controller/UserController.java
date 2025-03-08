@@ -4,6 +4,7 @@ import com.example.base_server.dto.UserDTO;
 import com.example.base_server.enums.Role;
 import com.example.base_server.model.User;
 import com.example.base_server.service.UserService;
+import com.example.base_server.utils.UserExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired //Dependency configuration
     private UserService userService;
+
+    @Autowired
+    private UserExtractor userExtractor;
 
     //1- POST: Register a New User
     @PostMapping("/register")
@@ -63,21 +67,12 @@ public class UserController {
     //5- Get logged User
     @GetMapping("/me")
     public ResponseEntity<?> getLoggedUser(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
+        User user = userExtractor.getUserFromAuth(authentication);
+        if (user == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authenticated.");
         }
-        //Retrieve the currently authenticated user from the security context.
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof UserDetails userDetails) { //Extracts UserDetails from Authentication
-            //Calls the service layer to retrieve the full User entity based on the email (used as username)
-            Optional<User> optionalUser = userService.findByEmail(userDetails.getUsername());
-            if(optionalUser.isPresent()){
-               return ResponseEntity.ok(new UserDTO(optionalUser.get()));
-            }
-        }
         //If user not found, but authenticated (Which is an error) returns the authentication name.
-        return ResponseEntity.ok("You are now validated as: " + authentication.getName());
+        return ResponseEntity.ok("You are now validated as: " + user.getEmail());
     }
 
     //6- Logout
@@ -105,19 +100,13 @@ public class UserController {
     //9- Update User
     @PutMapping("/update")
     public ResponseEntity<String> updateUser(Authentication authentication, @RequestParam String name, @RequestParam String password) {
-        if (authentication == null || !authentication.isAuthenticated()) {
+        User user = userExtractor.getUserFromAuth(authentication);
+        if (user == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authenticated.");
         }
-        //Retrieve the currently authenticated user from the security context.
-        Object principal = authentication.getPrincipal();
+        boolean success = userService.updateUser(user.getEmail(), name, password);
 
-        if (principal instanceof UserDetails userDetails) { //Extracts UserDetails from Authentication
-            //Calls the service layer to update the user based on User Email.
-            boolean success = userService.updateUser(userDetails.getUsername(), name, password);
-            return success ? ResponseEntity.ok("User has been updated")
+        return success ? ResponseEntity.ok("User has been updated")
                     : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data. Update failed");
-
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error has occurred!");
     }
 }

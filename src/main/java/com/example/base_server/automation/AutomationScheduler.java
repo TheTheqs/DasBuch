@@ -1,7 +1,6 @@
 package com.example.base_server.automation;
 
 import com.example.base_server.utils.TxtFileUtil;
-import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +24,7 @@ public class AutomationScheduler {
         this.context = context;
     }
 
-    @Scheduled(fixedRate = 60000) //Here is the time configuration, 5000 means 5 seconds.
+    @Scheduled(fixedRate = 60000) //Here is the time configuration.
     public void runAutomation() {
         if (automationTask.continueTask()) {
             if(callCount == 0) {
@@ -34,8 +33,9 @@ public class AutomationScheduler {
             callCount ++;
             automationTask.execute();
         } else {
-            writeLog("Automation task finished! Numbers of calls: "+ callCount +". Ending application...");
-            exitApplication();
+            //writeLog("Automation task finished! Numbers of calls: "+ callCount +". Ending application...");
+            //exitApplication();
+            System.out.println("Not executing task");
         }
     }
 

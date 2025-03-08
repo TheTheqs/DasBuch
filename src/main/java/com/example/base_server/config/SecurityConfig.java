@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/register", "/users/login", "/api/hello", "/users/verify", "/users/request-reset", "/users/reset").permitAll() // Let this routes open with no authentication
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/books/populate").hasRole("AUTOMATION")
+                        .requestMatchers(HttpMethod.POST, "/requisition/new").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/automation/process").hasRole("AUTOMATION")
                         .requestMatchers(HttpMethod.PUT, "/users/update").authenticated()
                         .anyRequest().authenticated() // For any other routes, authentication is required.
                 )

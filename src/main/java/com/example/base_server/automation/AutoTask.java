@@ -37,9 +37,7 @@ public class AutoTask implements AutomationTask {
     //This function will tell if the automation task continue or break
     @Override
     public boolean continueTask() {
-        Long totalBooks = bookService.getTotalBooksNumber();
-        writeLog("Total books in the database: " + totalBooks);
-        return (totalBooks <= 80000L && !googleBooksClient.itemsFinished());
+        return false;
     }
 
     //The actual automatic call

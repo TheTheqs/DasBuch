@@ -26,19 +26,26 @@ public class AutomationAuthFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String path = httpRequest.getRequestURI(); // URL requisition
+
+        // If it's not an auto requisition, ignores it
+        if (!path.startsWith("/automation")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // If is an auto req, apply the token
         String token = httpRequest.getHeader("Automation-Token");
 
         if (token != null && token.equals(automationToken)) {
-            //Simulated a ADMIN ruler for the authentication system
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
                             "automation-user",
                             null,
-                            List.of(new SimpleGrantedAuthority("ROLE_AUTOMATION"))); //Set as ROLE_AUTOMATION
+                            List.of(new SimpleGrantedAuthority("ROLE_AUTOMATION"))
+                    );
 
-            //Put the authentication in the context.
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
             chain.doFilter(request, response);
         } else {
             throw new ServletException("Automation authentication denied!");

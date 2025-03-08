@@ -2,6 +2,8 @@ package com.example.base_server.repository;
 
 import com.example.base_server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -37,6 +39,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return The User associated with the provided token, or null if not found.
      */
     User findByResetToken(String token);
+
+    //The following method assure that a user has its requisitions when needed.
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.requisitions WHERE u.id = :id")
+    Optional<User> findByIdWithRequisitions(@Param("id") Long id);
 }
 
 // Standard CRUD methods provided by JpaRepository:

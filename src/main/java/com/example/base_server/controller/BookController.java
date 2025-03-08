@@ -8,11 +8,4 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    @Autowired
-    GoogleBooksClient googleBooksClient;
-
-    @PostMapping("/populate")
-    public String populate() {
-        return googleBooksClient.fetchBooksByCategory() ? "Populate succeeded!" : "Populate failed!";
-    }
 }
