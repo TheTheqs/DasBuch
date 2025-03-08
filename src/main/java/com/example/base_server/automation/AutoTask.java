@@ -25,11 +25,13 @@ public class AutoTask implements AutomationTask {
     private final RestTemplate restTemplate;
 
     BookService bookService;
+    GoogleBooksClient googleBooksClient;
 
-    public AutoTask (RestTemplate restTemplate, BookService bookService,@Value("${automation.token}") String AUTOMATION_TOKEN) {
+    public AutoTask (RestTemplate restTemplate, BookService bookService, @Value("${automation.token}") String AUTOMATION_TOKEN, GoogleBooksClient googleBooksClient) {
         this.restTemplate = restTemplate;
         this.AUTOMATION_TOKEN = AUTOMATION_TOKEN;
         this.bookService = bookService;
+        this.googleBooksClient = googleBooksClient;
     }
 
     //This function will tell if the automation task continue or break
@@ -37,7 +39,7 @@ public class AutoTask implements AutomationTask {
     public boolean continueTask() {
         Long totalBooks = bookService.getTotalBooksNumber();
         writeLog("Total books in the database: " + totalBooks);
-        return totalBooks <= 8L;
+        return (totalBooks <= 80000L && !googleBooksClient.itemsFinished());
     }
 
     //The actual automatic call

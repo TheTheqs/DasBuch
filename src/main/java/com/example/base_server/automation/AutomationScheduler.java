@@ -25,7 +25,7 @@ public class AutomationScheduler {
         this.context = context;
     }
 
-    @Scheduled(fixedRate = 5000) //Here is the time configuration, 5000 means 5 seconds.
+    @Scheduled(fixedRate = 60000) //Here is the time configuration, 5000 means 5 seconds.
     public void runAutomation() {
         if (automationTask.continueTask()) {
             if(callCount == 0) {

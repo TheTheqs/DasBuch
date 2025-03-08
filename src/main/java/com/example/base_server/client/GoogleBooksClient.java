@@ -10,20 +10,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.text.Normalizer;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Component
 public class GoogleBooksClient {
 
+    private int currentIndex = 0;
+
     private final WebClient webClient;
     private final String apikey;
     private final BookService bookService;
-    private final KeyWordService keyWordService;
-    private List<String> BOOK_CATEGORIES = new ArrayList<>();
+    private final List<String> BOOK_CATEGORIES = List.of();
 
     //Constructor Dependency
     public GoogleBooksClient(WebClient.Builder webClientBuilder,
@@ -32,7 +32,6 @@ public class GoogleBooksClient {
         this.webClient = webClientBuilder.baseUrl("https://www.googleapis.com/books/v1").build();
         this.apikey = apiKey;
         this.bookService = bookService;
-        this.keyWordService = keyWordService;
     }
 
     public String searchBooks(String query) {
@@ -68,6 +67,7 @@ public class GoogleBooksClient {
         int startIndex = 0;
         int maxResults = 40; //Max allowed by Google Books
         String category = getNextGenre();
+        currentIndex++;
         ObjectMapper objectMapper = new ObjectMapper();
 
         while (true) {
@@ -77,7 +77,7 @@ public class GoogleBooksClient {
                 String response = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                                 .path("/volumes")
-                                .queryParam("q", "subject:" + category)
+                                .queryParam("q", "inauthor:" + category)
                                 .queryParam("startIndex", finalStartIndex)
                                 .queryParam("maxResults", maxResults)
                                 .queryParam("key", apikey)
@@ -164,12 +164,17 @@ public class GoogleBooksClient {
     }
     //Iteration function
     public String getNextGenre() {
-        if(BOOK_CATEGORIES.isEmpty()) {
-            BOOK_CATEGORIES = keyWordService.getAllKeywordValues();
-        }
-        //Getting the progress
-        String actualProgress = TxtFileUtil.read("progress.txt");
-        String lastGenre = Arrays.stream(actualProgress.split(";")).map(String::trim).toList().getLast();
-        return BOOK_CATEGORIES.get(BOOK_CATEGORIES.indexOf(lastGenre) + 1);
+        return normalizeName(BOOK_CATEGORIES.get(currentIndex));
+    }
+    //A requisition with special characters may result in error, so we need a function to normalize that
+    public static String normalizeName(String name) {
+        return Normalizer.normalize(name, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "")
+                .replaceAll("[^a-zA-Z0-9\\s]", "");
+    }
+
+    //This function returns true if there is no more items in the list to be retrieved.
+    public boolean itemsFinished () {
+        return BOOK_CATEGORIES.size() == currentIndex;
     }
 }

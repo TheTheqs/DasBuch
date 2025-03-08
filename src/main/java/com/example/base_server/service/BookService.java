@@ -35,6 +35,13 @@ public class BookService {
             writeLog("The book is already in database, retrieving it... \n" + optionalBook.get().getTitle());
             return optionalBook.get();
         }
+        for (String name: sAuthors){
+            if (name.length() > 255) {
+                System.out.println(name);
+                name = name.substring(0, 255);
+                System.out.println(name);
+            }
+        }
         List<Author> authors = sAuthors.stream()
                 .map(authorService::saveAuthor)
                 .toList();
