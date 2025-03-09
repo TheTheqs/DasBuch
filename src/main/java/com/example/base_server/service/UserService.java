@@ -28,6 +28,8 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder; //Bean that will make the hash
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private EmailSender emailSender;
     //Services
     //1- Register a new user (encrypts password and generates verification token)
     public User registerUser(String name, String email, String password, Role role){
@@ -109,10 +111,9 @@ public class UserService {
 
     //6- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
     private void sendVerificationEmail(User user) {
-        System.out.println("📧 Simulated Email Sent:");
-        System.out.println("To: " + user.getEmail());
-        System.out.println("Subject: Verify your account");
-        System.out.println("Body: Click the link to verify your account: http://localhost:8080/users/verify?token=" + user.getVerificationToken());
+        emailSender.sendEmail(user.getEmail(),
+                "Verify your account",
+                "Click the link to verify your account: http://localhost:8080/users/verify?token=" + user.getVerificationToken());
     }
 
     //7- Auxiliary method to generate a unique verification token
@@ -158,10 +159,9 @@ public class UserService {
 
     //10- Send reset token message
     private void sendResetEmail(User user) {
-        System.out.println("📧 Simulated Email Sent:");
-        System.out.println("To: " + user.getEmail());
-        System.out.println("Subject: Reset password");
-        System.out.println("Body: Click the link to reset the password of your account: http://localhost:8080/users/reset?token=" + user.getResetToken());
+        emailSender.sendEmail(user.getEmail(),
+                "Reset password",
+                "Click the link to reset the password of your account: http://localhost:8080/users/reset?token=" + user.getResetToken());
     }
 
     //11- Update User

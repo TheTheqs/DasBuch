@@ -1,7 +1,6 @@
 package com.example.base_server.automation;
 
-import com.example.base_server.client.GoogleBooksClient;
-import com.example.base_server.service.BookService;
+import com.example.base_server.service.RequisitionService;
 import com.example.base_server.utils.TxtFileUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -20,24 +19,22 @@ import java.time.format.DateTimeFormatter;
 public class AutoTask implements AutomationTask {
 
     private final String AUTOMATION_TOKEN;
-    private static final String API_URL = "http://localhost:8080/books/populate";
+    private static final String API_URL = "http://localhost:8080/automation/process";
 
     private final RestTemplate restTemplate;
 
-    BookService bookService;
-    GoogleBooksClient googleBooksClient;
+    private final RequisitionService requisitionService;
 
-    public AutoTask (RestTemplate restTemplate, BookService bookService, @Value("${automation.token}") String AUTOMATION_TOKEN, GoogleBooksClient googleBooksClient) {
+    public AutoTask (RestTemplate restTemplate, @Value("${automation.token}") String AUTOMATION_TOKEN, RequisitionService requisitionService) {
         this.restTemplate = restTemplate;
         this.AUTOMATION_TOKEN = AUTOMATION_TOKEN;
-        this.bookService = bookService;
-        this.googleBooksClient = googleBooksClient;
+        this.requisitionService = requisitionService;
     }
 
     //This function will tell if the automation task continue or break
     @Override
     public boolean continueTask() {
-        return false;
+        return requisitionService.haveRequisition();
     }
 
     //The actual automatic call

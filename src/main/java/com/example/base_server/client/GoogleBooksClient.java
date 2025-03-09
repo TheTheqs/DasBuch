@@ -1,5 +1,6 @@
 package com.example.base_server.client;
 
+import com.example.base_server.model.Book;
 import com.example.base_server.service.BookService;
 import com.example.base_server.service.KeyWordService;
 import com.example.base_server.utils.TxtFileUtil;
@@ -12,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.text.Normalizer;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,12 +64,12 @@ public class GoogleBooksClient {
         return isbnBase + checkDigit;
     }
 
-    //Get all books in Google Books by category.
-    public boolean fetchBooksByCategory() {
+    //Get all books in Google Books by author.
+    public List<Book> fetchBooksByAuthor(String author) {
         int startIndex = 0;
         int maxResults = 40; //Max allowed by Google Books
-        String category = getNextGenre();
-        currentIndex++;
+
+        List<Book> books = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
         while (true) {
@@ -77,7 +79,7 @@ public class GoogleBooksClient {
                 String response = webClient.get()
                         .uri(uriBuilder -> uriBuilder
                                 .path("/volumes")
-                                .queryParam("q", "inauthor:" + category)
+                                .queryParam("q", "inauthor:" + normalizeName(author))
                                 .queryParam("startIndex", finalStartIndex)
                                 .queryParam("maxResults", maxResults)
                                 .queryParam("key", apikey)
@@ -92,8 +94,7 @@ public class GoogleBooksClient {
 
                 if (items.isMissingNode() || items.isEmpty()) {
                     //If there is no results left
-                    System.out.println("Category " + category + " is finished!");
-                    TxtFileUtil.write("progress.txt", false, category + ";");
+                    TxtFileUtil.write("external-api.txt", false, "The external api requested the following author: " + author + ";");
                     break;
                 }
 
@@ -122,17 +123,20 @@ public class GoogleBooksClient {
                     if (isbn == null) continue;
 
                     //Save in the database
-                    bookService.saveBook(title, authors, description, keywords, publishedDate, isbn, coverURL, externalLink);
+                    BookService.SaveResponse saveResponse = bookService.saveBook(title, authors, description, keywords, publishedDate, isbn, coverURL, externalLink);
+                    if(saveResponse.newBook()) {
+                        books.add(saveResponse.book());
+                    };
                 }
 
                 startIndex += maxResults; // Next pages
 
             } catch (Exception e) {
-                System.err.println("Fail to get books by category" + category + ": " + e.getMessage());
+                System.err.println("Fail to get books by author: " + author + ": " + e.getMessage());
                 break;
             }
         }
-        return true;
+        return books;
     }
 
     //Convert date from Google Books to a usable one

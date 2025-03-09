@@ -18,4 +18,8 @@ public interface RequisitionRepository extends JpaRepository <Requisition, Long>
     //Get all requisitions by user
     List<Requisition> findByUserId(Long userId);
 
+    //Get the total amount of requisitions by a user
+    @Query("SELECT COUNT(r) FROM Requisition r WHERE r.user.id = :userId")
+    int countByUserId(Long userId);
+
 }

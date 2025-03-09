@@ -1,0 +1,7 @@
+
+The external api requested the following author: Paulo Coelho;
+The external api requested the following author: James Clavell;
+The external api requested the following author: Victor de Castro;
+The external api requested the following author: Fernanda Torres;
+The external api requested the following author: Stephen King;
+The external api requested the following author: A Divina Comédia;

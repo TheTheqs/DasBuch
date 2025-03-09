@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -26,14 +25,14 @@ public class BookService {
     private KeyWordService keyWordService;
 
     //1- Save new book
-    public Book saveBook (String title, List<String> sAuthors, String description, List<String> sKeyWords, LocalDateTime publishedDate, String isbn, String coverURL, String externalLinks) {
+    public SaveResponse saveBook (String title, List<String> sAuthors, String description, List<String> sKeyWords, LocalDateTime publishedDate, String isbn, String coverURL, String externalLinks) {
         if(isbn == null || isbn.trim().isEmpty()){
             throw new IllegalArgumentException("ISBN cannot be null or empty");
         }
         Optional<Book> optionalBook = Optional.ofNullable(bookRepository.findByIsbn(isbn));
         if(optionalBook.isPresent()){
             writeLog("The book is already in database, retrieving it... \n" + optionalBook.get().getTitle());
-            return optionalBook.get();
+            return new SaveResponse(false, optionalBook.get());
         }
         for (String name: sAuthors){
             if (name.length() > 255) {
@@ -51,7 +50,7 @@ public class BookService {
                 .toList();
         Book newBook = bookRepository.save(new Book(title, authors, description, keyWords, publishedDate, isbn, coverURL, externalLinks));
         writeLog("New book saved in database, retrieving it... \n" + newBook.getTitle());
-        return newBook;
+        return new SaveResponse(true, newBook);
     }
     //2- Create log messages
     private void writeLog(String message) {
@@ -64,4 +63,21 @@ public class BookService {
         return bookRepository.count();
     }
 
+    //4- Get books containing
+    public List<Book> getBooksContaining(String title){
+        return bookRepository.findByTitleContaining(title);
+    }
+
+    //5- Get books titles only
+    public List<String> getBooksTitle(List<Book> books){
+        if (books == null || books.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return books.stream()
+                .map(Book::getTitle)
+                .toList();
+    }
+
+    //6- Record for book response
+    public record SaveResponse(boolean newBook, Book book) {}
 }

@@ -24,18 +24,16 @@ public class AutomationScheduler {
         this.context = context;
     }
 
-    @Scheduled(fixedRate = 60000) //Here is the time configuration.
+    @Scheduled(cron = "0 */7 * * * ?") //3 minutes
     public void runAutomation() {
         if (automationTask.continueTask()) {
             if(callCount == 0) {
-                writeLog("Starting automation system...");
+                writeLog("Starting Call...");
             }
             callCount ++;
             automationTask.execute();
         } else {
-            //writeLog("Automation task finished! Numbers of calls: "+ callCount +". Ending application...");
-            //exitApplication();
-            System.out.println("Not executing task");
+            writeLog("There is no requisition in queue, task won't be called...");
         }
     }
 
