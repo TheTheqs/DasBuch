@@ -3,6 +3,7 @@ package com.example.base_server.service;
 import com.example.base_server.model.Author;
 import com.example.base_server.repository.AuthorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,14 @@ public class AuthorService {
         return authorRepository.findByNameContaining(name);
     }
 
+    @Transactional
     //2- Save New Author - If the author already exist, return it, if not, save it and return it.
     public Author saveAuthor(String name){
         Optional<Author> existingAuthor = authorRepository.findByNameContaining(name).stream().findFirst();
         return existingAuthor.orElseGet(() -> authorRepository.save(new Author(name)));
     }
 
+    @Transactional
     //3- Update Author
     public boolean updateAuthor(String name, Long id){
         Author author = authorRepository.findById(id)

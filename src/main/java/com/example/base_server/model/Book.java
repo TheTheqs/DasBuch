@@ -51,6 +51,10 @@ public class Book {
     @ManyToMany(mappedBy = "readBooks")
     private List<User> readBy; //Stores users that already read the book
 
+    //Book Reviews
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
     @Column
     private LocalDateTime createdAt;
 
@@ -179,6 +183,19 @@ public class Book {
 
     public void removeKeyWord(KeyWord keyWord){
         this.keyWords.remove(keyWord);
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setBook(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     //Hashcode and Equals

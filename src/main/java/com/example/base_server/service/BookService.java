@@ -5,6 +5,7 @@ import com.example.base_server.model.Book;
 import com.example.base_server.model.KeyWord;
 import com.example.base_server.repository.BookRepository;
 import com.example.base_server.utils.TxtFileUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class BookService {
     @Autowired
     private KeyWordService keyWordService;
 
+    @Transactional
     //1- Save new book
     public SaveResponse saveBook (String title, List<String> sAuthors, String description, List<String> sKeyWords, LocalDateTime publishedDate, String isbn, String coverURL, String externalLinks) {
         if(isbn == null || isbn.trim().isEmpty()){

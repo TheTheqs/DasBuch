@@ -7,6 +7,7 @@ import com.example.base_server.repository.UserRepository;
 import com.example.base_server.utils.EmailValidator;
 import com.example.base_server.utils.NameValidator;
 import com.example.base_server.utils.PasswordValidator;
+import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,7 @@ public class UserService {
     @Autowired
     private EmailSender emailSender;
     //Services
+    @Transactional
     //1- Register a new user (encrypts password and generates verification token)
     public User registerUser(String name, String email, String password, Role role){
         if (!EmailValidator.isValidEmail(email)) {
@@ -101,6 +103,7 @@ public class UserService {
         user.setPassword(null); // Remove password before returning for security reasons
         return user;
     }
+    @Transactional
     //5- Delete user by id
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
@@ -123,6 +126,7 @@ public class UserService {
         sendVerificationEmail(user); //Email verification sending
     }
 
+    @Transactional
     //8- Reset user password using reset token
     public boolean resetPassword(String token, String password){
         User user = userRepository.findByResetToken(token);
@@ -164,6 +168,7 @@ public class UserService {
                 "Click the link to reset the password of your account: http://localhost:8080/users/reset?token=" + user.getResetToken());
     }
 
+    @Transactional
     //11- Update User
     public boolean updateUser(String email, String name, String password){
         Optional<User> optionalUser = findByEmail(email);

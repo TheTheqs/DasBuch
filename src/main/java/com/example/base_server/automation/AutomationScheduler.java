@@ -24,7 +24,7 @@ public class AutomationScheduler {
         this.context = context;
     }
 
-    @Scheduled(cron = "0 */7 * * * ?") //3 minutes
+    @Scheduled(cron = "0 */7 * * * ?") //7 minutes
     public void runAutomation() {
         if (automationTask.continueTask()) {
             if(callCount == 0) {

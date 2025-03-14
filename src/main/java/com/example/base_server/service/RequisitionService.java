@@ -7,6 +7,7 @@ import com.example.base_server.model.Requisition;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.RequisitionRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class RequisitionService {
         return requisitionRepository.findByUserId(id);
     }
 
+    @Transactional
     //4- Save new Requisition
     public Requisition saveRequisition(String title, String author, User user) {
         if (author == null || author.isBlank()) {
@@ -67,6 +69,7 @@ public class RequisitionService {
         return requisitionRepository.save(requisition);
     }
 
+    @Transactional
     //5- Delete requisition by ID
     public void deleteRequisition(Requisition requisition){
         requisitionRepository.deleteById(requisition.getId());

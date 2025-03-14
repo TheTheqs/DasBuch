@@ -46,6 +46,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Requisition> requisitions;
 
+    //User Reviews
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
     //Reset password attributes
     @Column(unique = true)
     private String resetToken = null;
@@ -133,6 +137,19 @@ public class User {
     public void removeRequisition(Requisition requisition) {
         requisitions.remove(requisition);
         requisition.setUser(null);
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setUser(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     //Hashcode and Equals
