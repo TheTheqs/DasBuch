@@ -82,4 +82,10 @@ public class BookService {
 
     //6- Record for book response
     public record SaveResponse(boolean newBook, Book book) {}
+
+    //7- Get book by ID
+    public Book getBookById(Long id){
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Book with ID " + id + " not found."));
+    }
 }

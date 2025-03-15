@@ -54,6 +54,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: You don't have permission.");
     }
 
+    //When the user try to create more than one review for one book
+    @ExceptionHandler(DuplicateReviewException.class)
+    public ResponseEntity<String> handleDuplicateReview(DuplicateReviewException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
     //Any kind of error
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception e) {

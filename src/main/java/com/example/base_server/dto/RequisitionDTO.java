@@ -8,6 +8,8 @@ public class RequisitionDTO {
     private String author;
     private String user;
 
+    public RequisitionDTO(){}
+
     public RequisitionDTO(Requisition requisition){
         this.title = requisition.getTitle();
         this.author = requisition.getAuthor();

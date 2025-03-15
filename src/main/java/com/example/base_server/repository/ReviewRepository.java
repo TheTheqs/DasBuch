@@ -26,6 +26,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT AVG(r.score) FROM Review r WHERE r.book.id = :bookId")
     Double findAverageScoreByBookId(Long bookId);
 
-    //Check if user has read the provided book
+    //Check if user already has a review for the provided book
     boolean existsByUserIdAndBookId(Long userId, Long bookId);
 }

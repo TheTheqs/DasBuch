@@ -5,11 +5,13 @@ import com.example.base_server.model.User;
 
 //This class is a clone for the User class, but without it sensible data.
 public class UserDTO {
-    private final Long id;
-    private final String name;
-    private final String email;
-    private final Role role;
-    private final Boolean isActive;
+    private Long id;
+    private String name;
+    private String email;
+    private Role role;
+    private Boolean isActive;
+
+    public UserDTO(){}
 
     // Constructor
     public UserDTO(User user) {

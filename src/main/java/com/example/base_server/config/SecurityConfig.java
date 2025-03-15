@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/requisition/new").authenticated()
                         .requestMatchers(HttpMethod.POST, "/automation/process").hasRole("AUTOMATION")
                         .requestMatchers(HttpMethod.PUT, "/users/update").authenticated()
+                        .requestMatchers("/books/**", "/reviews/**").authenticated()
                         .anyRequest().authenticated() // For any other routes, authentication is required.
                 )
                 .sessionManagement(session -> session
@@ -54,6 +55,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean //For Spring Security authentication handle.
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

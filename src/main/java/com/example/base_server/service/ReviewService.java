@@ -1,6 +1,7 @@
 package com.example.base_server.service;
 
 import com.example.base_server.enums.Role;
+import com.example.base_server.exception.DuplicateReviewException;
 import com.example.base_server.model.Book;
 import com.example.base_server.model.Review;
 import com.example.base_server.model.User;
@@ -25,6 +26,10 @@ public class ReviewService {
     public Review saveReview(Book book, User user, String commentary, int score, String sReadAt){
         if(book == null || user == null){
             throw new IllegalArgumentException("Book and User cannot be null!");
+        }
+
+        if (reviewRepository.existsByUserIdAndBookId(user.getId(), book.getId())) {
+            throw new DuplicateReviewException("You have already submitted a review for this book. Please edit your existing review.");
         }
 
         score = Math.clamp(score, 1, 5);
@@ -58,10 +63,14 @@ public class ReviewService {
 
     @Transactional
     //3- Update method
-    public Review updateReview(Long id, Book book, String commentary, int score, String sReadAt){
+    public Review updateReview(Long id, User user, Book book, String commentary, int score, String sReadAt){
 
         Review review = getReview(id);
-        review.setBook(book);
+
+        if(!review.getUser().equals(user) && !(user.getRole() == Role.ADMIN)) {
+            throw new AccessDeniedException("Only the ADMIN and review owners can modify reviews!");
+        }
+
         if (book != null) {
             review.setBook(book);
         }
