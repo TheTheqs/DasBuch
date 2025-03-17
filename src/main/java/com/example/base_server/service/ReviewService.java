@@ -32,7 +32,7 @@ public class ReviewService {
             throw new DuplicateReviewException("You have already submitted a review for this book. Please edit your existing review.");
         }
 
-        score = Math.clamp(score, 1, 5);
+        score = Math.clamp(score, 1, 10);
 
         commentary = (commentary == null || commentary.isEmpty()) ? "There is no commentary." : commentary;
 
