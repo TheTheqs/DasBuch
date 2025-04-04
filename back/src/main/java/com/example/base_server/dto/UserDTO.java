@@ -26,4 +26,16 @@ public class UserDTO {
     public String getEmail() { return email; }
     public Role getRole() { return role; }
     public Boolean getIsActive() { return isActive; }
+
+    //To String
+    @Override
+    public String toString() {
+        return "UserDTO {" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

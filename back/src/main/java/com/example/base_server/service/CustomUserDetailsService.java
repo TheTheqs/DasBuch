@@ -1,5 +1,6 @@
 package com.example.base_server.service;
 
+import com.example.base_server.config.CustomUserDetails;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(email));
-        if(userOptional.isEmpty()){
-            throw new NoSuchElementException("No user found with this email.");
-        }
-        User user = userOptional.get();
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
-                .build();
+        User user = Optional.ofNullable(userRepository.findByEmail(email))
+                .orElseThrow(() -> new UsernameNotFoundException("No user found with this email."));
+        return new CustomUserDetails(user);
     }
 }

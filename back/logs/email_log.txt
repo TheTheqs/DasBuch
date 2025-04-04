@@ -1,0 +1,4 @@
+📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Verify your account
+Body: Click the link to verify your account: http://localhost:8080/users/verify?token=3434cb17-2376-484e-9676-2686390b83ff
