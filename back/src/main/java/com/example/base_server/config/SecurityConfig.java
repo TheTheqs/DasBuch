@@ -14,37 +14,45 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
 
-@Configuration //This is necessary for the Bean declaration system
+@Configuration
 public class SecurityConfig {
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean //This bean randle the authentication by session system
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)// Exclude the CSRF requirement
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/api/hello", "/users/verify").permitAll() // Let this routes open with no authentication
+                        .requestMatchers(
+                                "/users/register",
+                                "/users/login",
+                                "/api/hello",
+                                "/users/verify"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-                        .anyRequest().authenticated() // For any other routes, authentication is required.
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED)  // Session configuration
+                        .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/users/login") // Redirect to login after logout.
+                        .logoutSuccessUrl("/users/login")
                         .permitAll()
-                );
-
-        return http.build();
+                )
+                .build();
     }
-    @Bean //For Spring Security authentication handle.
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
+                                                       BCryptPasswordEncoder passwordEncoder) {
+        var authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(List.of(authProvider));
+        return new ProviderManager(authProvider);
     }
 }

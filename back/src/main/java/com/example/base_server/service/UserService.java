@@ -2,16 +2,17 @@ package com.example.base_server.service;
 
 //Imports
 import com.example.base_server.enums.Role;
+import com.example.base_server.infrastructure.email.FileEmailSender;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.UserRepository;
 import com.example.base_server.utils.EmailValidator;
+import com.example.base_server.utils.PasswordValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -20,12 +21,21 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    @Autowired //Dependency declaration
-    private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder; //Bean that will make the hash
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final FileEmailSender fileEmailSender;
+
+    public UserService(UserRepository userRepository,
+                       BCryptPasswordEncoder passwordEncoder,
+                       AuthenticationManager authenticationManager,
+                       FileEmailSender fileEmailSender) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.fileEmailSender = fileEmailSender;
+    }
+
     //Services
     //1- Register a new user (encrypts password and generates verification token)
     public User registerUser(String name, String email, String password, Role role){
@@ -35,6 +45,10 @@ public class UserService {
 
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already exists!");
+        }
+
+        if (!PasswordValidator.isValid(password)) {
+            throw new IllegalArgumentException("Invalid password format!");
         }
 
         String hashedPassword = passwordEncoder.encode(password); //Password cryptography
@@ -100,10 +114,9 @@ public class UserService {
 
     //6- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
     private void sendVerificationEmail(User user) {
-        System.out.println("📧 Simulated Email Sent:");
-        System.out.println("To: " + user.getEmail());
-        System.out.println("Subject: Verify your account");
-        System.out.println("Body: Click the link to verify your account: http://localhost:8080/users/verify?token=" + user.getVerificationToken());
+        fileEmailSender.send(user.getEmail(),"Verify your account",
+                "Body: Click the link to verify your account: http://localhost:8080/users/verify?token=" +
+                        user.getVerificationToken());
     }
     //7- Auxiliary method to generate a unique verification token
     private String generateVerificationToken() {
