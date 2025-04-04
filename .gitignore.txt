@@ -1,0 +1,38 @@
+# === BACKEND (Spring Boot) ===
+back/target/
+back/.mvn/
+back/.idea/
+back/.classpath
+back/.project
+back/.settings/
+back/*.iml
+back/*.log
+
+# Spring Boot specific
+back/*.jar
+back/*.war
+
+# === FRONTEND (React/Vite/etc) ===
+front/node_modules/
+front/dist/
+front/.env
+front/.next/
+front/.vite/
+
+# === GENERAL ===
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+*.iml
+*.class
+*.jar
+*.war
+.env
+.vscode/
+.idea/
+
+# Ignore OS generated files
+ehthumbs.db
+Icon?
