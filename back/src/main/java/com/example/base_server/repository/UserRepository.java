@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param email The email of the user.
      * @return The User with the provided email, or null if not found.
      */
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     /**
      * Retrieves a User by their verification token.
@@ -28,7 +28,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param token The verification token.
      * @return The User associated with the provided token, or null if not found.
      */
-    User findByVerificationToken(String token);
+    Optional<User>  findByVerificationToken(String token);
+
+    /**
+     * Retrieves a User by their reset token.
+     * Used in the password reset system.
+     * @param token The reset token.
+     * @return The User associated with the provided token, or null if not found.
+     */
+    Optional<User>  findByResetToken(String token);
 }
 
 // Standard CRUD methods provided by JpaRepository:

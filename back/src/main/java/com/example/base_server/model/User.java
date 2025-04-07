@@ -13,7 +13,7 @@ public class User {
     private Long id;
     @Column(nullable = false) // Declaring this Column cannot be null
     private String name;
-    @Column(nullable = false, unique = true) // Declaring this cannot be null and must be unique
+    @Column(nullable = false, unique = true, updatable = false) // Declaring this cannot be null and must be unique
     private String email;
     @Column(nullable = false)
     private String password; //Remember, this will be stored as a HashCode ¬¬
@@ -26,6 +26,10 @@ public class User {
     private String verificationToken; //For email verification
     @Column
     private LocalDateTime tokenExpirationTime;
+    @Column
+    private String resetToken; //For password reset
+    @Column
+    private LocalDateTime resetTokenExpiration;
     @Column(nullable = false, updatable = false) //Obviously, cannot change after creation
     private LocalDateTime createdAt;
     @Column(nullable = false)
@@ -50,6 +54,8 @@ public class User {
         this.password = password;
         this.role = role;
         this.isActive = false;
+        this.resetToken = null;
+        this.resetTokenExpiration = null;
     }
     //Getters e Setters
     public Long getId() { return id; }
@@ -75,6 +81,12 @@ public class User {
 
     public LocalDateTime getTokenExpirationTime() { return tokenExpirationTime; }
     public void setTokenExpirationTime(LocalDateTime tokenExpirationTime) { this.tokenExpirationTime = tokenExpirationTime; }
+
+    public String getResetToken() { return resetToken; }
+    public void setResetToken(String resetToken) { this.resetToken = resetToken; }
+
+    public LocalDateTime getResetTokenExpiration() { return resetTokenExpiration; }
+    public void setResetTokenExpiration(LocalDateTime resetTokenExpiration) { this.resetTokenExpiration = resetTokenExpiration; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }

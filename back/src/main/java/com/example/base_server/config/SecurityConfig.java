@@ -40,6 +40,8 @@ public class SecurityConfig {
                                 "/users/verify"
                         ).permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/users/reset").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -1,4 +1,16 @@
 📧 Simulated Email Sent:
 To: matheqs@gmail.com
 Subject: Verify your account
-Body: Click the link to verify your account: http://localhost:8080/users/verify?token=3434cb17-2376-484e-9676-2686390b83ff
+Body: Click the link to verify your account: http://localhost:8080/users/verify?token=3434cb17-2376-484e-9676-2686390b83ff📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:8080/users/reset?token=1ff1e316-3113-4bff-95cb-6235c1bc993c

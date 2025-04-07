@@ -77,4 +77,34 @@ public class UserController {
         );
         return ResponseEntity.ok("You have been logged out successfully!");
     }
+
+    // 7 - Change user attributes
+    @PatchMapping("/update")
+    public ResponseEntity<UserDTO> updateUser(Authentication authentication,
+                                                @RequestParam String name,
+                                                @RequestParam String password) {
+        var updatedUser = new UserDTO(
+                userService.updateUser(UserExtractor.extractUser(authentication),
+                name,
+                password));
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    //8- Request reset password
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> requestPasswordReset(@RequestParam String email) {
+        userService.generatePasswordToken(email);
+        return ResponseEntity.ok("If this email exists, a password reset link has been sent.");
+    }
+
+    //9- Reset password
+    @PatchMapping("/reset")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String password) {
+        String message = userService.resetPassword(token, password) ?
+                "Password reset successfully." :
+                "Password reset failed. Please try again.";
+
+        return ResponseEntity.ok(message);
+    }
 }

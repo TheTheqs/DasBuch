@@ -52,7 +52,7 @@ public class UserService {
         }
 
         String hashedPassword = passwordEncoder.encode(password); //Password cryptography
-        String verificationToken = generateVerificationToken(); //Token generation
+        String verificationToken = generateToken(); //Token generation
 
         User newUser = new User(name, email, hashedPassword, role); //User creation
         newUser.setVerificationToken(verificationToken); //Set token
@@ -65,8 +65,10 @@ public class UserService {
 
     //2- Verify user email using the verification token
     public boolean verifyUser(String token){
-        User user = userRepository.findByVerificationToken(token);
-        if (user == null || user.getTokenExpirationTime().isBefore(LocalDateTime.now())) {
+        User user = userRepository.findByVerificationToken(token)
+                .orElseThrow(() -> new NoSuchElementException("No user found with this token."));
+
+        if (user.getTokenExpirationTime().isBefore(LocalDateTime.now())) {
             return false; // invalid or expired token
         }
         user.setIsActive(true);
@@ -75,14 +77,9 @@ public class UserService {
         return true;
     }
 
-    //3- Retrieve user by email (used for login)
-    public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email));
-    }
-
-    //4- Login method (validates email and compares password)
+    //3- Login method (validates email and compares password)
     public User login(String email, String rawPassword) {
-        User user = findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("No user found with this email."));
 
         if (!user.getIsActive()) {
@@ -104,24 +101,74 @@ public class UserService {
         user.setPassword(null); // Remove password before returning for security reasons
         return user;
     }
-    //5- Delete user by id
+    //4- Delete user by id
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User with ID " + id + " not found."));
 
-
-
         userRepository.deleteById(id);
     }
 
-    //6- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
+    //5- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
     private void sendVerificationEmail(User user) {
         fileEmailSender.send(user.getEmail(),"Verify your account",
-                "Body: Click the link to verify your account: http://localhost:8080/users/verify?token=" +
+                "Click the link to verify your account: http://localhost:8080/users/verify?token=" +
                         user.getVerificationToken());
     }
-    //7- Auxiliary method to generate a unique verification token
-    private String generateVerificationToken() {
+    //6- Auxiliary method to generate a unique verification token
+    private String generateToken() {
         return UUID.randomUUID().toString();
+    }
+
+    //7- Update user
+    public User updateUser(User user, String name, String password) {
+        if (!PasswordValidator.isValid(password)) {
+            throw new IllegalArgumentException("Invalid password format!");
+        }
+        user.setPassword(password);
+        user.setName(name);
+
+        fileEmailSender.send(
+                user.getEmail(),
+                "User update",
+                "Your user account has been updated!");
+
+        return userRepository.save(user);
+    }
+
+    //8- Request token for password reset
+    public void generatePasswordToken(String email){
+        userRepository.findByEmail(email).ifPresent(user -> {
+            user.setResetToken(generateToken());
+            user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(15));
+
+            fileEmailSender.send(
+                    user.getEmail(),
+                    "Reset your password",
+                    "Click the link to reset your password: http://localhost:8080/users/reset?token=" + user.getResetToken()
+            );
+
+            userRepository.save(user);
+        });
+    }
+
+    //9- Reset password with token
+    public boolean resetPassword(String token, String password) {
+        User user = userRepository.findByResetToken(token)
+                .orElseThrow(() -> new NoSuchElementException("No user found with this token."));
+
+        if (user.getResetTokenExpiration().isBefore(LocalDateTime.now())) {
+            return false; // invalid or expired token
+        }
+
+        if (!PasswordValidator.isValid(password)) {
+            throw new IllegalArgumentException("Invalid password format!");
+        }
+
+        user.setPassword(password);
+        user.setResetToken(null);
+        user.setResetTokenExpiration(null);
+        userRepository.save(user);
+        return true;
     }
 }
