@@ -27,6 +27,14 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
+    @ManyToMany
+    @JoinTable(
+            name = "book_user",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> readBy;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -53,6 +61,8 @@ public class Book {
         this.authors = authors;
         this.reviews = reviews;
     }
+
+    //Getters and Setters
 
     public Long getId() {
         return id;
@@ -90,6 +100,14 @@ public class Book {
         this.reviews = reviews;
     }
 
+    public Set<User> getReadBy() {
+        return readBy;
+    }
+
+    public void setReadBy(Set<User> readBy) {
+        this.readBy = readBy;
+    }
+
     //List Methods
     public void addAuthor(Author author) {
         this.authors.add(author);
@@ -105,6 +123,14 @@ public class Book {
 
     public void removeReview(Review review) {
         this.reviews.remove(review);
+    }
+
+    public void addUser(User user){
+        this.readBy.add(user);
+    }
+
+    public void removeUser(User user){
+        this.readBy.remove(user);
     }
 
     //Hash code and Equals

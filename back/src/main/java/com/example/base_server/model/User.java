@@ -47,6 +47,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
+    @ManyToMany(mappedBy = "readBy")
+    private Set<Book> readBooks;
+
     @Column(nullable = false, updatable = false) //Obviously, cannot change after creation
     private LocalDateTime createdAt;
 
@@ -84,10 +87,6 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -98,10 +97,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -176,6 +171,14 @@ public class User {
         this.reviews = reviews;
     }
 
+    public Set<Book> getReadBooks() {
+        return readBooks;
+    }
+
+    public void setReadBooks(Set<Book> readBooks) {
+        this.readBooks = readBooks;
+    }
+
     //List methods
     public void addReview(Review review) {
         this.reviews.add(review);
@@ -183,6 +186,14 @@ public class User {
 
     public void removeReview(Review review) {
         this.reviews.remove(review);
+    }
+
+    public void addBook(Book book){
+        this.readBooks.add(book);
+    }
+
+    public void removeBook(Book book){
+        this.readBooks.remove(book);
     }
 
     //Hashcode and Equals

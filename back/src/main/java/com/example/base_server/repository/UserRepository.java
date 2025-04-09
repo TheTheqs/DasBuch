@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -37,6 +38,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return The User associated with the provided token, or null if not found.
      */
     Optional<User>  findByResetToken(String token);
+
+    //Get reader list for a book. Util for consistence when excluding a book from the database
+    Set<User> findByReadBooks_Id(Long id);
 }
 
 // Standard CRUD methods provided by JpaRepository:

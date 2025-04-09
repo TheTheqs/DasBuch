@@ -14,7 +14,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-Generate
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "authors")
