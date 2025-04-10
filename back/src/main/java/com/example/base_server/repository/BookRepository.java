@@ -17,11 +17,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByTitleContainingIgnoreCase(String title);
 
     //Dynamic search by author name
-    Set<Book> findByAuthors_NameContainingIgnoreCaseOrderByTitleAsc(String name);
+    Set<Book> findByAuthors_IdOrderByTitleAsc(Long id);
 
-    //Dynamic searches by username
-    Set<Book> findByReadBy_NameContainingIgnoreCaseOrderByTitleAsc(String name);
-
+    //Dynamic search by username
     Set<Book> findByReadBy_IdOrderByTitleAsc(Long id);
 
 }
