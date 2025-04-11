@@ -49,7 +49,6 @@ public class BookService {
                 .orElseThrow(() -> new NoSuchElementException("Book not found: " + id));
     }
 
-        //Returns all books with titles that contain the given substring (case-insensitive)
     public List<Book> getBookListByTitle(String title) {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }

@@ -10,9 +10,6 @@ import java.util.Set;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    //Exist by title for short verification
-    boolean existsByTitle(String title);
-
     //Dynamic search by title
     List<Book> findByTitleContainingIgnoreCase(String title);
 

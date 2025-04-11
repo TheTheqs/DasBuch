@@ -18,4 +18,7 @@ public interface ReviewRepository extends JpaRepository <Review, Long> {
     Set<Review> findByUser_NameContainingIgnoreCase(String name);
 
     Set<Review> findByUser_IdOrderByCreatedAtAsc(Long id);
+
+    //Get a bool for an already existing review, used to block duplicates
+    boolean existsByUser_IdAndBook_Id(Long userId, Long bookId);
 }
