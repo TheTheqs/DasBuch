@@ -17,5 +17,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     //Dynamic search by username
     Page<Book> findByReadBy_IdOrderByTitleAsc(Long id, Pageable pageable);
-
 }

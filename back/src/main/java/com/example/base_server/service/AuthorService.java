@@ -3,11 +3,11 @@ package com.example.base_server.service;
 import com.example.base_server.model.Author;
 import com.example.base_server.model.Book;
 import com.example.base_server.repository.AuthorRepository;
+import com.example.base_server.repository.BookRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -15,27 +15,24 @@ import java.util.Set;
 public class AuthorService {
     //Dependency injection
     private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, BookRepository bookRepository) {
         this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
     }
 
     //All CRUD for authors
     //Create
-    public Author createAuthor(String name){
+    public Author createAuthor(String name) {
         return authorRepository.findByName(name)
                 .orElseGet(() -> authorRepository.save(new Author(name, Set.of())));
     }
 
     //Read
-    public Author getAuthorById(Long id){
+    public Author getAuthorById(Long id) {
         return authorRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Author not found"));
-    }
-
-    public Author getAuthorByName(String name){
-        return authorRepository.findByName(name)
-                .orElseThrow(() -> new NoSuchElementException("Author not found: " + name));
     }
 
     public Page<Author> getAuthorListByName(String name, Pageable pageable) {
@@ -43,24 +40,21 @@ public class AuthorService {
     }
 
     //Update
-    public Author updateAuthor(String name, Set<Book> books){
-        Author author = authorRepository.findByName(name.trim())
-                .orElseThrow(() -> new NoSuchElementException("Author not found: " + name));
+    public Author updateAuthor(Long id, String name) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Author not found, id:  " + id));
         if (!name.trim().isEmpty() && !author.getName().equals(name.trim())) {
             author.setName(name.trim());
-        }
-        if(books != null && !books.isEmpty()) {
-            books.forEach(author::addBook);
         }
         return authorRepository.save(author);
     }
 
     //Delete
-    public boolean deleteAuthor(Author author) {
-        if(!authorRepository.existsById(author.getId())) {
-           return false;
+    public boolean deleteAuthor(Long id) {
+        if (!authorRepository.existsById(id)) {
+            return false;
         }
-        authorRepository.delete(author);
+        authorRepository.deleteById(id);
         return true;
     }
 

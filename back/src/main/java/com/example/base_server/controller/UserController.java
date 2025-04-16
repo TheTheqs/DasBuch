@@ -6,6 +6,8 @@ import com.example.base_server.service.UserService;
 import com.example.base_server.utils.UserExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -63,7 +65,7 @@ public class UserController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authenticated.");
         }
-        UserDTO user =  new UserDTO(UserExtractor.extractUser(authentication));
+        UserDTO user = new UserDTO(UserExtractor.extractUser(authentication));
         return ResponseEntity.ok("You are validated as: " + user);
     }
 
@@ -81,12 +83,12 @@ public class UserController {
     // 7 - Change user attributes
     @PatchMapping("/update")
     public ResponseEntity<UserDTO> updateUser(Authentication authentication,
-                                                @RequestParam String name,
-                                                @RequestParam String password) {
+                                              @RequestParam String name,
+                                              @RequestParam String password) {
         var updatedUser = new UserDTO(
                 userService.updateUser(UserExtractor.extractUser(authentication),
-                name,
-                password));
+                        name,
+                        password));
 
         return ResponseEntity.ok(updatedUser);
     }
@@ -106,5 +108,23 @@ public class UserController {
                 "Password reset failed. Please try again.";
 
         return ResponseEntity.ok(message);
+    }
+
+    //10- Search user by name
+    @GetMapping("/search")
+    public ResponseEntity<Page<UserDTO>> searchUsername(@RequestParam String name, Pageable pageable) {
+
+        Page<UserDTO> result = userService.searchUserByName(name, pageable).map(UserDTO::new);
+
+        return ResponseEntity.ok(result);
+    }
+
+    //11 Get users by read book
+    @GetMapping("/book")
+    public ResponseEntity<Page<UserDTO>> searchUserByBook(@RequestParam Long id, Pageable pageable) {
+
+        Page<UserDTO> result = userService.searchByReadBook(id, pageable).map(UserDTO::new);
+
+        return ResponseEntity.ok(result);
     }
 }
