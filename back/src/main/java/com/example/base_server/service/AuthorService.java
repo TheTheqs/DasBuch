@@ -1,7 +1,6 @@
 package com.example.base_server.service;
 
 import com.example.base_server.model.Author;
-import com.example.base_server.model.Book;
 import com.example.base_server.repository.AuthorRepository;
 import com.example.base_server.repository.BookRepository;
 import org.springframework.data.domain.Page;
@@ -15,11 +14,9 @@ import java.util.Set;
 public class AuthorService {
     //Dependency injection
     private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
 
-    public AuthorService(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.bookRepository = bookRepository;
     }
 
     //All CRUD for authors

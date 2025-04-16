@@ -5,6 +5,7 @@ import com.example.base_server.model.Book;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.BookRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -25,13 +26,13 @@ public class BookService {
     }
     //All CRUD methods
     //Create
-    public Book createBook(String title, List<String> authorNames, Pageable pageable) {
+    public Book createBook(String title, List<String> authorNames) {
 
         Set<Author> authors = authorNames.stream()
                 .map(authorService::createAuthor)
                 .collect(Collectors.toSet());
 
-        Page<Book> bookList = bookRepository.findByTitleContainingIgnoreCase(title.trim(), pageable);
+        List<Book> bookList = bookRepository.findByTitleContainingIgnoreCase(title.trim(), PageRequest.of(0, 10)).toList();
 
         Optional<Book> existingBook = bookList.stream()
                 .filter(book -> book.getTitle().trim().equalsIgnoreCase(title.trim()) &&
@@ -55,12 +56,12 @@ public class BookService {
         return bookRepository.findByTitleContainingIgnoreCase(title, pageable);
     }
 
-    public Page<Book> getBookListByAuthor(Author author, Pageable pageable) {
-        return bookRepository.findByAuthors_IdOrderByTitleAsc(author.getId(), pageable);
+    public Page<Book> getBookListByAuthor(Long id, Pageable pageable) {
+        return bookRepository.findByAuthors_IdOrderByTitleAsc(id, pageable);
     }
 
-    public Page<Book> getBookListByUser(User user, Pageable pageable) {
-        return bookRepository.findByReadBy_IdOrderByTitleAsc(user.getId(), pageable);
+    public Page<Book> getBookListByUser(Long id, Pageable pageable) {
+        return bookRepository.findByReadBy_IdOrderByTitleAsc(id, pageable);
     }
 
     //Update
@@ -75,11 +76,11 @@ public class BookService {
     }
 
     //Delete
-    public boolean deleteBook(Book book) {
-        if (!bookRepository.existsById(book.getId())) {
+    public boolean deleteBook(Long id) {
+        if (!bookRepository.existsById(id)) {
             return false;
         }
-        bookRepository.delete(book);
+        bookRepository.deleteById(id);
         return true;
     }
 }
