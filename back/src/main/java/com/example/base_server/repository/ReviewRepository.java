@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends JpaRepository <Review, Long> {
 
-    //Find reviews from book object
-    Page<Review> findByBook_TitleContainingIgnoreCase(String title, Pageable pageable);
-
     Page<Review> findByBook_IdOrderByCreatedAtAsc(Long id, Pageable pageable);
 
     //Find reviews from user object

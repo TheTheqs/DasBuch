@@ -26,9 +26,9 @@ public class BookService {
     }
     //All CRUD methods
     //Create
-    public Book createBook(String title, List<String> authorNames) {
+    public Book createBook(String title, List<String> authorsNames) {
 
-        Set<Author> authors = authorNames.stream()
+        Set<Author> authors = authorsNames.stream()
                 .map(authorService::createAuthor)
                 .collect(Collectors.toSet());
 

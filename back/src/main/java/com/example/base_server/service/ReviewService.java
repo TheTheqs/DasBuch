@@ -1,5 +1,6 @@
 package com.example.base_server.service;
 
+import com.example.base_server.enums.Role;
 import com.example.base_server.model.Book;
 import com.example.base_server.model.Review;
 import com.example.base_server.model.User;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class ReviewService {
@@ -52,20 +54,12 @@ public class ReviewService {
         return reviewRepository.findByBook_IdOrderByCreatedAtAsc(id, pageable);
     }
 
-    public Page<Review> getReviewsByTitle(String title, Pageable pageable) {
-        return reviewRepository.findByBook_TitleContainingIgnoreCase(title, pageable);
-    }
-
     public Page<Review> getUserReviews(Long id, Pageable pageable) {
         if (!userRepository.existsById(id)) {
             throw new NoSuchElementException("Error: user not found!");
         }
         //Again, result list can be empty, but the user must exist
         return reviewRepository.findByUser_IdOrderByCreatedAtAsc(id, pageable);
-    }
-
-    public Page<Review> getReviewByUserSearch(String username, Pageable pageable) {
-        return reviewRepository.findByUser_NameContainingIgnoreCase(username, pageable);
     }
 
     //Update
@@ -93,10 +87,16 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
     //Delete
-    public boolean deleteReview(Review review) {
-        if (!reviewRepository.existsById(review.getId())) {
+    public boolean deleteReview(Long id, User user) {
+        if (!reviewRepository.existsById(id)) {
             return false;
         }
+
+        Review review = getReview(id);
+        if(!Objects.equals(user.getId(), review.getUser().getId()) && user.getRole() != Role.ADMIN) {
+            throw new BadCredentialsException("Only the ADMIN and review owners can delete reviews");
+        }
+
         review.getBook().removeUser(review.getUser());
         bookRepository.save(review.getBook());
         reviewRepository.delete(review);
