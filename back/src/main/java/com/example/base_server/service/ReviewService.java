@@ -6,11 +6,12 @@ import com.example.base_server.model.User;
 import com.example.base_server.repository.BookRepository;
 import com.example.base_server.repository.ReviewRepository;
 import com.example.base_server.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Service
 public class ReviewService {
@@ -43,28 +44,28 @@ public class ReviewService {
                 .orElseThrow(() -> new NoSuchElementException("Review not found! id: " + id));
     }
 
-    public Set<Review> getBookReviews(Long id) {
+    public Page<Review> getBookReviews(Long id, Pageable pageable) {
         if (!bookRepository.existsById(id)) {
             throw new NoSuchElementException("Review not found!");
         }
         //Return an empty list is not an error, but the book must exist in the data
-        return reviewRepository.findByBook_IdOrderByCreatedAtAsc(id);
+        return reviewRepository.findByBook_IdOrderByCreatedAtAsc(id, pageable);
     }
 
-    public Set<Review> getReviewsByTitle(String title) {
-        return reviewRepository.findByBook_TitleContainingIgnoreCase(title);
+    public Page<Review> getReviewsByTitle(String title, Pageable pageable) {
+        return reviewRepository.findByBook_TitleContainingIgnoreCase(title, pageable);
     }
 
-    public Set<Review> getUserReviews(Long id) {
+    public Page<Review> getUserReviews(Long id, Pageable pageable) {
         if (!userRepository.existsById(id)) {
             throw new NoSuchElementException("Error: user not found!");
         }
         //Again, result list can be empty, but the user must exist
-        return reviewRepository.findByUser_IdOrderByCreatedAtAsc(id);
+        return reviewRepository.findByUser_IdOrderByCreatedAtAsc(id, pageable);
     }
 
-    public Set<Review> getReviewByUserSearch(String username) {
-        return reviewRepository.findByUser_NameContainingIgnoreCase(username);
+    public Page<Review> getReviewByUserSearch(String username, Pageable pageable) {
+        return reviewRepository.findByUser_NameContainingIgnoreCase(username, pageable);
     }
 
     //Update

@@ -7,6 +7,8 @@ import com.example.base_server.model.User;
 import com.example.base_server.repository.UserRepository;
 import com.example.base_server.utils.EmailValidator;
 import com.example.base_server.utils.PasswordValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -170,5 +172,14 @@ public class UserService {
         user.setResetTokenExpiration(null);
         userRepository.save(user);
         return true;
+    }
+    //Some Read methods
+    //Find by name
+    public Page<User> searchUserByName(String name, Pageable pageable) {
+        return userRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
+    //Find by read books
+    public Page<User> searchByReadBook(Long id, Pageable pageable) {
+        return userRepository.findByReadBooks_Id(id, pageable);
     }
 }

@@ -10,6 +10,7 @@ public class UserDTO {
     private final String email;
     private final Role role;
     private final Boolean isActive;
+    private final int reviewCount;
 
     // Constructor
     public UserDTO(User user) {
@@ -18,6 +19,7 @@ public class UserDTO {
         this.email = user.getEmail();
         this.role = user.getRole();
         this.isActive = user.getIsActive();
+        this.reviewCount = user.getReviews().size();
     }
 
     // Getters
@@ -41,6 +43,10 @@ public class UserDTO {
         return isActive;
     }
 
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
     //To String
     @Override
     public String toString() {
@@ -50,6 +56,7 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", isActive=" + isActive +
+                ", reviewCount = " + reviewCount +
                 '}';
     }
 }

@@ -3,7 +3,10 @@ package com.example.base_server.service;
 import com.example.base_server.model.Author;
 import com.example.base_server.model.Book;
 import com.example.base_server.repository.AuthorRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -35,8 +38,8 @@ public class AuthorService {
                 .orElseThrow(() -> new NoSuchElementException("Author not found: " + name));
     }
 
-    public List<Author> getAuthorListByName(String name) {
-        return authorRepository.findByNameContainingIgnoreCase(name);
+    public Page<Author> getAuthorListByName(String name, Pageable pageable) {
+        return authorRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 
     //Update

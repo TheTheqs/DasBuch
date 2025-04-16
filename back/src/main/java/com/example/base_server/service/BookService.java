@@ -4,6 +4,8 @@ import com.example.base_server.model.Author;
 import com.example.base_server.model.Book;
 import com.example.base_server.model.User;
 import com.example.base_server.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,13 +25,13 @@ public class BookService {
     }
     //All CRUD methods
     //Create
-    public Book createBook(String title, List<String> authorNames) {
+    public Book createBook(String title, List<String> authorNames, Pageable pageable) {
 
         Set<Author> authors = authorNames.stream()
                 .map(authorService::createAuthor)
                 .collect(Collectors.toSet());
 
-        List<Book> bookList = bookRepository.findByTitleContainingIgnoreCase(title.trim());
+        Page<Book> bookList = bookRepository.findByTitleContainingIgnoreCase(title.trim(), pageable);
 
         Optional<Book> existingBook = bookList.stream()
                 .filter(book -> book.getTitle().trim().equalsIgnoreCase(title.trim()) &&
@@ -49,16 +51,16 @@ public class BookService {
                 .orElseThrow(() -> new NoSuchElementException("Book not found: " + id));
     }
 
-    public List<Book> getBookListByTitle(String title) {
-        return bookRepository.findByTitleContainingIgnoreCase(title);
+    public Page<Book> getBookListByTitle(String title, Pageable pageable) {
+        return bookRepository.findByTitleContainingIgnoreCase(title, pageable);
     }
 
-    public Set<Book> getBookListByAuthor(Author author) {
-        return bookRepository.findByAuthors_IdOrderByTitleAsc(author.getId());
+    public Page<Book> getBookListByAuthor(Author author, Pageable pageable) {
+        return bookRepository.findByAuthors_IdOrderByTitleAsc(author.getId(), pageable);
     }
 
-    public Set<Book> getBookListByUser(User user) {
-        return bookRepository.findByReadBy_IdOrderByTitleAsc(user.getId());
+    public Page<Book> getBookListByUser(User user, Pageable pageable) {
+        return bookRepository.findByReadBy_IdOrderByTitleAsc(user.getId(), pageable);
     }
 
     //Update

@@ -1,11 +1,11 @@
 package com.example.base_server.repository;
 
 import com.example.base_server.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -40,7 +40,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User>  findByResetToken(String token);
 
     //Get reader list for a book. Util for consistence when excluding a book from the database
-    Set<User> findByReadBooks_Id(Long id);
+    Page<User> findByReadBooks_Id(Long id, Pageable pageable);
+
+    //Get by name containing
+    Page<User> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }
 
 // Standard CRUD methods provided by JpaRepository:
