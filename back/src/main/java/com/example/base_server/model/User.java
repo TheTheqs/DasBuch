@@ -81,6 +81,14 @@ public class User {
         this.resetToken = null;
         this.resetTokenExpiration = null;
     }
+    //The following constructor is meant to be used on tests only
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+        this.password = "123456";
+        this.role = Role.USER;
+        this.isActive = false;
+    }
 
     //Getters e Setters
     public Long getId() {

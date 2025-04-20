@@ -8,10 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +38,7 @@ public class BookService {
                 .findFirst();
 
         return existingBook.orElseGet(() -> {
-            Book newBook = new Book(title.trim(), authors, Set.of());
+            Book newBook = new Book(title.trim(), authors, new HashSet<>());
             return bookRepository.save(newBook);
         });
 

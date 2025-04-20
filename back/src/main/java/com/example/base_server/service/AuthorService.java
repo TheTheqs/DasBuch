@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -23,7 +25,7 @@ public class AuthorService {
     //Create
     public Author createAuthor(String name) {
         return authorRepository.findByName(name)
-                .orElseGet(() -> authorRepository.save(new Author(name, Set.of())));
+                .orElseGet(() -> authorRepository.save(new Author(name, new HashSet<>())));
     }
 
     //Read
@@ -39,10 +41,19 @@ public class AuthorService {
     //Update
     public Author updateAuthor(Long id, String name) {
         Author author = authorRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Author not found, id:  " + id));
-        if (!name.trim().isEmpty() && !author.getName().equals(name.trim())) {
-            author.setName(name.trim());
+                .orElseThrow(() -> new NoSuchElementException("Author not found, id: " + id));
+
+        String trimmed = name.trim();
+        if (!trimmed.isEmpty() && !author.getName().equalsIgnoreCase(trimmed)) {
+            //Verify if the provided new name is available.
+            Optional<Author> existing = authorRepository.findByName(trimmed);
+            if (existing.isPresent() && !existing.get().getId().equals(id)) {
+                throw new IllegalArgumentException("An author with this name already exists.");
+            }
+
+            author.setName(trimmed);
         }
+
         return authorRepository.save(author);
     }
 

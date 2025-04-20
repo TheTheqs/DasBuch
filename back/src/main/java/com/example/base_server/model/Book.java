@@ -3,11 +3,12 @@ package com.example.base_server.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "books", uniqueConstraints = {@UniqueConstraint(columnNames = {"title", "author"})})
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-Generate
@@ -60,6 +61,7 @@ public class Book {
         this.title = title;
         this.authors = authors;
         this.reviews = reviews;
+        this.readBy = new HashSet<>();
     }
 
     //Getters and Setters
