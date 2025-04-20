@@ -61,6 +61,7 @@ public class UserService {
         newUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(15)); //Set token time
         newUser.setIsActive(false); //Manipulate activation
 
+        System.out.println("ENTREI NO SEND EMAIL");
         sendVerificationEmail(newUser); //Email verification sending
         return userRepository.save(newUser);
     }

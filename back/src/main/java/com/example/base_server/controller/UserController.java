@@ -37,7 +37,8 @@ public class UserController {
     // 2 - Verify
     @GetMapping("/verify")
     public ResponseEntity<String> verifyUser(@RequestParam String token) {
-        return userService.verifyUser(token)
+        boolean verified = userService.verifyUser(token);
+        return verified
                 ? ResponseEntity.ok("Account verified successfully!")
                 : ResponseEntity.badRequest().body("Invalid or expired verification token.");
     }

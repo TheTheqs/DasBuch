@@ -5,6 +5,7 @@ import com.example.base_server.enums.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class User {
     private LocalDateTime resetTokenExpiration;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();
 
     @ManyToMany(mappedBy = "readBy")
     private Set<Book> readBooks;
