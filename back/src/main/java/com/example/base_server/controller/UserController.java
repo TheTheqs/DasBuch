@@ -1,5 +1,6 @@
 package com.example.base_server.controller;
 
+import com.example.base_server.dto.CreateUserDTO;
 import com.example.base_server.dto.UserDTO;
 import com.example.base_server.enums.Role;
 import com.example.base_server.service.UserService;
@@ -27,10 +28,8 @@ public class UserController {
 
     // 1 - Register
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestParam String name,
-                                                @RequestParam String email,
-                                                @RequestParam String password) {
-        var newUser = new UserDTO(userService.registerUser(name, email, password, Role.USER));
+    public ResponseEntity<UserDTO> registerUser(@RequestBody CreateUserDTO dto) {
+        var newUser = new UserDTO(userService.registerUser(dto.getName(), dto.getEmail(), dto.getPassword(), Role.USER));
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 

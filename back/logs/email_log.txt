@@ -73,4 +73,10 @@ Subject: Verify your account
 Click the link to verify your account: http://localhost:8080/users/verify?token=1310e8f1-ae7e-4f86-bdda-685280abe0e8📧 Simulated Email Sent:
 To: user@email.com
 Subject: Verify your account
-Click the link to verify your account: http://localhost:8080/users/verify?token=fda052a1-e144-4af7-ac98-c484a41bde29
+Click the link to verify your account: http://localhost:8080/users/verify?token=fda052a1-e144-4af7-ac98-c484a41bde29📧 Simulated Email Sent:
+To: matheqs@example.com
+Subject: Verify your account
+Click the link to verify your account: http://localhost:8080/users/verify?token=c85adf02-cc3f-4b0a-84c4-9d1f69bb095c📧 Simulated Email Sent:
+To: matheqs2@example.com
+Subject: Verify your account
+Click the link to verify your account: http://localhost:8080/users/verify?token=6731fe8d-38bf-491d-ada4-b662e8901d6b
