@@ -25,6 +25,15 @@ public class CreateReviewDTO {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime readAt;
 
+    public CreateReviewDTO(String bookTitle, List<String> authorsNames, String synopsys, String commentary, int score, LocalDateTime readAt) {
+        this.bookTitle = bookTitle;
+        this.authorsNames = authorsNames;
+        this.synopsys = synopsys;
+        this.commentary = commentary;
+        this.score = score;
+        this.readAt = readAt;
+    }
+
     public String getBookTitle() {
         return bookTitle;
     }

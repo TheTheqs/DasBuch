@@ -9,7 +9,7 @@ import com.example.base_server.repository.ReviewRepository;
 import com.example.base_server.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -66,8 +66,8 @@ public class ReviewService {
     public Review updateReview(User user, Long id, Book book, String synopsys, String commentary, int score, LocalDateTime readAt) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Review not found! id: " + id));
-        if (!review.getUser().equals(user)) {
-            throw new BadCredentialsException("Only the owner can update it's reviews!");
+        if (!review.getUser().equals(user) && user.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("You don't have permission to perform this action");
         }
         if (!review.getBook().equals(book) && book != null) {
             review.setBook(book);
@@ -94,7 +94,7 @@ public class ReviewService {
 
         Review review = getReview(id);
         if(!Objects.equals(user.getId(), review.getUser().getId()) && user.getRole() != Role.ADMIN) {
-            throw new BadCredentialsException("Only the ADMIN and review owners can delete reviews");
+            throw new AccessDeniedException("Only the ADMIN and review owners can delete reviews");
         }
 
         review.getBook().removeUser(review.getUser());
