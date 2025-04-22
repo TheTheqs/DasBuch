@@ -64,6 +64,12 @@ public class Book {
         this.readBy = new HashSet<>();
     }
 
+    //Test constructor only
+    public Book(String title, Set<Author> authors){
+        this.title = title;
+        this.authors = authors;
+    }
+
     //Getters and Setters
 
     public Long getId() {

@@ -45,6 +45,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/authors/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/authors/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/books/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/books/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/users/reset").permitAll()
                         .anyRequest().authenticated()
                 )

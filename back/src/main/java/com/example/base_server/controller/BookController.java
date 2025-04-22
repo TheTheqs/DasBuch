@@ -59,10 +59,6 @@ public class BookController {
     //Delete Book
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteBook(@PathVariable Long id, Authentication authentication) {
-        if(UserExtractor.extractUser(authentication).getRole() != Role.ADMIN) {
-            throw new BadCredentialsException("Only ADMIN can delete books");
-        }
-
         return ResponseEntity.ok(bookService.deleteBook(id));
     }
 
@@ -71,11 +67,6 @@ public class BookController {
             @PathVariable Long id,
             @RequestBody UpdateBookDTO dto,
             Authentication authentication) {
-
-        if(UserExtractor.extractUser(authentication).getRole() != Role.ADMIN) {
-            throw new BadCredentialsException("Only ADMIN can update books");
-        }
-
         Set<Author> authors = Set.of();
         if (dto.getAuthorIds() != null && !dto.getAuthorIds().isEmpty()) {
             authors = dto.getAuthorIds().stream()
