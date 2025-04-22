@@ -36,20 +36,12 @@ public class AuthorController {
     //Delete authors
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteAuthor(@PathVariable Long id, Authentication authentication) {
-        if(UserExtractor.extractUser(authentication).getRole() != Role.ADMIN) {
-            throw new BadCredentialsException("Only ADMIN can delete authors");
-        }
-
         return ResponseEntity.ok(authorService.deleteAuthor(id));
     }
 
     //Update author
     @PatchMapping("/{id}")
     public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestParam String name, Authentication authentication) {
-        if(UserExtractor.extractUser(authentication).getRole() != Role.ADMIN) {
-            throw new BadCredentialsException("Only ADMIN can modify authors");
-        }
-
         return ResponseEntity.ok(new AuthorDTO(authorService.updateAuthor(id, name)));
     }
 
