@@ -1,11 +1,21 @@
-import './App.css'
-import './index.css'; 
-function App() { 
-return ( 
-<div className="min-h-screen flex items-center justify-center bg-gray-100 text-2xl"> 
-<h1 className="text-blue-600 font-bold">Projeto React + Vite funcionando! 🚀</h1>
-</div> 
-); 
-} 
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import Footer from './components/Footer';
+
+function App() {
+    return (
+      <Router>
+        <Navbar />
+        <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+        </main>
+        <Footer />
+      </Router>
+    );
+  }
 
 export default App
