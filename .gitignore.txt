@@ -13,11 +13,39 @@ back/*.jar
 back/*.war
 
 # === FRONTEND (React/Vite/etc) ===
-front/node_modules/
-front/dist/
-front/.env
-front/.next/
-front/.vite/
+front/das-buch/HELP.md
+front/das-buch/target/
+front/das-buch/!.mvn/wrapper/maven-wrapper.jar
+front/das-buch/!**/src/main/**/target/
+front/das-buch/!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
 
 # === GENERAL ===
 *.log
@@ -29,8 +57,8 @@ Thumbs.db
 *.class
 *.jar
 *.war
-.env
-.vscode/
+front/das-buch/.env
+front/das-buch/.vscode/
 .idea/
 
 # Ignore OS generated files
