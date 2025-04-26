@@ -14,6 +14,7 @@
 
 body {
   background-color: darkgray;
+  padding-top: 60px;
   height: 100%;
   margin: 0;
 }
@@ -40,4 +41,9 @@ main {
 
 .btn-darksoft:hover {
   background-color: #444;
+}
+
+a.btn {
+  min-width: 200px;
+  text-align: center;
 }

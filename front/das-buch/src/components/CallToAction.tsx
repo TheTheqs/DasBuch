@@ -1,3 +1,5 @@
+import PrimaryButton from "./PrimaryButton";
+
 function CallToAction() {
     return (
       <section className="text-dark py-5">
@@ -6,9 +8,9 @@ function CallToAction() {
           <p className="lead mb-4">
             Descubra, leia e compartilhe suas experiências literárias!
           </p>
-          <a href="/signin" className="btn btn-darksoft btn-lg px-4">
-            Comece agora
-          </a>
+          <PrimaryButton to="/signin" label="Comece agora" />
+
+          <PrimaryButton to="/login" label="Fazer Login" />
         </div>
       </section>
     );
