@@ -3,11 +3,12 @@ import { ReactNode } from 'react';
 interface FormContainerProps {
   title: string;
   submitMessage: string;
+  afterFormContent?: React.ReactNode;
   children: ReactNode;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-function FormContainer({ title, children, submitMessage, onSubmit }: FormContainerProps) {
+function FormContainer({ title, children, submitMessage, onSubmit, afterFormContent }: FormContainerProps) {
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
       <div className="col-md-6">
@@ -26,6 +27,7 @@ function FormContainer({ title, children, submitMessage, onSubmit }: FormContain
             {submitMessage}
           </button>
         </form>
+        {afterFormContent}
       </div>
     </div>
   );

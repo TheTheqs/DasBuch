@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage';
 import Footer from './components/Footer';
 import SignInPage from './pages/SignInPage';
 import MessagePage from './pages/MessagePage';
+import LogInPage from './pages/LogInPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
     return (
@@ -14,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignInPage />} />
+          <Route path='/login' element={<LogInPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/message" element={<MessagePage />} />
         </Routes>
         </main>
