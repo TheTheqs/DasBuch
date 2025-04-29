@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { handleApiError } from '../utils/handleApiError';
 import FormInput from '../components/FormInput';
 import FormContainer from '../components/FormContainer';
+import UserService from '../services/UserService';
 
 function SignInPage() {
   const [formData, setFormData] = useState({
@@ -11,13 +13,38 @@ function SignInPage() {
     confirmPassword: ''
   });
 
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Dados enviados:', formData);
+    setSuccess("");
+    setError("");
+
+    if (formData.email !== formData.confirmEmail) {
+      setError("Os emails não coincidem.");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      await UserService.registerUser({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+      setSuccess("Conta criada com sucesso! Verifique seu e-mail.");
+    } catch (error) {
+      setError(handleApiError(error));
+    }
   };
 
   return (
@@ -65,6 +92,8 @@ function SignInPage() {
         value={formData.confirmPassword}
         onChange={handleChange}
       />
+      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </FormContainer>
   );
 }

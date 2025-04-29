@@ -115,7 +115,7 @@ public class UserService {
     //5- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
     private void sendVerificationEmail(User user) {
         fileEmailSender.send(user.getEmail(),"Verify your account",
-                "Click the link to verify your account: http://localhost:8080/users/verify?token=" +
+                "Click the link to verify your account: http://localhost:5173/verify?token=" +
                         user.getVerificationToken());
     }
     //6- Auxiliary method to generate a unique verification token
