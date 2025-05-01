@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/User';
 import { handleApiError } from '../utils/handleApiError';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function Navbar() {
   const { user, clearUser } = useUser();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await axios.get("http://localhost:8080/users/logout", {withCredentials: true});
-      clearUser();
     } catch (error) {
       alert(handleApiError(error));
+    }
+    finally {
+      clearUser();
+      navigate("/");
     }
   };
 

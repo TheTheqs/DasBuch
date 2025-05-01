@@ -1,0 +1,28 @@
+interface UserCardProps {
+  name: string;
+  id: number;
+  reviewCount: number;
+}
+
+function UserCard({ name, id, reviewCount }: UserCardProps) {
+  return (
+    <div
+      style={{
+        backgroundColor: "#f2f2f2",
+        color: "#333",             
+        padding: "1rem",
+        borderRadius: "8px",
+        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        width: "250px",
+        margin: "0.5rem auto",
+        textAlign: "center"
+      }}
+    >
+      <h2 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{name}</h2>
+      <p style={{ margin: 0, fontSize: "0.9rem" }}>ID: {id}</p>
+      <p style={{ margin: 0, fontSize: "0.9rem" }}>Reviews: {reviewCount}</p>
+    </div>
+  );
+}
+
+export default UserCard;

@@ -7,14 +7,14 @@ function HomePage() {
 
   if(!user) {
     return (
-      <div style={{ paddingTop: '80px' }}>
+      <div style={{ paddingTop: '60px' }}>
         <CallToAction />
       </div>
     );
   }
 
   return (
-    <div style={{ paddingTop: '40px' }}>
+    <div style={{ paddingTop: '0px' }}>
       <MainActions name= {user.name} />
     </div>
   );

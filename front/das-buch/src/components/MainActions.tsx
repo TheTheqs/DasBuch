@@ -10,7 +10,7 @@ function MainActions({ name }: MainActionsProps) {
         <div className="container d-flex flex-column align-items-center justify-content-center text-center" style={{ minHeight: '40vh' }}>
           <h1 className="display-4 fw-bold mb-4">Bem-vindo {name}! 📑</h1>
 
-          <p className="lead mb-5">
+          <p className="lead mb-4">
             Para detalhes sobre a aplicação ou entrar em contato com o desenvolvedor (Matheqs :D) visite a aba "Sobre".
           </p>
 
@@ -18,7 +18,7 @@ function MainActions({ name }: MainActionsProps) {
 
           <PrimaryButton to="/my" label="Meus Reviews" />
 
-          <PrimaryButton to="/search_user" label="Buscar Usuário"/>
+          <PrimaryButton to="/user" label="Buscar Usuário"/>
 
         </div>
       </section>

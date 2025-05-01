@@ -24,7 +24,6 @@ function LogInPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
-
     try {
       const user = await UserService.loginUser(formData.email, formData.password);
       setUser(user);

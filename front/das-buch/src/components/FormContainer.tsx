@@ -10,10 +10,10 @@ interface FormContainerProps {
 
 function FormContainer({ title, children, submitMessage, onSubmit, afterFormContent }: FormContainerProps) {
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '40vh' }}>
       <div className="col-md-6">
         <form onSubmit={onSubmit}>
-          <h1 className="mb-4 text-center" style={{ fontSize: '24px' }}>
+          <h1 className="mb-1 text-center" style={{ fontSize: '24px' }}>
             {title}
           </h1>
 
