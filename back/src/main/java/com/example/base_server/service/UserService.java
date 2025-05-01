@@ -82,7 +82,7 @@ public class UserService {
 
     //3- Login method (validates email and compares password)
     public User login(String email, String rawPassword) {
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmailIgnoreCase(email.toLowerCase())
                 .orElseThrow(() -> new NoSuchElementException("No user found with this email."));
 
         if (!user.getIsActive()) {
@@ -141,7 +141,7 @@ public class UserService {
 
     //8- Request token for password reset
     public void generatePasswordToken(String email){
-        userRepository.findByEmail(email).ifPresent(user -> {
+        userRepository.findByEmailIgnoreCase(email).ifPresent(user -> {
             user.setResetToken(generateToken());
             user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(15));
 

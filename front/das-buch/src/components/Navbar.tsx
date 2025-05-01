@@ -1,6 +1,20 @@
 import { Link } from 'react-router-dom';
+import { useUser } from '../context/User';
+import { handleApiError } from '../utils/handleApiError';
+import axios from 'axios';
 
 function Navbar() {
+  const { user, clearUser } = useUser();
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("http://localhost:8080/users/logout", {withCredentials: true});
+      clearUser();
+    } catch (error) {
+      alert(handleApiError(error));
+    }
+  };
+
   return (
     <nav className="bg-dark navbar navbar-expand-md fixed-top p-0 navbar-dark">
       <div className="container">
@@ -28,12 +42,31 @@ function Navbar() {
             <li className="nav-item">
               <Link to="/sobre" className="nav-link">Sobre</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/signin" className="nav-link">Sign In</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">Log In</Link>
-            </li>
+            {/*If not logged*/}
+            {user === null && (
+              <>
+                <li className="nav-item">
+                  <Link to="/signin" className="nav-link">Sign In</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">Log In</Link>
+                </li>
+              </>
+            )}
+
+            {/* If logged */}
+            {user !== null && (
+              <>
+                <li className="nav-item">
+                  <Link to="/profile" className="nav-link">{user.name}</Link>
+                </li>
+                <li className="nav-item">
+                  <button onClick={handleLogout} className="btn btn-link nav-link" style={{ textDecoration: 'none' }}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

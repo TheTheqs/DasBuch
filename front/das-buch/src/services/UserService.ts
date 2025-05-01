@@ -21,8 +21,16 @@ class UserService {
         return response.data;
     }
 
-    async getUserById(id: number): Promise<UserDTO> {
-      const response = await axios.get<UserDTO>(`${this.BASE_URL}/${id}`);
+    //Login
+    async loginUser(email: string, password: string): Promise<UserDTO> {
+      const response = await axios.post<UserDTO>(
+        `${this.BASE_URL}/login`,
+        null,
+        {
+          params: { email, password },
+          withCredentials: true
+        }
+      );
       return response.data;
     }
   

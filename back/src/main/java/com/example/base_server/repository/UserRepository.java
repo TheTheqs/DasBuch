@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param email The email of the user.
      * @return The User with the provided email, or null if not found.
      */
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmailIgnoreCase(String email);
 
     /**
      * Retrieves a User by their verification token.
