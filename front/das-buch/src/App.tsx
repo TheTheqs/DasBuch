@@ -9,6 +9,8 @@ import LogInPage from './pages/LogInPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import UserPage from './pages/UserPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
+import ProfilePage from './pages/ProfilePage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 function App() {
     return (
@@ -21,7 +23,9 @@ function App() {
           <Route path="/verify" element={<VerifyEmailPage />} />
           <Route path='/login' element={<LogInPage />} />
           <Route path='/user' element={<UserPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset" element={<ResetPasswordPage />} />
           <Route path="/message" element={<MessagePage />} />
         </Routes>
         </main>

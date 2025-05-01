@@ -1,0 +1,34 @@
+📧 Simulated Email Sent:
+To: matheqs22@outlook.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs22@outlook.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=6a51d534-dded-4714-a8c2-16774a273656📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=c613c3a6-be0a-4284-928c-f5a07dbefcc7📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=d0db67e5-0ea9-4a4f-983c-f5a9893be523📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=6484e616-1c2c-44ba-a18d-7775d4e79c7c📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=d7d10f93-dc18-4ca7-a55e-cba8de61cccd📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Reset your password
+Click the link to reset your password: http://localhost:5173/reset?token=951d3a1f-ab8b-4c1e-8e8b-bec91710ace5📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
+Your user account has been updated!

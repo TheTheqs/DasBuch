@@ -1,6 +1,7 @@
 package com.example.base_server.controller;
 
 import com.example.base_server.dto.CreateUserDTO;
+import com.example.base_server.dto.ResetPasswordRequest;
 import com.example.base_server.dto.UserDTO;
 import com.example.base_server.enums.Role;
 import com.example.base_server.service.UserService;
@@ -102,10 +103,13 @@ public class UserController {
 
     //9- Reset password
     @PatchMapping("/reset")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String password) {
-        String message = userService.resetPassword(token, password) ?
-                "Password reset successfully." :
-                "Password reset failed. Please try again.";
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        String token = request.getToken();
+        String password = request.getPassword();
+
+        String message = userService.resetPassword(token, password)
+                ? "Password reset successfully."
+                : "Password reset failed. Please try again.";
 
         return ResponseEntity.ok(message);
     }

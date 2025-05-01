@@ -128,7 +128,10 @@ public class UserService {
         if (!PasswordValidator.isValid(password)) {
             throw new IllegalArgumentException("Invalid password format!");
         }
-        user.setPassword(password);
+
+        String hashedPassword = passwordEncoder.encode(password); //Password cryptography
+
+        user.setPassword(hashedPassword);
         user.setName(name);
 
         fileEmailSender.send(
@@ -148,7 +151,7 @@ public class UserService {
             fileEmailSender.send(
                     user.getEmail(),
                     "Reset your password",
-                    "Click the link to reset your password: http://localhost:8080/users/reset?token=" + user.getResetToken()
+                    "Click the link to reset your password: http://localhost:5173/reset?token=" + user.getResetToken()
             );
 
             userRepository.save(user);
@@ -168,7 +171,9 @@ public class UserService {
             throw new IllegalArgumentException("Invalid password format!");
         }
 
-        user.setPassword(password);
+        String hashedPassword = passwordEncoder.encode(password);
+
+        user.setPassword(hashedPassword);
         user.setResetToken(null);
         user.setResetTokenExpiration(null);
         userRepository.save(user);

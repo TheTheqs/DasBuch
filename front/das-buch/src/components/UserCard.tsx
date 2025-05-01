@@ -13,7 +13,8 @@ function UserCard({ name, id, reviewCount }: UserCardProps) {
         padding: "1rem",
         borderRadius: "8px",
         boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-        width: "250px",
+        width: "100%",
+        maxWidth: "320px",
         margin: "0.5rem auto",
         textAlign: "center"
       }}
