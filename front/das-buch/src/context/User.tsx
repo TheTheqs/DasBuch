@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect,ReactNode } from "react";
 import { UserDTO } from "../type/UserDTO";
 
 interface UserContextType {
@@ -13,8 +13,21 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<UserDTO | null>(null);
 
-  const setUser = (user: UserDTO) => setUserState(user);
-  const clearUser = () => setUserState(null);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUserState(JSON.parse(savedUser));
+    }
+  }, []);
+
+  const setUser = (user: UserDTO) => {
+    setUserState(user);
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+  const clearUser = () => {
+    setUserState(null);
+    localStorage.removeItem("user");
+  };
 
   return (
     <UserContext.Provider value={{ user, setUser, clearUser }}>

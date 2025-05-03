@@ -19,7 +19,7 @@ public class ReviewDTO {
         this.id = review.getId();
         this.user = new UserDTO(review.getUser());
         this.book = new BookDTO(review.getBook());
-        this.synopsys = review.getReaderSynopsis();
+        this.synopsys = review.getSynopsys();
         this.commentary = review.getCommentary();
         this.score = ((float) review.getScore()) / 2f;
         this.readAt = formatMonthYear(review.getReadAt());

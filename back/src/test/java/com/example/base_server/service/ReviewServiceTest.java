@@ -104,7 +104,7 @@ public class ReviewServiceTest {
     void shouldUpdateReviewByOwner() {
         Review review = reviewService.createReview(user, book, "Resumo", "Comentário", 4, LocalDateTime.now());
         Review updated = reviewService.updateReview(user, review.getId(), book, "Novo Resumo", "Novo Comentário", 5, LocalDateTime.now());
-        assertEquals("Novo Resumo", updated.getReaderSynopsis());
+        assertEquals("Novo Resumo", updated.getSynopsys());
     }
 
     @Test

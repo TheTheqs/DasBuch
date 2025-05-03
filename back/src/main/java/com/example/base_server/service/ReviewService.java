@@ -72,8 +72,8 @@ public class ReviewService {
         if (!review.getBook().equals(book) && book != null) {
             review.setBook(book);
         }
-        if (!review.getReaderSynopsis().equals(synopsys)) {
-            review.setReaderSynopsis(synopsys);
+        if (!review.getSynopsys().equals(synopsys)) {
+            review.setSynopsys(synopsys);
         }
         if (!review.getCommentary().equals(commentary)) {
             review.setCommentary(commentary);

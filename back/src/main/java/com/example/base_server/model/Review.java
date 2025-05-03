@@ -28,7 +28,7 @@ public class Review {
     private Book book;
 
     @Column
-    private String readerSynopsis;
+    private String synopsys;
 
     @Column
     private String commentary;
@@ -62,10 +62,10 @@ public class Review {
     public Review() {
     }
 
-    public Review(User user, Book book, String readerSynopsis, String commentary, int score, LocalDateTime readAt) {
+    public Review(User user, Book book, String synopsys, String commentary, int score, LocalDateTime readAt) {
         this.user = user;
         this.book = book;
-        this.readerSynopsis = readerSynopsis;
+        this.synopsys = synopsys;
         this.commentary = commentary;
         this.score = score;
         this.readAt = readAt;
@@ -83,8 +83,8 @@ public class Review {
         return book;
     }
 
-    public String getReaderSynopsis() {
-        return readerSynopsis;
+    public String getSynopsys() {
+        return synopsys;
     }
 
     public String getCommentary() {
@@ -115,8 +115,8 @@ public class Review {
         this.book = book;
     }
 
-    public void setReaderSynopsis(String readerSynopsis) {
-        this.readerSynopsis = readerSynopsis;
+    public void setSynopsys(String synopsys) {
+        this.synopsys = synopsys;
     }
 
     public void setCommentary(String commentary) {
