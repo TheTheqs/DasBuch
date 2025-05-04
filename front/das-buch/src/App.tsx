@@ -11,6 +11,7 @@ import VerifyEmailPage from "./pages/VerifyEmailPage";
 import ProfilePage from "./pages/ProfilePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NewReviewPage from "./pages/NewReviewPage";
+import UserReviewsPage from "./pages/UserReviewsPage";
 import ReviewPage from "./pages/ReviewPage";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset" element={<ResetPasswordPage />} />
           <Route path="/review/:id" element={<ReviewPage />}/>
+          <Route path="/user/reviews/:id" element={<UserReviewsPage />}/>
           <Route path="/new" element={<NewReviewPage />} />
           <Route path="/message" element={<MessagePage />} />
         </Routes>

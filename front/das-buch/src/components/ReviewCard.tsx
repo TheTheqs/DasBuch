@@ -11,7 +11,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/reviews/${review.id}`);
+    navigate(`/review/${review.id}`);
   };
 
   const renderStars = (score: number) => {
