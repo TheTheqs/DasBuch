@@ -38,7 +38,7 @@ public class BookController {
         return ResponseEntity.ok(new BookDTO(bookService.getBookById(id)));
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Page<BookDTO>> searchBookTitle(@RequestParam String title, Pageable pageable) {
         Page<BookDTO> results = bookService.getBookListByTitle(title, pageable).map(BookDTO::new);
         return ResponseEntity.ok(results);

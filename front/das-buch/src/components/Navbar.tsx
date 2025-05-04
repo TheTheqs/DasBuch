@@ -36,16 +36,16 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link to="/livros" className="nav-link">Livros</Link>
+              <Link to="/book" className="nav-link">Livros</Link>
             </li>
             <li className="nav-item">
-              <Link to="/autores" className="nav-link">Autores</Link>
+              <Link to="/author" className="nav-link">Autores</Link>
             </li>
             <li className="nav-item">
-              <Link to="/reviews" className="nav-link">Reviews</Link>
+              <Link to="/review" className="nav-link">Reviews</Link>
             </li>
             <li className="nav-item">
-              <Link to="/sobre" className="nav-link">Sobre</Link>
+              <Link to="/about" className="nav-link">Sobre</Link>
             </li>
             {/*If not logged*/}
             {user === null && (

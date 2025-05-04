@@ -71,7 +71,7 @@ class ReviewService {
     return newReview.data;
   }
 
-  //Read - Individual
+  //Delete
   async deleteReview(id: number): Promise<boolean> {
     const response = await this.api.delete<boolean>(`/${id}`);
     return response.data;

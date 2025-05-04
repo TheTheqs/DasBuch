@@ -7,7 +7,7 @@ import SearchResultGrid from "../components/SearchResultsGrid";
 import PaginationBar from "../components/PaginationBar";
 import { Spinner } from "react-bootstrap";
 
-function UserReviewsPage() {
+function BookReviewsPage() {
   const { id } = useParams<{ id: string }>();
   const [results, setResults] = useState<ReviewDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
@@ -19,7 +19,7 @@ function UserReviewsPage() {
       if (!id) return;
       setLoading(true);
       try {
-        const response = await ReviewService.getUserReviews(Number(id), 0, 10);
+        const response = await ReviewService.getBookReviews(Number(id), 0, 10);
         setResults(response.content);
         setPageInfo({
           page: response.number,
@@ -71,7 +71,7 @@ function UserReviewsPage() {
   return (
     <div className="container py-4">
     <h3 className="mb-4 text-center fw-bold text-secondary">
-      Reviews do Usuário
+      Reviews de Livro
     </h3>
 
     {results.length === 0 ? (
@@ -93,4 +93,4 @@ function UserReviewsPage() {
   );
 }
 
-export default UserReviewsPage;
+export default BookReviewsPage;
