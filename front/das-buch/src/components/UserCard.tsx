@@ -16,8 +16,13 @@ function UserCard({ name, id, reviewCount }: UserCardProps) {
         width: "100%",
         maxWidth: "320px",
         margin: "0.5rem auto",
-        textAlign: "center"
+        textAlign: "center",
+        cursor: "pointer",
+        transition: "transform 0.2s ease-in-out",
       }}
+      onClick={() => window.location.href = `/user/reviews/${id}`}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <h2 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{name}</h2>
       <p style={{ margin: 0, fontSize: "0.9rem" }}>ID: {id}</p>

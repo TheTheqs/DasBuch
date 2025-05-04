@@ -70,7 +70,7 @@ function BookReviewsPage() {
 
   return (
     <div className="container py-4">
-    <h3 className="mb-4 text-center fw-bold text-secondary">
+    <h3 className="mb-4 text-center fw-bold">
       Reviews de Livro
     </h3>
 

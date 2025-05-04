@@ -25,6 +25,9 @@ class BookService {
     const response = await this.api.get<PagedResponse<BookDTO>>(url);
     return response.data;
   }
+
+  //Update
+  
 }
 
 export default new BookService();
