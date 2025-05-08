@@ -13,6 +13,8 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NewReviewPage from "./pages/NewReviewPage";
 import UserReviewsPage from "./pages/UserReviewsPage";
 import ReviewPage from "./pages/ReviewPage";
+import EditReviewPage from "./pages/EditReviewPage";
+import SearchReviewPage from "./pages/SearchReviewPage";
 import SearchBookPage from "./pages/SearchBookPage";
 import BookPage from "./pages/BookPage";
 import BookReviewsPage from "./pages/BookReviewsPage";
@@ -38,6 +40,8 @@ function App() {
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/message" element={<MessagePage />} />
           <Route path="/book/reviews/:id" element={<BookReviewsPage />}/>
+          <Route path="/review" element= {<SearchReviewPage />} />
+          <Route path="/update_review/:id" element= {<EditReviewPage />} />
         </Routes>
       </main>
       <Footer />

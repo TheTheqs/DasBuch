@@ -1,5 +1,6 @@
 package com.example.base_server.controller;
 
+import com.example.base_server.dto.BookDTO;
 import com.example.base_server.dto.CreateReviewDTO;
 import com.example.base_server.dto.ReviewDTO;
 import com.example.base_server.model.Book;
@@ -63,6 +64,12 @@ public class ReviewController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Page<ReviewDTO>> getUserReviews(@PathVariable Long id, Pageable pageable) {
         Page<ReviewDTO> results = reviewService.getUserReviews(id, pageable).map(ReviewDTO::new);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ReviewDTO>> searchBookTitle(@RequestParam String title, Pageable pageable) {
+        Page<ReviewDTO> results = reviewService.searchBookReviewsByBookTitle(title, pageable).map(ReviewDTO::new);
         return ResponseEntity.ok(results);
     }
 

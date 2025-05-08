@@ -57,15 +57,26 @@ class ReviewService {
     return response.data;
   }
 
+  //Search by book title
+    async searchByBookTitle(
+      title: string,
+      page: number = 0,
+      size: number = 10
+    ): Promise<PagedResponse<ReviewDTO>> {
+      const url = `/search?title=${encodeURIComponent(title)}&page=${page}&size=${size}`;
+      const response = await this.api.get<PagedResponse<ReviewDTO>>(url);
+      return response.data;
+    }
+
   //Update
   async updateReview(review: {
     id: number;
-    book: string;
-    authors: string[];
-    synopsis: string;
+    bookTitle: string;
+    authorsNames: string[];
+    synopsys: string;
     commentary: string;
     score: number;
-    readAt: Date;
+    readAt: string;
   }): Promise<ReviewDTO> {
     const newReview = await this.api.patch<ReviewDTO>(`${review.id}`, review);
     return newReview.data;
