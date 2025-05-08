@@ -11,8 +11,7 @@ public interface ReviewRepository extends JpaRepository <Review, Long> {
 
     Page<Review> findByBook_IdOrderByCreatedAtAsc(Long id, Pageable pageable);
 
-    //Find reviews from user object
-    Page<Review> findByUser_NameContainingIgnoreCase(String name, Pageable pageable);
+    Page<Review> findByBook_TitleContainingIgnoreCase(String title, Pageable pageable);
 
     Page<Review> findByUser_IdOrderByCreatedAtAsc(Long id, Pageable pageable);
 

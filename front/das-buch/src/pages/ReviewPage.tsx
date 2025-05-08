@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ReviewDTO } from "../type/ReviewDTO";
 import RatingInput from "../components/RatingInput";
 import { Button, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import ReviewService from "../services/ReviewService";
 import { useUser } from "../context/User";
 
@@ -12,6 +13,7 @@ const ReviewPage: React.FC = () => {
   const [review, setReview] = useState<ReviewDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -86,10 +88,26 @@ const ReviewPage: React.FC = () => {
           <strong>Lido em:</strong> {formattedDate}
         </div>
 
-        {user?.id === review.user.id && (
+        {(user?.id === review.user.id || user?.role === "ADMIN") && (
           <div className="d-flex gap-2">
             <Button variant="outline-primary">Editar</Button>
-            <Button variant="outline-danger">Deletar</Button>
+
+            <Button
+              variant="outline-danger"
+              onClick={async () => {
+                const confirmed = window.confirm(
+                  "Tem certeza que deseja deletar este review?"
+                );
+                if (!confirmed) return;
+
+                const message = await ReviewService.deleteReview(review.id);
+                alert(message);
+
+                navigate(`/user/reviews/${review.user.id}`);
+              }}
+            >
+              Deletar
+            </Button>
           </div>
         )}
       </div>

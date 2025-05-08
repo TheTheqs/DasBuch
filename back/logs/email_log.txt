@@ -31,4 +31,7 @@ Subject: User update
 Your user account has been updated!📧 Simulated Email Sent:
 To: matheqs@gmail.com
 Subject: User update
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: User update
 Your user account has been updated!

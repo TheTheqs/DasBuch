@@ -72,9 +72,12 @@ class ReviewService {
   }
 
   //Delete
-  async deleteReview(id: number): Promise<boolean> {
+  async deleteReview(id: number): Promise<string> {
     const response = await this.api.delete<boolean>(`/${id}`);
-    return response.data;
+    if(response.data) {
+      return "Review deleted successfully!"
+    };
+    return "Failed to delete review"
   }
 }
 

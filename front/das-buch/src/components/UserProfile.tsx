@@ -23,6 +23,7 @@ function UserProfile({user}: UserProfileProps) {
         <ProfileLine label="ID" content={String(user.id)} />
         <ProfileLine label="Name" content={user.name} />
         <ProfileLine label="Email" content={user.email} />
+        <ProfileLine label="Role" content={user.role} />
         <ProfileLine label="Reviews" content={String(user.reviewCount)} />        
       </div>
     );

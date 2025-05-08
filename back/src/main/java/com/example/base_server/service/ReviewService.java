@@ -62,6 +62,10 @@ public class ReviewService {
         return reviewRepository.findByUser_IdOrderByCreatedAtAsc(id, pageable);
     }
 
+    public Page<Review> searchBookReviewsByBookTitle(String title, Pageable pageable) {
+        return reviewRepository.findByBook_TitleContainingIgnoreCase(title, pageable);
+    }
+
     //Update
     public Review updateReview(User user, Long id, Book book, String synopsys, String commentary, int score, LocalDateTime readAt) {
         Review review = reviewRepository.findById(id)
