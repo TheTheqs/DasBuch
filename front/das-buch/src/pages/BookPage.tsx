@@ -16,7 +16,7 @@ function BookPage() {
       if (!id) return;
       setLoading(true);
       try {
-        const data = await BookService.geBookById(Number(id));
+        const data = await BookService.getBookById(Number(id));
         setBook(data);
       } catch (err) {
         setError("Erro ao carregar os dados do livro." + err);

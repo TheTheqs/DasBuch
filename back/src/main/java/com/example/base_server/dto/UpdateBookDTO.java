@@ -5,16 +5,16 @@ import java.util.Set;
 
 public class UpdateBookDTO {
     private String title;
-    private Set<Long> authorIds;
+    private Set<String> authors;
 
     // Getters e Setters
 
-    public Set<Long> getAuthorIds() {
-        return authorIds;
+    public Set<String> getAuthors() {
+        return authors;
     }
 
-    public void setAuthorIds(Set<Long> authorIds) {
-        this.authorIds = authorIds;
+    public void setAuthors(Set<String> authors) {
+        this.authors = authors;
     }
 
     public String getTitle() {
@@ -29,11 +29,11 @@ public class UpdateBookDTO {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UpdateBookDTO that = (UpdateBookDTO) o;
-        return Objects.equals(title, that.title) && Objects.equals(authorIds, that.authorIds);
+        return Objects.equals(title, that.title) && Objects.equals(authors, that.authors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, authorIds);
+        return Objects.hash(title, authors);
     }
 }

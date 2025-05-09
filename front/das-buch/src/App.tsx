@@ -18,6 +18,7 @@ import SearchReviewPage from "./pages/SearchReviewPage";
 import SearchBookPage from "./pages/SearchBookPage";
 import BookPage from "./pages/BookPage";
 import BookReviewsPage from "./pages/BookReviewsPage";
+import EditBookPage from "./pages/EditBookPage";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/book/reviews/:id" element={<BookReviewsPage />}/>
           <Route path="/review" element= {<SearchReviewPage />} />
           <Route path="/update_review/:id" element= {<EditReviewPage />} />
+          <Route path="/update_book/:id" element= {<EditBookPage />} />
         </Routes>
       </main>
       <Footer />

@@ -76,17 +76,19 @@ public class ReviewService {
         if (!review.getBook().equals(book) && book != null) {
             review.setBook(book);
         }
-        if (!review.getSynopsys().equals(synopsys)) {
+        if (!Objects.equals(review.getSynopsys(), synopsys)) {
             review.setSynopsys(synopsys);
         }
-        if (!review.getCommentary().equals(commentary)) {
+
+        if (!Objects.equals(review.getCommentary(), commentary)) {
             review.setCommentary(commentary);
+        }
+
+        if (!Objects.equals(review.getReadAt(), readAt)) {
+            review.setReadAt(readAt);
         }
         if (review.getScore() != score) {
             review.setScore(score);
-        }
-        if (!review.getReadAt().equals(readAt)) {
-            review.setReadAt(readAt);
         }
         return reviewRepository.save(review);
     }

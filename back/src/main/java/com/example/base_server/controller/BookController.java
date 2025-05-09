@@ -69,9 +69,9 @@ public class BookController {
             @RequestBody UpdateBookDTO dto,
             Authentication authentication) {
         Set<Author> authors = Set.of();
-        if (dto.getAuthorIds() != null && !dto.getAuthorIds().isEmpty()) {
-            authors = dto.getAuthorIds().stream()
-                    .map(authorService::getAuthorById)
+        if (dto.getAuthors() != null && !dto.getAuthors().isEmpty()) {
+            authors = dto.getAuthors().stream()
+                    .map(authorService::createAuthor)
                     .collect(Collectors.toSet());
         }
 
