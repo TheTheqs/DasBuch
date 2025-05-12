@@ -1,7 +1,9 @@
 package com.example.base_server.controller;
 
 import com.example.base_server.dto.AuthorDTO;
+import com.example.base_server.dto.UpdateAuthorDTO;
 import com.example.base_server.enums.Role;
+import com.example.base_server.model.Author;
 import com.example.base_server.service.AuthorService;
 import com.example.base_server.utils.UserExtractor;
 import org.springframework.data.domain.Page;
@@ -41,8 +43,12 @@ public class AuthorController {
 
     //Update author
     @PatchMapping("/{id}")
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestParam String name, Authentication authentication) {
-        return ResponseEntity.ok(new AuthorDTO(authorService.updateAuthor(id, name)));
+    public ResponseEntity<AuthorDTO> updateAuthor(
+            @PathVariable Long id,
+            @RequestBody UpdateAuthorDTO dto,
+            Authentication authentication) {
+        Author updated = authorService.updateAuthor(id, dto.getName());
+        return ResponseEntity.ok(new AuthorDTO(updated));
     }
 
 }

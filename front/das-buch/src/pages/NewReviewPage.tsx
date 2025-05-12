@@ -1,23 +1,47 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { handleApiError } from "../utils/handleApiError";
 import ReviewService from "../services/ReviewService";
 import ReviewForm from "../components/ReviewForm";
+import BookService from "../services/BookService";
+import { BookDTO } from "../type/BookDTO";
 
 function NewReviewPage() {
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(!!bookId);
 
-  const initialData = {
+  const [initialData, setInitialData] = useState({
     title: "",
     authorsNames: [""],
     synopsys: "",
     commentary: "",
     score: 0,
     readDate: new Date(),
-  };
+  });
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      if (!bookId) return;
+      try {
+        const book: BookDTO = await BookService.getBookById(Number(bookId));
+        setInitialData((prev) => ({
+          ...prev,
+          title: book.title,
+          authorsNames: book.authors.map((a) => a.name),
+        }));
+      } catch (err) {
+        setError("Erro ao carregar dados do livro: " + handleApiError(err));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [bookId]);
 
   const handleCreate = async (formData: typeof initialData) => {
     setSuccess("");
@@ -38,6 +62,14 @@ function NewReviewPage() {
       setError(handleApiError(error));
     }
   };
+
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <p>Carregando informações do livro...</p>
+      </div>
+    );
+  }
 
   return (
     <ReviewForm

@@ -60,7 +60,13 @@ function BookPage() {
           <strong>Quantidade de Reviews:</strong> {book.reviewCount}
         </div>
       </div>
-      <PrimaryButton to={`/book/reviews/${book.id}`} label="Ver Reviews" />
+      <div className="d-flex gap-2">
+        <PrimaryButton to={`/book/reviews/${book.id}`} label="Ver Reviews" />
+        <PrimaryButton
+          to={`/new/${book.id}`}
+          label="Fazer Review para este Livro"
+        />
+      </div>
     </div>
   );
 }

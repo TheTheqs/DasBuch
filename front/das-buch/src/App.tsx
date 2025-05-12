@@ -19,6 +19,9 @@ import SearchBookPage from "./pages/SearchBookPage";
 import BookPage from "./pages/BookPage";
 import BookReviewsPage from "./pages/BookReviewsPage";
 import EditBookPage from "./pages/EditBookPage";
+import SearchAuthorPage from "./pages/SearchAuthorPage";
+import AuthorPage from "./pages/AuthorPage";
+import EditAuthorPage from "./pages/EditAuthorPage";
 
 function App() {
   return (
@@ -36,14 +39,17 @@ function App() {
           <Route path="/reset" element={<ResetPasswordPage />} />
           <Route path="/review/:id" element={<ReviewPage />}/>
           <Route path="/user/reviews/:id" element={<UserReviewsPage />}/>
-          <Route path="/new" element={<NewReviewPage />} />
+          <Route path="/new/:bookId?" element={<NewReviewPage />} />
           <Route path="/book" element={<SearchBookPage />} />
           <Route path="/book/:id" element={<BookPage />} />
+          <Route path="/author" element= {<SearchAuthorPage />}/>
+          <Route path="/author/:id" element= {<AuthorPage />}/>
           <Route path="/message" element={<MessagePage />} />
           <Route path="/book/reviews/:id" element={<BookReviewsPage />}/>
           <Route path="/review" element= {<SearchReviewPage />} />
           <Route path="/update_review/:id" element= {<EditReviewPage />} />
           <Route path="/update_book/:id" element= {<EditBookPage />} />
+          <Route path="/update_author/:id" element= {<EditAuthorPage />} />
         </Routes>
       </main>
       <Footer />

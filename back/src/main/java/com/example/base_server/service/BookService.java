@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -80,5 +81,15 @@ public class BookService {
         }
         bookRepository.deleteById(id);
         return true;
+    }
+
+    //Util function for Author Update
+    @Transactional
+    public void transferBooks(Author from, Author to) {
+        for (Book book : new HashSet<>(from.getBooks())) {
+            book.getAuthors().remove(from);
+            book.getAuthors().add(to);
+            bookRepository.save(book);
+        }
     }
 }

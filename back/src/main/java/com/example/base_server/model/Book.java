@@ -141,16 +141,15 @@ public class Book {
         this.readBy.remove(user);
     }
 
-    //Hash code and Equals
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title);
+        return Objects.equals(id, book.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title);
+        return Objects.hashCode(id);
     }
 }
