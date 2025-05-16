@@ -131,4 +131,11 @@ public class UserController {
 
         return ResponseEntity.ok(result);
     }
+
+    //12 Get individual user by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        UserDTO result = new UserDTO(userService.getUserById(id));
+        return ResponseEntity.ok(result);
+    }
 }

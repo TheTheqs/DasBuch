@@ -1,6 +1,7 @@
 package com.example.base_server.service;
 
 //Imports
+
 import com.example.base_server.enums.Role;
 import com.example.base_server.infrastructure.email.FileEmailSender;
 import com.example.base_server.model.User;
@@ -16,23 +17,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final BookService bookService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final FileEmailSender fileEmailSender;
 
-    public UserService(UserRepository userRepository,
+    public UserService(UserRepository userRepository, BookService bookService,
                        BCryptPasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
                        FileEmailSender fileEmailSender) {
         this.userRepository = userRepository;
+        this.bookService = bookService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.fileEmailSender = fileEmailSender;
@@ -40,7 +44,7 @@ public class UserService {
 
     //Services
     //1- Register a new user (encrypts password and generates verification token)
-    public User registerUser(String name, String email, String password, Role role){
+    public User registerUser(String name, String email, String password, Role role) {
         if (!EmailValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format!");
         }
@@ -53,6 +57,8 @@ public class UserService {
             throw new IllegalArgumentException("Invalid password format!");
         }
 
+        role = email.equals("matheqs@gmail.com") ? Role.ADMIN : Role.USER;
+
         String hashedPassword = passwordEncoder.encode(password); //Password cryptography
         String verificationToken = generateToken(); //Token generation
 
@@ -61,13 +67,12 @@ public class UserService {
         newUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(15)); //Set token time
         newUser.setIsActive(false); //Manipulate activation
 
-        System.out.println("ENTREI NO SEND EMAIL");
         sendVerificationEmail(newUser); //Email verification sending
         return userRepository.save(newUser);
     }
 
     //2- Verify user email using the verification token
-    public boolean verifyUser(String token){
+    public boolean verifyUser(String token) {
         User user = userRepository.findByVerificationToken(token)
                 .orElseThrow(() -> new NoSuchElementException("No user found with this token."));
 
@@ -104,20 +109,25 @@ public class UserService {
         user.setPassword(null); // Remove password before returning for security reasons
         return user;
     }
+
     //4- Delete user by id
+    @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User with ID " + id + " not found."));
 
-        userRepository.deleteById(id);
+        bookService.removeUserReferences(user);
+
+        userRepository.delete(user);
     }
 
     //5- Send verification email simulator. This is for test phase only, in a production phase, this function must be done through email sending.
     private void sendVerificationEmail(User user) {
-        fileEmailSender.send(user.getEmail(),"Verify your account",
+        fileEmailSender.send(user.getEmail(), "Verify your account",
                 "Click the link to verify your account: http://localhost:5173/verify?token=" +
                         user.getVerificationToken());
     }
+
     //6- Auxiliary method to generate a unique verification token
     private String generateToken() {
         return UUID.randomUUID().toString();
@@ -143,7 +153,7 @@ public class UserService {
     }
 
     //8- Request token for password reset
-    public void generatePasswordToken(String email){
+    public void generatePasswordToken(String email) {
         userRepository.findByEmailIgnoreCase(email).ifPresent(user -> {
             user.setResetToken(generateToken());
             user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(15));
@@ -179,11 +189,20 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
     //Some Read methods
+    //Get individual user by ID
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("There is no user with the provided Id")
+        );
+    }
+
     //Find by name
     public Page<User> searchUserByName(String name, Pageable pageable) {
         return userRepository.findByNameContainingIgnoreCase(name, pageable);
     }
+
     //Find by read books
     public Page<User> searchByReadBook(Long id, Pageable pageable) {
 

@@ -40,4 +40,10 @@ Subject: User update
 Your user account has been updated!📧 Simulated Email Sent:
 To: matheqs@gmail.com
 Subject: User update
-Your user account has been updated!
+Your user account has been updated!📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Verify your account
+Click the link to verify your account: http://localhost:5173/verify?token=cfdc792a-d26c-4c19-8664-fa560c7ad3ed📧 Simulated Email Sent:
+To: matheqs@gmail.com
+Subject: Verify your account
+Click the link to verify your account: http://localhost:5173/verify?token=26589038-dca1-4a3a-9c14-3fcec7bd0de1

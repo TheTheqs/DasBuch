@@ -90,9 +90,12 @@ const ReviewPage: React.FC = () => {
 
         {(user?.id === review.user.id || user?.role === "ADMIN") && (
           <div className="d-flex gap-2">
-            <Button variant="outline-primary"
-            onClick = {() => navigate(`/update_review/${review.id}`)}
-            >Editar</Button>
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate(`/update_review/${review.id}`)}
+            >
+              Editar
+            </Button>
 
             <Button
               variant="outline-danger"

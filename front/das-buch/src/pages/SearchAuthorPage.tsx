@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import FormContainer from "../components/FormContainer";
 import AuthorCard from "../components/AuthorCard";
@@ -9,30 +10,42 @@ import { AuthorDTO } from "../type/AuthorDTO";
 import { handleApiError } from "../utils/handleApiError";
 
 function SearchAuthorPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [formData, setFormData] = useState({ name: "" });
   const [results, setResults] = useState<AuthorDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const name = searchParams.get("name") || "";
+    const page = parseInt(searchParams.get("page") || "0", 10);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
+    if (name) {
+      setFormData({ name });
+      search(name, page);
+    }
+  }, [searchParams]);
 
+  const search = async (name: string, page: number) => {
     try {
-      const response = await AuthorService.searchAuthorByName(
-        formData.name,
-        0,
-        10
-      );
+      const response = await AuthorService.searchAuthorByName(name, page, 10);
       setResults(response.content);
       setPageInfo({ page: response.number, totalPages: response.totalPages });
     } catch (error) {
       setError(handleApiError(error));
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setSearchParams({ name: formData.name, page: "0" });
+    search(formData.name, 0);
   };
 
   return (
@@ -62,23 +75,18 @@ function SearchAuthorPage() {
       {results.length > 0 && (
         <SearchResultGrid>
           {results.map((author) => (
-            <AuthorCard key={author.id} author = {author} />
+            <AuthorCard key={author.id} author={author} />
           ))}
 
           <PaginationBar
             currentPage={pageInfo.page}
             totalPages={pageInfo.totalPages}
-            onPageChange={async (newPage) => {
-              const response = await AuthorService.searchAuthorByName(
-                formData.name,
-                newPage,
-                10
-              );
-              setResults(response.content);
-              setPageInfo({
-                page: response.number,
-                totalPages: response.totalPages,
+            onPageChange={(newPage) => {
+              setSearchParams({
+                name: formData.name,
+                page: newPage.toString(),
               });
+              search(formData.name, newPage);
             }}
           />
         </SearchResultGrid>

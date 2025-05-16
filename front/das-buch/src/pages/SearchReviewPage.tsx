@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import FormContainer from "../components/FormContainer";
 import ReviewCard from "../components/ReviewCard";
@@ -9,30 +10,43 @@ import { ReviewDTO } from "../type/ReviewDTO";
 import { handleApiError } from "../utils/handleApiError";
 
 function SearchReviewPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [formData, setFormData] = useState({ title: "" });
   const [results, setResults] = useState<ReviewDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // Atualiza o input ao carregar a página com base na URL
+  useEffect(() => {
+    const title = searchParams.get("title") || "";
+    const page = parseInt(searchParams.get("page") || "0", 10);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
+    if (title) {
+      setFormData({ title });
+      search(title, page);
+    }
+  }, [searchParams]);
 
+  const search = async (title: string, page: number) => {
     try {
-      const response = await ReviewService.searchByBookTitle(
-        formData.title,
-        0,
-        10
-      );
+      const response = await ReviewService.searchByBookTitle(title, page, 10);
       setResults(response.content);
       setPageInfo({ page: response.number, totalPages: response.totalPages });
     } catch (error) {
       setError(handleApiError(error));
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setSearchParams({ title: formData.title, page: "0" });
+    search(formData.title, 0);
   };
 
   return (
@@ -68,17 +82,12 @@ function SearchReviewPage() {
           <PaginationBar
             currentPage={pageInfo.page}
             totalPages={pageInfo.totalPages}
-            onPageChange={async (newPage) => {
-              const response = await ReviewService.searchByBookTitle(
-                formData.title,
-                newPage,
-                10
-              );
-              setResults(response.content);
-              setPageInfo({
-                page: response.number,
-                totalPages: response.totalPages,
+            onPageChange={(newPage) => {
+              setSearchParams({
+                title: formData.title,
+                page: newPage.toString(),
               });
+              search(formData.title, newPage);
             }}
           />
         </SearchResultGrid>

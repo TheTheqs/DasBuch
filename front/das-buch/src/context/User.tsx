@@ -43,3 +43,7 @@ export function useUser() {
   }
   return context;
 }
+
+export function clearUser() {
+  localStorage.removeItem("user");
+}

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import FormContainer from "../components/FormContainer";
 import BookCard from "../components/BookCard";
@@ -9,30 +10,42 @@ import { BookDTO } from "../type/BookDTO";
 import { handleApiError } from "../utils/handleApiError";
 
 function SearchBookPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [formData, setFormData] = useState({ title: "" });
   const [results, setResults] = useState<BookDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const title = searchParams.get("title") || "";
+    const page = parseInt(searchParams.get("page") || "0", 10);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
+    if (title) {
+      setFormData({ title });
+      search(title, page);
+    }
+  }, [searchParams]);
 
+  const search = async (title: string, page: number) => {
     try {
-      const response = await BookService.searchBookByTitle(
-        formData.title,
-        0,
-        10
-      );
+      const response = await BookService.searchBookByTitle(title, page, 10);
       setResults(response.content);
       setPageInfo({ page: response.number, totalPages: response.totalPages });
     } catch (error) {
       setError(handleApiError(error));
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setSearchParams({ title: formData.title, page: "0" });
+    search(formData.title, 0);
   };
 
   return (
@@ -68,17 +81,12 @@ function SearchBookPage() {
           <PaginationBar
             currentPage={pageInfo.page}
             totalPages={pageInfo.totalPages}
-            onPageChange={async (newPage) => {
-              const response = await BookService.searchBookByTitle(
-                formData.title,
-                newPage,
-                10
-              );
-              setResults(response.content);
-              setPageInfo({
-                page: response.number,
-                totalPages: response.totalPages,
+            onPageChange={(newPage) => {
+              setSearchParams({
+                title: formData.title,
+                page: newPage.toString(),
               });
+              search(formData.title, newPage);
             }}
           />
         </SearchResultGrid>

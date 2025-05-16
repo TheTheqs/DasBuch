@@ -65,7 +65,7 @@ function ProfilePage() {
         Meu Perfil
       </h1>
 
-      <UserProfile user={user} />
+      <UserProfile relatedUser={user} />
 
       <FormContainer title="Atualizar Dados" submitMessage='Atualizar' onSubmit={handleSubmit}>
       <FormInput

@@ -92,4 +92,13 @@ public class BookService {
             bookRepository.save(book);
         }
     }
+    //Util function for Delete User
+    @Transactional
+    public void removeUserReferences(User user) {
+        Set<Book> books = user.getReadBooks();
+        for (Book book : books) {
+            book.getReadBy().remove(user);
+        }
+        bookRepository.saveAll(books);
+    }
 }

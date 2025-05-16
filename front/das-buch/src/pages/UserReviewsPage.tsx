@@ -5,7 +5,10 @@ import { ReviewDTO } from "../type/ReviewDTO";
 import ReviewCard from "../components/ReviewCard";
 import SearchResultGrid from "../components/SearchResultsGrid";
 import PaginationBar from "../components/PaginationBar";
+import UserProfile from "../components/UserProfile";
 import { Spinner } from "react-bootstrap";
+import UserService from "../services/UserService";
+import { UserDTO } from "../type/UserDTO";
 
 function UserReviewsPage() {
   const { id } = useParams<{ id: string }>();
@@ -13,25 +16,32 @@ function UserReviewsPage() {
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [user, setUser] = useState<UserDTO | null>(null);
 
   useEffect(() => {
-    const fetchReviews = async () => {
+    const fetchData = async () => {
       if (!id) return;
       setLoading(true);
       try {
-        const response = await ReviewService.getUserReviews(Number(id), 0, 10);
-        setResults(response.content);
+        const [reviewResponse, userResponse] = await Promise.all([
+          ReviewService.getUserReviews(Number(id), 0, 10),
+          UserService.getUserById(Number(id)),
+        ]);
+
+        setResults(reviewResponse.content);
         setPageInfo({
-          page: response.number,
-          totalPages: response.totalPages,
+          page: reviewResponse.number,
+          totalPages: reviewResponse.totalPages,
         });
+        setUser(userResponse);
       } catch (err) {
-        setError("Erro ao carregar os reviews." + err);
+        setError("Erro ao carregar os dados do usuário e reviews. " + err);
       } finally {
         setLoading(false);
       }
     };
-    fetchReviews();
+
+    fetchData();
   }, [id]);
 
   const handlePageChange = async (newPage: number) => {
@@ -62,34 +72,31 @@ function UserReviewsPage() {
 
   if (error) {
     return (
-      <div className="container py-5 text-center text-danger">
-        {error}
-      </div>
+      <div className="container py-5 text-center text-danger">{error}</div>
     );
   }
 
   return (
     <div className="container py-4">
-    <h3 className="mb-4 text-center fw-bold">
-      Reviews do Usuário
-    </h3>
+      {user && <UserProfile relatedUser={user} />}
+      <h3 className="mb-4 text-center fw-bold">Reviews do Usuário</h3>
 
-    {results.length === 0 ? (
-      <div className="text-center text-muted">Nenhum review encontrado.</div>
-    ) : (
-      <SearchResultGrid>
-        {results.map((review) => (
-          <ReviewCard key={review.id} review={review} />
-        ))}
+      {results.length === 0 ? (
+        <div className="text-center text-muted">Nenhum review encontrado.</div>
+      ) : (
+        <SearchResultGrid>
+          {results.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
 
-        <PaginationBar
-          currentPage={pageInfo.page}
-          totalPages={pageInfo.totalPages}
-          onPageChange={handlePageChange}
-        />
-      </SearchResultGrid>
-    )}
-  </div>
+          <PaginationBar
+            currentPage={pageInfo.page}
+            totalPages={pageInfo.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </SearchResultGrid>
+      )}
+    </div>
   );
 }
 

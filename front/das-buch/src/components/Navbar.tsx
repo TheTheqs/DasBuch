@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
-import { useUser } from '../context/User';
-import { handleApiError } from '../utils/handleApiError';
+import { Link } from "react-router-dom";
+import { useUser } from "../context/User";
+import { handleApiError } from "../utils/handleApiError";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import UserService from "../services/UserService";
 
 function Navbar() {
   const { user, clearUser } = useUser();
@@ -10,11 +10,10 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:8080/users/logout", {withCredentials: true});
+      await UserService.logout();
     } catch (error) {
       alert(handleApiError(error));
-    }
-    finally {
+    } finally {
       clearUser();
       navigate("/");
     }
@@ -23,7 +22,12 @@ function Navbar() {
   return (
     <nav className="bg-dark navbar navbar-expand-md fixed-top p-0 navbar-dark">
       <div className="container">
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navcol-1"
+        >
           <span className="visually-hidden">Toggle navigation</span>
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -36,25 +40,37 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link to="/book" className="nav-link">Livros</Link>
+              <Link to="/book" className="nav-link">
+                Livros
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/author" className="nav-link">Autores</Link>
+              <Link to="/author" className="nav-link">
+                Autores
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/review" className="nav-link">Reviews</Link>
+              <Link to="/review" className="nav-link">
+                Reviews
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link">Sobre</Link>
+              <Link to="/about" className="nav-link">
+                Sobre
+              </Link>
             </li>
             {/*If not logged*/}
             {user === null && (
               <>
                 <li className="nav-item">
-                  <Link to="/signin" className="nav-link">Sign In</Link>
+                  <Link to="/signin" className="nav-link">
+                    Sign In
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/login" className="nav-link">Log In</Link>
+                  <Link to="/login" className="nav-link">
+                    Log In
+                  </Link>
                 </li>
               </>
             )}
@@ -63,10 +79,16 @@ function Navbar() {
             {user !== null && (
               <>
                 <li className="nav-item">
-                  <Link to="/profile" className="nav-link">{user.name}</Link>
+                  <Link to="/profile" className="nav-link">
+                    {user.name}
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <button onClick={handleLogout} className="btn btn-link nav-link" style={{ textDecoration: 'none' }}>
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-link nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Logout
                   </button>
                 </li>

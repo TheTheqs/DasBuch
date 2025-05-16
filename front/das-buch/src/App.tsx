@@ -6,7 +6,7 @@ import SignInPage from "./pages/SignInPage";
 import MessagePage from "./pages/MessagePage";
 import LogInPage from "./pages/LogInPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import UserPage from "./pages/UserPage";
+import SearchUserPage from "./pages/SearchUserPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import ProfilePage from "./pages/ProfilePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
@@ -33,7 +33,7 @@ function App() {
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/verify" element={<VerifyEmailPage />} />
           <Route path="/login" element={<LogInPage />} />
-          <Route path="/user" element={<UserPage />} />
+          <Route path="/user" element={<SearchUserPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset" element={<ResetPasswordPage />} />

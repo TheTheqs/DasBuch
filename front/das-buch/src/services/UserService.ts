@@ -1,10 +1,10 @@
 import axios from "axios";
 import { UserDTO } from "../type/UserDTO";
 import { PagedResponse } from "../type/PagedResponse";
+import { clearUser } from "../context/User";
 
 class UserService {
   private BASE_URL = "http://localhost:8080/users";
-
   //Register User
   async registerUser(user: {
     name: string;
@@ -53,8 +53,8 @@ class UserService {
       `${this.BASE_URL}/update`,
       null,
       {
-        params: {name, password},
-        withCredentials: true
+        params: { name, password },
+        withCredentials: true,
       }
     );
     return response.data;
@@ -66,8 +66,8 @@ class UserService {
       `${this.BASE_URL}/forgot-password`,
       null,
       {
-        params: {email},
-        responseType: "text"
+        params: { email },
+        responseType: "text",
       }
     );
     return response.data;
@@ -80,14 +80,37 @@ class UserService {
       { token, password },
       {
         responseType: "text",
-        withCredentials: true
+        withCredentials: true,
       }
     );
     return response.data;
   }
+  //Logout
+  async logout(): Promise<void> {
+    await axios.get("http://localhost:8080/users/logout", {
+      withCredentials: true,
+    });
+    clearUser();
+  }
 
-  async deleteUser(id: number): Promise<void> {
-    await axios.delete(`${this.BASE_URL}/${id}`);
+  //Delete user
+  async deleteUser(id: number): Promise<string> {
+    const response = await axios.delete(`${this.BASE_URL}/${id}`, {
+      withCredentials: true,
+    });
+
+    if (response.data) {
+      return "User deleted successfully!";
+    }
+    return "Failed to delete user";
+  }
+
+  //Get individual User by ID
+  async getUserById(id: number): Promise<UserDTO> {
+    const response = await axios.get<UserDTO>(`${this.BASE_URL}/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
   }
 }
 
