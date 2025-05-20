@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { handleApiError } from '../utils/handleApiError';
 import FormInput from '../components/FormInput';
 import FormContainer from '../components/FormContainer';
 import UserService from '../services/UserService';
 
 function SignInPage() {
+  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,7 +44,8 @@ function SignInPage() {
         email: formData.email,
         password: formData.password
       });
-      setSuccess("Conta criada com sucesso! Verifique seu e-mail.");
+      setSuccess("Conta criada com sucesso!");
+      navigate("/message?title=Conta+criada+com+sucesso!&subtitle=Vá+para+página+de+login+para+realizar+o+login!")
     } catch (error) {
       setError(handleApiError(error));
     }

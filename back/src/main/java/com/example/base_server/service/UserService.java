@@ -30,21 +30,24 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final FileEmailSender fileEmailSender;
+    private final RecoverEmailRequestService recoverEmailRequestService;
 
     public UserService(UserRepository userRepository, BookService bookService,
                        BCryptPasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
-                       FileEmailSender fileEmailSender) {
+                       FileEmailSender fileEmailSender,
+                       RecoverEmailRequestService recoverEmailRequestService) {
         this.userRepository = userRepository;
         this.bookService = bookService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.fileEmailSender = fileEmailSender;
+        this.recoverEmailRequestService = recoverEmailRequestService;
     }
 
     //Services
     //1- Register a new user (encrypts password and generates verification token)
-    public User registerUser(String name, String email, String password, Role role) {
+    public User registerUser(String name, String email, String password, boolean verification) {
         if (!EmailValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format!");
         }
@@ -57,17 +60,19 @@ public class UserService {
             throw new IllegalArgumentException("Invalid password format!");
         }
 
-        role = email.equals("matheqs@gmail.com") ? Role.ADMIN : Role.USER;
+        Role role = email.equals("matheqs@gmail.com") ? Role.ADMIN : Role.USER;
 
         String hashedPassword = passwordEncoder.encode(password); //Password cryptography
-        String verificationToken = generateToken(); //Token generation
 
         User newUser = new User(name, email, hashedPassword, role); //User creation
-        newUser.setVerificationToken(verificationToken); //Set token
-        newUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(15)); //Set token time
-        newUser.setIsActive(false); //Manipulate activation
-
-        sendVerificationEmail(newUser); //Email verification sending
+        newUser.setIsActive(true);//Activate user by default (no email verification)
+        if (verification) {
+            String verificationToken = generateToken(); //Token generation
+            newUser.setVerificationToken(verificationToken); //Set token
+            newUser.setTokenExpirationTime(LocalDateTime.now().plusMinutes(180)); //Set token time
+            newUser.setIsActive(false); //Manipulate activation
+            sendVerificationEmail(newUser); //Email verification sending
+        }
         return userRepository.save(newUser);
     }
 
@@ -153,16 +158,20 @@ public class UserService {
     }
 
     //8- Request token for password reset
-    public void generatePasswordToken(String email) {
+    public void generatePasswordToken(String email, boolean verification) {
         userRepository.findByEmailIgnoreCase(email).ifPresent(user -> {
             user.setResetToken(generateToken());
-            user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(15));
-
-            fileEmailSender.send(
-                    user.getEmail(),
-                    "Reset your password",
-                    "Click the link to reset your password: http://localhost:5173/reset?token=" + user.getResetToken()
-            );
+            user.setResetTokenExpiration(LocalDateTime.now().plusYears(20));
+            if (verification) {
+                fileEmailSender.send(
+                        user.getEmail(),
+                        "Reset your password",
+                        "Click the link to reset your password: http://localhost:5173/reset?token=" + user.getResetToken()
+                );
+            }
+            else {
+                recoverEmailRequestService.createRequest(email, ("reset?token=" + user.getResetToken()));
+            }
 
             userRepository.save(user);
         });

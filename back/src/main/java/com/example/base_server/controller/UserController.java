@@ -30,7 +30,7 @@ public class UserController {
     // 1 - Register
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody CreateUserDTO dto) {
-        var newUser = new UserDTO(userService.registerUser(dto.getName(), dto.getEmail(), dto.getPassword(), Role.USER));
+        var newUser = new UserDTO(userService.registerUser(dto.getName(), dto.getEmail(), dto.getPassword(), false));
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
@@ -97,7 +97,7 @@ public class UserController {
     //8- Request reset password
     @PostMapping("/forgot-password")
     public ResponseEntity<String> requestPasswordReset(@RequestParam String email) {
-        userService.generatePasswordToken(email);
+        userService.generatePasswordToken(email, false);
         return ResponseEntity.ok("If this email exists, a password reset link has been sent.");
     }
 

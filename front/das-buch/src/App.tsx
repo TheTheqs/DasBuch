@@ -22,6 +22,7 @@ import EditBookPage from "./pages/EditBookPage";
 import SearchAuthorPage from "./pages/SearchAuthorPage";
 import AuthorPage from "./pages/AuthorPage";
 import EditAuthorPage from "./pages/EditAuthorPage";
+import RecoveryRequestAdminPage from "./pages/RecoveryRequestAdminPage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="/book" element={<SearchBookPage />} />
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/author" element= {<SearchAuthorPage />}/>
+          <Route path="/adm" element = {<RecoveryRequestAdminPage />}/>
           <Route path="/author/:id" element= {<AuthorPage />}/>
           <Route path="/message" element={<MessagePage />} />
           <Route path="/book/reviews/:id" element={<BookReviewsPage />}/>

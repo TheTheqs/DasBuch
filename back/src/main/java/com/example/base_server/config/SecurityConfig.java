@@ -52,6 +52,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/recovery").permitAll()
+                        .requestMatchers("/api/recovery/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/reviews/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/reviews/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/reviews/**").authenticated()
