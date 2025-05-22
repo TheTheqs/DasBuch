@@ -3,10 +3,12 @@ import { useUser } from "../context/User";
 import { handleApiError } from "../utils/handleApiError";
 import { useNavigate } from "react-router-dom";
 import UserService from "../services/UserService";
+import { useTranslation } from "react-i18next";
 
 function Navbar() {
   const { user, clearUser } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     try {
@@ -28,7 +30,7 @@ function Navbar() {
           data-bs-toggle="collapse"
           data-bs-target="#navcol-1"
         >
-          <span className="visually-hidden">Toggle navigation</span>
+          <span className="visually-hidden">{t("navbar.toggle")}</span>
           <span className="navbar-toggler-icon"></span>
         </button>
         <div id="navcol-1" className="collapse navbar-collapse">
@@ -41,22 +43,22 @@ function Navbar() {
 
             <li className="nav-item">
               <Link to="/book" className="nav-link">
-                Livros
+                {t("navbar.books")}
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/author" className="nav-link">
-                Autores
+                {t("navbar.authors")}
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/review" className="nav-link">
-                Reviews
+                {t("navbar.reviews")}
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/about" className="nav-link">
-                Sobre
+                {t("navbar.about")}
               </Link>
             </li>
             {/*If not logged*/}
@@ -64,12 +66,12 @@ function Navbar() {
               <>
                 <li className="nav-item">
                   <Link to="/signin" className="nav-link">
-                    Sign In
+                    {t("navbar.signin")}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/login" className="nav-link">
-                    Log In
+                    {t("navbar.login")}
                   </Link>
                 </li>
               </>
@@ -89,7 +91,7 @@ function Navbar() {
                     className="btn btn-link nav-link"
                     style={{ textDecoration: "none" }}
                   >
-                    Logout
+                    {t("navbar.logout")}
                   </button>
                 </li>
               </>

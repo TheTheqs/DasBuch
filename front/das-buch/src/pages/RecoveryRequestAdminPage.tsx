@@ -4,16 +4,18 @@ import RecoveryRequestList from "../components/RecoveryRequestList";
 import { RecoveryRequest } from "../components/RecoveryRequestItem";
 import RecoverEmailRequestService from "../services/RecoverEmailRequestService";
 import { useUser } from "../context/User";
+import { useTranslation } from "react-i18next";
 
 const RecoveryRequestAdminPage: React.FC = () => {
   const { user } = useUser();
+  const { t } = useTranslation();
   const [requests, setRequests] = useState<RecoveryRequest[]>([]);
 
   if (!user || user.role !== "ADMIN") {
     return (
       <div className="container py-4">
-        <h3 className="text-danger">Acesso restrito</h3>
-        <p>Você precisa ser um administrador para visualizar esta página.</p>
+        <h3 className="text-danger">{t("adminRecovery.accessDeniedTitle")}</h3>
+        <p>{t("adminRecovery.accessDeniedSubtitle")}</p>
       </div>
     );
   }
@@ -58,7 +60,7 @@ const RecoveryRequestAdminPage: React.FC = () => {
 
   return (
     <div className="container py-4">
-      <h2 className="mb-4">Gerenciamento de Requisições de Recuperação</h2>
+      <h2 className="mb-4">{t("adminRecovery.pageTitle")}</h2>
       <RecoveryRequestControls onShowAll={fetchAll} onShowPending={fetchPending} />
       <RecoveryRequestList
         requests={requests}

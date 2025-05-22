@@ -1,0 +1,258 @@
+{
+    "author": {
+        "noBooks": "Kein zugehöriges Buch",
+        "edit": "Autor bearbeiten",
+        "name": "Name",
+        "placeholderName": "Geben Sie den Namen des Autors ein"
+    },
+    "book": {
+        "title": "Titel",
+        "placeholderTitle": "Geben Sie den Buchtitel ein",
+        "authors": "Autoren",
+        "unknownAuthor": "Unbekannter Autor",
+        "review": "Bewertung",
+        "reviews": "Bewertungen",
+        "edit": "Buch bearbeiten",
+        "delete": "Löschen",
+        "confirmDelete": "Möchten Sie dieses Buch wirklich löschen?"
+    },
+    "cta": {
+        "welcome": "Willkommen bei DasBuch 📚",
+        "description": "Entdecke, lese und teile deine literarischen Erfahrungen!",
+        "startNow": "Jetzt starten",
+        "login": "Anmelden"
+    },
+    "dynamicInput": {
+        "placeholder": "Neuer Autor",
+        "remove": "Entfernen",
+        "add": "+ Hinzufügen"
+    },
+    "footer": {
+        "rights": "Alle Rechte vorbehalten."
+    },
+    "form": {
+        "submit": "Speichern",
+        "update": "Aktualisieren",
+        "create": "Erstellen",
+        "send": "Senden",
+        "login": "Anmelden",
+        "search": "Suchen",
+        "name": "Name",
+        "namePlaceholder": "Geben Sie Ihren Namen ein",
+        "email": "E-Mail",
+        "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+        "confirmEmail": "E-Mail bestätigen",
+        "confirmEmailPlaceholder": "Geben Sie Ihre E-Mail erneut ein",
+        "password": "Passwort",
+        "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+        "confirmPassword": "Passwort bestätigen",
+        "confirmPasswordPlaceholder": "Geben Sie Ihr Passwort erneut ein",
+        "emailMismatch": "Die E-Mails stimmen nicht überein.",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+        "register": "Registrieren",
+        "acceptTerms": "Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu (siehe Seite 'Über')",
+        "termsNotAccepted": "Sie müssen den Nutzungsbedingungen zustimmen, um fortzufahren.",
+        "registrationData": "Erstellen Sie ein Konto",
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+    },
+    "main": {
+        "welcome": "Willkommen {{name}}! 📑",
+        "info": "Für weitere Informationen zur Anwendung oder um den Entwickler (Matheqs :D) zu kontaktieren, besuche den Reiter \"Über\".",
+        "newReview": "Neue Bewertung",
+        "myReviews": "Meine Bewertungen",
+        "searchUser": "Benutzer suchen"
+    },
+    "navbar": {
+        "books": "Bücher",
+        "authors": "Autoren",
+        "reviews": "Bewertungen",
+        "about": "Über",
+        "signin": "Konto erstellen",
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "toggle": "Navigation umschalten"
+    },
+    "recovery": {
+        "resolved": "Gelöst",
+        "pending": "Ausstehend",
+        "createdAt": "Erstellt am:",
+        "markAsResolved": "Als gelöst markieren",
+        "delete": "Löschen",
+        "showPending": "Ausstehende Anfragen anzeigen",
+        "showAll": "Alle Anfragen anzeigen"
+    },
+    "review": {
+        "formTitle": "Neue Bewertung",
+        "bookTitle": "Buch",
+        "placeholderBookTitle": "Geben Sie den Buchtitel ein",
+        "authors": "Autoren",
+        "synopsis": "Inhaltsangabe",
+        "placeholderSynopsis": "Schreibe deine Inhaltsangabe des Buches...",
+        "comment": "Kommentar",
+        "placeholderComment": "Gib deine Meinung zum Buch ab...",
+        "score": "Bewertung",
+        "readDate": "Gelesen am"
+    },
+    "userCard": {
+        "idLabel": "ID: {{id}}",
+        "reviewLabel": "Bewertungen: {{count}}"
+    },
+    "userProfile": {
+        "name": "Name",
+        "reviews": "Bewertungen",
+        "id": "ID",
+        "email": "E-Mail",
+        "role": "Rolle",
+        "confirmDelete": "Möchten Sie diesen Benutzer wirklich löschen?",
+        "deleteProfile": "Profil löschen"
+    },
+    "authorPage": {
+        "loadError": "Fehler beim Laden der Autorendaten.",
+        "notFound": "Autor nicht gefunden.",
+        "idLabel": "Autor-ID: {{id}}",
+        "books": "Bücher:",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "confirmDelete": "Möchten Sie diesen Autor wirklich löschen?"
+    },
+    "bookPage": {
+        "loadError": "Fehler beim Laden der Buchdaten.",
+        "notFound": "Buch nicht gefunden.",
+        "idLabel": "Buch-ID: {{id}}",
+        "authors": "Autoren:",
+        "unknownAuthor": "Unbekannter Autor",
+        "reviewCount": "Anzahl der Bewertungen:",
+        "viewReviews": "Bewertungen anzeigen",
+        "createReview": "Bewertung für dieses Buch schreiben"
+    },
+    "bookReviews": {
+        "loadError": "Fehler beim Laden der Bewertungen.",
+        "pageChangeError": "Fehler beim Seitenwechsel.",
+        "title": "Buchbewertungen",
+        "noResults": "Keine Bewertungen gefunden."
+    },
+    "editAuthor": {
+        "loading": "Autor wird geladen...",
+        "notFound": "Autor nicht gefunden.",
+        "success": "Autor erfolgreich aktualisiert!"
+    },
+    "editBook": {
+        "loading": "Buch wird geladen...",
+        "notFound": "Buch nicht gefunden.",
+        "success": "Buch erfolgreich aktualisiert!"
+    },
+    "editReview": {
+        "loading": "Bewertung wird geladen...",
+        "notFound": "Bewertung nicht gefunden.",
+        "success": "Bewertung erfolgreich aktualisiert!"
+    },
+    "forgotPassword": {
+        "title": "Passwort zurücksetzen",
+        "emailLabel": "E-Mail",
+        "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein"
+    },
+    "login": {
+        "title": "Anmeldung",
+        "forgotPassword": "Passwort vergessen?"
+    },
+    "newReview": {
+        "loading": "Buchinformationen werden geladen...",
+        "loadErrorPrefix": "Fehler beim Laden der Buchdaten:",
+        "success": "Bewertung erfolgreich erstellt!"
+    },
+    "profile": {
+        "title": "Mein Profil",
+        "formTitle": "Daten aktualisieren",
+        "namePlaceholder": "Neuen Namen eingeben",
+        "passwordPlaceholder": "Neues Passwort eingeben",
+        "confirmPassword": "Passwort bestätigen",
+        "confirmPasswordPlaceholder": "Neues Passwort erneut eingeben",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+        "success": "Daten erfolgreich aktualisiert!"
+    },
+    "adminRecovery": {
+        "accessDeniedTitle": "Zugriff verweigert",
+        "accessDeniedSubtitle": "Sie müssen Administrator sein, um diese Seite anzuzeigen.",
+        "pageTitle": "Verwaltung von Wiederherstellungsanfragen"
+    },
+    "resetPassword": {
+        "title": "Passwort zurücksetzen",
+        "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+        "confirmPasswordPlaceholder": "Geben Sie Ihr Passwort erneut ein",
+        "tokenMissing": "Wiederherstellungs-Token nicht gefunden."
+    },
+    "reviewPage": {
+        "authors": "Autoren",
+        "synopsis": "Inhaltsangabe",
+        "commentary": "Kommentar",
+        "score": "Bewertung",
+        "readAt": "Gelesen am",
+        "by": "Bewertung von ",
+        "reviewIdPrefix": "Bewertungs-ID: ",
+        "confirmDelete": "Möchten Sie diese Bewertung wirklich löschen?"
+    },
+    "searchAuthor": {
+        "title": "Autor suchen",
+        "namePlaceholder": "Name des Autors",
+        "noResults": "Kein Autor gefunden."
+    },
+    "searchBook": {
+        "title": "Buch suchen",
+        "titlePlaceholder": "Buchtitel",
+        "noResults": "Kein Buch gefunden."
+    },
+    "searchReview": {
+        "title": "Bewertung suchen",
+        "noResults": "Keine Bewertung gefunden."
+    },
+    "searchUser": {
+        "title": "Benutzer suchen",
+        "namePlaceholder": "Name des Benutzers",
+        "noResults": "Kein Benutzer gefunden."
+    },
+    "message": {
+        "accountCreatedTitle": "Konto erfolgreich erstellt!",
+        "accountCreatedSubtitle": "Gehen Sie zur Anmeldeseite, um sich einzuloggen!",
+        "accountRecoveryRequestTitle": "Wiederherstellungsanfrage eingereicht!",
+        "accountRecoveryRequestSubtitle": "Deine Anfrage hat ein Ticket in unserem System erstellt. Überprüfe deine E-Mails, um Anweisungen zum Zurücksetzen deines Passworts zu erhalten. Wenn es zu lange dauert, zögere nicht, den Entwickler (Matheqs) anzustupsen, damit er den Vorgang beschleunigt — ehrlich gesagt, an deiner Stelle würde ich das sofort tun! Schau auf der Seite 'Über uns' nach, wie du ihn erreichen kannst."
+    },
+    "userReviews": {
+        "title": "Benutzerbewertungen",
+        "noResults": "Keine Bewertung gefunden.",
+        "fetchError": "Fehler beim Laden der Benutzer- und Bewertungsdaten.",
+        "paginationError": "Fehler beim Seitenwechsel."
+    },
+    "verifyEmail": {
+        "title": "E-Mail-Verifizierung",
+        "tokenMissing": "Verifizierungs-Token nicht gefunden."
+    },
+    "notFound": {
+        "title": "Seite nicht gefunden",
+        "code": "404",
+        "description": "Der gesuchte Inhalt existiert nicht oder wurde verschoben.",
+        "backHome": "Zurück zur Startseite"
+    },
+    "about": {
+        "title": "Über DasBuch",
+        "intro": "Hallo, mein Name ist <1>Matheqs</1> und ich bin ein autodidaktischer Entwickler. <3>DasBuch</3> ist mein erstes Fullstack-Projekt, das ich als persönliche Herausforderung entwickelt habe, um meine Fähigkeiten in verschiedenen Bereichen der Softwareentwicklung zu testen.",
+        "background": "Die Idee entstand aus meiner Leseleidenschaft, die ich seit meiner Jugend pflege. Seit Jahren schreibe ich Buchbewertungen auf Papier, und ich entschied mich, eine digitale Plattform zu schaffen, um diese Notizen zu organisieren. DasBuch ist also nicht nur ein Portfolio-Projekt – ich nutze es tatsächlich im Alltag, und vielleicht findest du hier sogar einige meiner Rezensionen.",
+        "focus": "Der Fokus des Projekts lag immer auf <1>Einfachheit</1>, sowohl in der Ästhetik als auch in der Logik der Anwendung.",
+        "contactIntro": "Für weitere Informationen über die Plattform, die verwendeten Tools oder bei Fragen, kannst du mich über die folgenden Kanäle kontaktieren:",
+        "contact": {
+            "instagram": "Instagram",
+            "email": "E-Mail",
+            "linkedin": "LinkedIn"
+        },
+        "linkedinNote": "Oder suche einfach nach <1>Matheqs</1>. Ich bin der erste hübsche Typ in den Ergebnissen 😄",
+        "termsTitle": "Datenschutzrichtlinie und Nutzungsbedingungen",
+        "termsIntro": "DasBuch ist eine unabhängige, nicht-kommerzielle und persönliche Anwendung, die auch von Dritten genutzt werden kann. Im Folgenden erläutere ich die grundlegenden Nutzungsbedingungen der Plattform:",
+        "terms": {
+            "data": "<1>Datenerhebung und -nutzung:</1> Die einzige sensible Information, die von der Plattform erfasst wird, ist die beim Anlegen eines Kontos angegebene E-Mail-Adresse. Diese wird ausschließlich zur Authentifizierung und Kontowiederherstellung verwendet. Keine persönlichen Daten werden verkauft, weitergegeben oder mit Dritten geteilt.",
+            "security": "<1>Sicherheit und Verantwortung:</1> Die Anwendung enthält keine Filter für Wörter, Ausdrücke oder Inhalte. Das bedeutet, dass jegliche veröffentlichte Texte – einschließlich Kommentare, Titel oder Rezensionen – in der Verantwortung des Autors liegen. Die Verwendung beleidigender, verleumderischer, hasserfüllter oder illegaler Inhalte kann gemeldet und ggf. entfernt werden.",
+            "storage": "<1>Speicherung:</1> Die Daten werden auf Servern mit eingeschränktem Zugriff gespeichert und dienen ausschließlich dem Betrieb der Anwendung. Es gibt keine Integration mit Werbesystemen oder Tracking-Diensten.",
+            "consent": "<1>Zustimmung:</1> Durch die Nutzung von DasBuch stimmt der Benutzer diesen Bedingungen automatisch zu. Da es sich um eine persönliche und experimentelle Anwendung handelt, können diese Bedingungen ohne vorherige Ankündigung geändert werden – stets mit dem Ziel der Transparenz und verantwortungsvollen Nutzung."
+        },
+        "closing": "Bei Fragen oder Anregungen zu diesen Bedingungen, kontaktiere mich gerne. Vielen Dank, dass du DasBuch nutzt! 💙"
+    }
+}

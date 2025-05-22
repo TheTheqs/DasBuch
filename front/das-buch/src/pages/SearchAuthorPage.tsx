@@ -8,9 +8,11 @@ import PaginationBar from "../components/PaginationBar";
 import AuthorService from "../services/AuthorService";
 import { AuthorDTO } from "../type/AuthorDTO";
 import { handleApiError } from "../utils/handleApiError";
+import { useTranslation } from "react-i18next";
 
 function SearchAuthorPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({ name: "" });
   const [results, setResults] = useState<AuthorDTO[]>([]);
@@ -51,13 +53,13 @@ function SearchAuthorPage() {
   return (
     <div>
       <FormContainer
-        title="Buscar Autor"
-        submitMessage="Pesquisar"
+        title={t("searchAuthor.title")}
+        submitMessage={t("form.search")}
         onSubmit={handleSubmit}
       >
         <FormInput
           label=""
-          placeholder="Nome do Autor"
+          placeholder={t("searchAuthor.namePlaceholder")}
           type="name"
           name="name"
           value={formData.name}
@@ -68,7 +70,7 @@ function SearchAuthorPage() {
 
       {formData.name !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
-          Nenhum autor encontrado.
+          {t("searchAuthor.noResults")}
         </div>
       )}
 

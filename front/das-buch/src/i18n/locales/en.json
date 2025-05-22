@@ -1,0 +1,258 @@
+{
+    "author": {
+        "noBooks": "No books associated",
+        "edit": "Edit Author",
+        "name": "Name",
+        "placeholderName": "Enter the author's name"
+    },
+    "book": {
+        "title": "Title",
+        "placeholderTitle": "Enter the book title",
+        "authors": "Authors",
+        "unknownAuthor": "Unknown author",
+        "review": "review",
+        "reviews": "reviews",
+        "edit": "Edit Book",
+        "delete": "Delete",
+        "confirmDelete": "Are you sure you want to delete this book?"
+    },
+    "cta": {
+        "welcome": "Welcome to DasBuch 📚",
+        "description": "Discover, read, and share your literary experiences!",
+        "startNow": "Start now",
+        "login": "Login"
+    },
+    "dynamicInput": {
+        "placeholder": "New Author",
+        "remove": "Remove",
+        "add": "+ Add"
+    },
+    "footer": {
+        "rights": "All rights reserved."
+    },
+    "form": {
+        "submit": "Save",
+        "update": "Update",
+        "create": "Create",
+        "send": "Send",
+        "login": "Login",
+        "search": "Search",
+        "name": "Name",
+        "namePlaceholder": "Enter your name",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "confirmEmail": "Confirm email",
+        "confirmEmailPlaceholder": "Enter your email again",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Enter your password again",
+        "emailMismatch": "Emails do not match.",
+        "passwordMismatch": "Passwords do not match.",
+        "acceptTerms": "I have read and agree to the terms of use (found on the About page)",
+        "termsNotAccepted": "You must agree to the terms of use to continue.",
+        "register": "Register",
+        "registrationData": "Create an Account",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "main": {
+        "welcome": "Welcome {{name}}! 📑",
+        "info": "For details about the app or to contact the developer (Matheqs :D), visit the \"About\" page.",
+        "newReview": "New Review",
+        "myReviews": "My Reviews",
+        "searchUser": "Search User"
+    },
+    "navbar": {
+        "books": "Books",
+        "authors": "Authors",
+        "reviews": "Reviews",
+        "about": "About",
+        "signin": "Sign Up",
+        "login": "Login",
+        "logout": "Logout",
+        "toggle": "Toggle navigation"
+    },
+    "recovery": {
+        "resolved": "Resolved",
+        "pending": "Pending",
+        "createdAt": "Created at:",
+        "markAsResolved": "Mark as Resolved",
+        "delete": "Delete",
+        "showPending": "Fetch Pending Requests",
+        "showAll": "Show All Requests"
+    },
+    "review": {
+        "formTitle": "New Review",
+        "bookTitle": "Book",
+        "placeholderBookTitle": "Enter the book title",
+        "authors": "Authors",
+        "synopsis": "Synopsis",
+        "placeholderSynopsis": "Write your synopsis of the book...",
+        "comment": "Comment",
+        "placeholderComment": "Share your opinion about the book...",
+        "score": "Rating",
+        "readDate": "Reading Date"
+    },
+    "userCard": {
+        "idLabel": "ID: {{id}}",
+        "reviewLabel": "Reviews: {{count}}"
+    },
+    "userProfile": {
+        "name": "Name",
+        "reviews": "Reviews",
+        "id": "ID",
+        "email": "Email",
+        "role": "Role",
+        "confirmDelete": "Are you sure you want to delete this user?",
+        "deleteProfile": "Delete Profile"
+    },
+    "authorPage": {
+        "loadError": "Error loading author data.",
+        "notFound": "Author not found.",
+        "idLabel": "Author ID: {{id}}",
+        "books": "Books:",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirmDelete": "Are you sure you want to delete this author?"
+    },
+    "bookPage": {
+        "loadError": "Error loading book data.",
+        "notFound": "Book not found.",
+        "idLabel": "Book ID: {{id}}",
+        "authors": "Authors:",
+        "unknownAuthor": "Unknown author",
+        "reviewCount": "Number of Reviews:",
+        "viewReviews": "View Reviews",
+        "createReview": "Write a Review for this Book"
+    },
+    "bookReviews": {
+        "loadError": "Error loading reviews.",
+        "pageChangeError": "Error changing page.",
+        "title": "Book Reviews",
+        "noResults": "No reviews found."
+    },
+    "editAuthor": {
+        "loading": "Loading author...",
+        "notFound": "Author not found.",
+        "success": "Author successfully updated!"
+    },
+    "editBook": {
+        "loading": "Loading book...",
+        "notFound": "Book not found.",
+        "success": "Book successfully updated!"
+    },
+    "editReview": {
+        "loading": "Loading review...",
+        "notFound": "Review not found.",
+        "success": "Review successfully updated!"
+    },
+    "forgotPassword": {
+        "title": "Recover Password",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Enter your email"
+    },
+    "login": {
+        "title": "Login",
+        "forgotPassword": "Forgot your password?"
+    },
+    "newReview": {
+        "loading": "Loading book information...",
+        "loadErrorPrefix": "Error loading book data:",
+        "success": "Review successfully created!"
+    },
+    "profile": {
+        "title": "My Profile",
+        "formTitle": "Update Information",
+        "namePlaceholder": "Enter the new name",
+        "passwordPlaceholder": "Enter the new password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Re-enter the new password",
+        "passwordMismatch": "Passwords do not match.",
+        "success": "Information successfully updated!"
+    },
+    "adminRecovery": {
+        "accessDeniedTitle": "Restricted Access",
+        "accessDeniedSubtitle": "You need to be an administrator to view this page.",
+        "pageTitle": "Recovery Request Management"
+    },
+    "resetPassword": {
+        "title": "Password Recovery",
+        "passwordPlaceholder": "Enter your password",
+        "confirmPasswordPlaceholder": "Enter your password again",
+        "tokenMissing": "Recovery token not found."
+    },
+    "reviewPage": {
+        "authors": "Authors",
+        "synopsis": "Synopsis",
+        "commentary": "Commentary",
+        "score": "Rating",
+        "readAt": "Read on",
+        "by": "Review of ",
+        "reviewIdPrefix": "Review ID: ",
+        "confirmDelete": "Are you sure you want to delete this review?"
+    },
+    "searchAuthor": {
+        "title": "Search Author",
+        "namePlaceholder": "Author's Name",
+        "noResults": "No authors found."
+    },
+    "searchBook": {
+        "title": "Search Book",
+        "titlePlaceholder": "Book Title",
+        "noResults": "No books found."
+    },
+    "searchReview": {
+        "title": "Search Review",
+        "noResults": "No reviews found."
+    },
+    "searchUser": {
+        "title": "Search User",
+        "namePlaceholder": "User's Name",
+        "noResults": "No users found."
+    },
+    "message": {
+        "accountCreatedTitle": "Account successfully created!",
+        "accountCreatedSubtitle": "Go to the login page to sign in!",
+        "accountRecoveryRequestTitle": "Recovery request submitted!",
+        "accountRecoveryRequestSubtitle": "Your request has opened a ticket in our system. Keep an eye on your email for instructions on how to reset your password. If it takes too long, don’t hesitate to poke the developer (Matheqs) to speed things up — in fact, if I were you, I’d do it right now! Check the About page to find out how to reach him!"
+    },
+    "userReviews": {
+        "title": "User Reviews",
+        "noResults": "No reviews found.",
+        "fetchError": "Error loading user and review data.",
+        "paginationError": "Error changing page."
+    },
+    "verifyEmail": {
+        "title": "Email Verification",
+        "tokenMissing": "Verification token not found."
+    },
+    "notFound": {
+        "title": "Page Not Found",
+        "code": "404",
+        "description": "The content you are looking for does not exist or has been moved.",
+        "backHome": "Return to Home Page"
+    },
+    "about": {
+        "title": "About DasBuch",
+        "intro": "Hi, my name is <1>Matheqs</1> and I'm an amateur developer. <3>DasBuch</3> is my first fullstack project, created as a personal challenge to test my skills across the various disciplines involved in building a complete application.",
+        "background": "The idea came from my reading habit, which I've cherished since my teenage years. For years I've been writing book reviews on paper, and I decided to create a digital platform to organize these notes. So, DasBuch is not just a portfolio project — I actually use it in my daily life, and you might even come across some of my own reviews here.",
+        "focus": "The project has always focused on <1>simplicity</1>, both in aesthetics and in application logic.",
+        "contactIntro": "For more details about the platform, the tools used, or any questions, you can contact me through the channels below:",
+        "contact": {
+            "instagram": "Instagram",
+            "email": "Email",
+            "linkedin": "LinkedIn"
+        },
+        "linkedinNote": "Or look for <1>Matheqs</1>. I'll be the first handsome guy in the results 😄",
+        "termsTitle": "Privacy Policy and Terms of Use",
+        "termsIntro": "DasBuch is an independent, non-profit, and personal-use application that may be accessed by interested third parties. Below, I outline the basic usage terms of the platform:",
+        "terms": {
+            "data": "<1>Data Collection and Use:</1> The only sensitive data collected by the platform is the email address provided during registration. This data is used only for authentication and account recovery. No personal information is sold, shared, or traded with third parties.",
+            "security": "<1>Security and Responsibility:</1> The application has no word, phrase, or content filters. This means any published text, including comments, titles, or reviews, is entirely the author's responsibility. The use of offensive language, slander, hate speech, or illegal content may be reported and, if necessary, removed.",
+            "storage": "<1>Data Storage:</1> Data is stored on servers with restricted access and is used solely to keep the application running. There is no integration with ad systems or browsing statistics collection.",
+            "consent": "<1>Consent:</1> By using DasBuch, the user automatically agrees to these terms. As a personal and experimental application, these terms may change without prior notice, always aiming for transparency and responsible use of the platform."
+        },
+        "closing": "If you have any questions or suggestions about these terms, feel free to get in touch. Thank you for using DasBuch! 💙"
+    }
+}

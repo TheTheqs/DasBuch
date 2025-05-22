@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import FormContainer from "./FormContainer";
 import FormInput from "./FormInput";
+import { useTranslation } from "react-i18next";
 
 interface AuthorFormData {
   name: string;
@@ -40,6 +41,8 @@ function AuthorForm({
     }
   };
 
+  const { t } = useTranslation();
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
@@ -47,13 +50,13 @@ function AuthorForm({
 
   return (
     <FormContainer
-      title="Editar Author"
+      title={t("author.edit")}
       submitMessage={submitLabel}
       onSubmit={handleFormSubmit}
     >
       <FormInput
-        label="Nome"
-        placeholder="Digite o título do livro"
+        label={t("author.name")}
+        placeholder={t("author.placeholderName")}
         type="text"
         name="name"
         value={formData.name}

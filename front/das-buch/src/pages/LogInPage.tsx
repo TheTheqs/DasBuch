@@ -6,8 +6,10 @@ import UserService from "../services/UserService";
 import { useUser } from "../context/User";
 import { handleApiError } from "../utils/handleApiError";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function LogInPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,24 +38,24 @@ function LogInPage() {
   return (
     <div>
       <FormContainer
-        title="Login"
-        submitMessage="Login"
+        title={t("login.title")}
+        submitMessage={t("form.login")}
         onSubmit={handleSubmit}
         afterFormContent={
-          <SimpleLink to="/forgot-password" label="Esqueceu a senha?" />
+          <SimpleLink to="/forgot-password" label={t("login.forgotPassword")} />
         }
       >
         <FormInput
-          label="Email"
-          placeholder="Digite seu email"
+          label={t("form.email")}
+          placeholder={t("form.emailPlaceholder")}
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
         />
         <FormInput
-          label="Senha"
-          placeholder="Digite sua senha"
+          label={t("form.password")}
+          placeholder={t("form.passwordPlaceholder")}
           type="password"
           name="password"
           value={formData.password}

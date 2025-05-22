@@ -8,16 +8,17 @@ import PaginationBar from "../components/PaginationBar";
 import ReviewService from "../services/ReviewService";
 import { ReviewDTO } from "../type/ReviewDTO";
 import { handleApiError } from "../utils/handleApiError";
+import { useTranslation } from "react-i18next";
 
 function SearchReviewPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({ title: "" });
   const [results, setResults] = useState<ReviewDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
 
-  // Atualiza o input ao carregar a página com base na URL
   useEffect(() => {
     const title = searchParams.get("title") || "";
     const page = parseInt(searchParams.get("page") || "0", 10);
@@ -52,13 +53,13 @@ function SearchReviewPage() {
   return (
     <div>
       <FormContainer
-        title="Buscar Review"
-        submitMessage="Pesquisar"
+        title={t("searchReview.title")}
+        submitMessage={t("form.search")}
         onSubmit={handleSubmit}
       >
         <FormInput
           label=""
-          placeholder="Título do Livro"
+          placeholder={t("searchBook.titlePlaceholder")}
           type="name"
           name="title"
           value={formData.title}
@@ -69,7 +70,7 @@ function SearchReviewPage() {
 
       {formData.title !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
-          Nenhum livro encontrado.
+          {t("searchReview.noResults")}
         </div>
       )}
 

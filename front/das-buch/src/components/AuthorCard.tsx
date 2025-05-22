@@ -1,9 +1,11 @@
 import { AuthorDTO } from "../type/AuthorDTO";
+import { useTranslation } from 'react-i18next';
 interface AuthorCardProps {
   author: AuthorDTO;
 }
 
 function AuthorCard({ author }: AuthorCardProps) {
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -29,7 +31,7 @@ function AuthorCard({ author }: AuthorCardProps) {
       <p style={{ margin: 0, fontSize: "0.85rem", color: "#666" }}>
         {author.books.length > 0
           ? author.books.join(", ")
-          : "Nenhum livro associado"}
+          : t("author.noBooks")}
       </p>
     </div>
   );

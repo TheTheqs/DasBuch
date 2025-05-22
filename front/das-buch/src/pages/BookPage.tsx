@@ -4,12 +4,14 @@ import BookService from "../services/BookService";
 import { BookDTO } from "../type/BookDTO";
 import { Spinner } from "react-bootstrap";
 import PrimaryButton from "../components/PrimaryButton";
+import { useTranslation } from "react-i18next";
 
 function BookPage() {
   const { id } = useParams<{ id: string }>();
   const [book, setBook] = useState<BookDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -19,13 +21,13 @@ function BookPage() {
         const data = await BookService.getBookById(Number(id));
         setBook(data);
       } catch (err) {
-        setError("Erro ao carregar os dados do livro." + err);
+        setError(t("bookPage.loadError") + " " + err);
       } finally {
         setLoading(false);
       }
     };
     fetchBook();
-  }, [id]);
+  }, [id, t]);
 
   if (loading) {
     return (
@@ -38,7 +40,7 @@ function BookPage() {
   if (error || !book) {
     return (
       <div className="container py-5 text-center text-danger">
-        {error || "Livro não encontrado."}
+        {error || t("bookPage.notFound")}
       </div>
     );
   }
@@ -46,26 +48,26 @@ function BookPage() {
   return (
     <div className="container py-4">
       <div className="bg-light p-4 rounded shadow-sm mb-2">
-        <div className="mb-2 text-muted small">ID do Livro: {book.id}</div>
+        <div className="mb-2 text-muted small">
+          {t("bookPage.idLabel", { id: book.id })}
+        </div>
         <h2 className="fw-bold mb-0">{book.title}</h2>
 
         <div className="mb-3">
-          <strong>Autores:</strong>{" "}
+          <strong>{t("bookPage.authors")}</strong>{" "}
           {book.authors.length > 0
             ? book.authors.map((a) => a.name).join(", ")
-            : "Autor desconhecido"}
+            : t("bookPage.unknownAuthor")}
         </div>
 
         <div className="mb-3">
-          <strong>Quantidade de Reviews:</strong> {book.reviewCount}
+          <strong>{t("bookPage.reviewCount")}</strong> {book.reviewCount}
         </div>
       </div>
+
       <div className="d-flex gap-2">
-        <PrimaryButton to={`/book/reviews/${book.id}`} label="Ver Reviews" />
-        <PrimaryButton
-          to={`/new/${book.id}`}
-          label="Fazer Review para este Livro"
-        />
+        <PrimaryButton to={`/book/reviews/${book.id}`} label={t("bookPage.viewReviews")} />
+        <PrimaryButton to={`/new/${book.id}`} label={t("bookPage.createReview")} />
       </div>
     </div>
   );

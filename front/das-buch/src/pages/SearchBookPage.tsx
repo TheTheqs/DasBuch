@@ -8,9 +8,11 @@ import PaginationBar from "../components/PaginationBar";
 import BookService from "../services/BookService";
 import { BookDTO } from "../type/BookDTO";
 import { handleApiError } from "../utils/handleApiError";
+import { useTranslation } from "react-i18next";
 
 function SearchBookPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({ title: "" });
   const [results, setResults] = useState<BookDTO[]>([]);
@@ -51,13 +53,13 @@ function SearchBookPage() {
   return (
     <div>
       <FormContainer
-        title="Buscar Livro"
-        submitMessage="Pesquisar"
+        title={t("searchBook.title")}
+        submitMessage={t("form.search")}
         onSubmit={handleSubmit}
       >
         <FormInput
           label=""
-          placeholder="Título do Livro"
+          placeholder={t("searchBook.titlePlaceholder")}
           type="name"
           name="title"
           value={formData.title}
@@ -68,7 +70,7 @@ function SearchBookPage() {
 
       {formData.title !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
-          Nenhum livro encontrado.
+          {t("searchBook.noResults")}
         </div>
       )}
 

@@ -5,6 +5,7 @@ import DynamicInputList from "./DynamicInputList";
 import FormTextarea from "./FormTextarea";
 import RatingInput from "./RatingInput";
 import FormDateInput from "./FormDateInput";
+import { useTranslation } from "react-i18next";
 
 interface ReviewFormData {
   title: string;
@@ -23,8 +24,15 @@ interface ReviewFormProps {
   error?: string;
 }
 
-function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: ReviewFormProps) {
+function ReviewForm({
+  initialData,
+  onSubmit,
+  submitLabel,
+  success,
+  error,
+}: ReviewFormProps) {
   const [formData, setFormData] = useState(initialData);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setFormData(initialData);
@@ -57,19 +65,20 @@ function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: Revi
     onSubmit(formData);
   };
 
-  const formattedReadDate = formData.readDate instanceof Date
-    ? formData.readDate.toISOString().slice(0, 7)
-    : "";
+  const formattedReadDate =
+    formData.readDate instanceof Date
+      ? formData.readDate.toISOString().slice(0, 7)
+      : "";
 
   return (
     <FormContainer
-      title="Dados Cadastrais"
+      title={t("review.formTitle")}
       submitMessage={submitLabel}
       onSubmit={handleFormSubmit}
     >
       <FormInput
-        label="Livro"
-        placeholder="Digite o título do livro"
+        label={t("review.bookTitle")}
+        placeholder={t("review.placeholderBookTitle")}
         type="text"
         name="title"
         value={formData.title}
@@ -77,7 +86,7 @@ function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: Revi
       />
 
       <DynamicInputList
-        label="Autores"
+        label={t("review.authors")}
         name="authorsNames"
         values={formData.authorsNames}
         onChange={(newAuthors) =>
@@ -86,8 +95,8 @@ function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: Revi
       />
 
       <FormTextarea
-        label="Sinopse"
-        placeholder="Escreva a sua sinopse do livro..."
+        label={t("review.synopsis")}
+        placeholder={t("review.placeholderSynopsis")}
         name="synopsys"
         value={formData.synopsys}
         onChange={handleChange}
@@ -95,8 +104,8 @@ function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: Revi
       />
 
       <FormTextarea
-        label="Comentário"
-        placeholder="Dê a sua opinião sobre o livro..."
+        label={t("review.comment")}
+        placeholder={t("review.placeholderComment")}
         name="commentary"
         value={formData.commentary}
         onChange={handleChange}
@@ -104,14 +113,14 @@ function ReviewForm({ initialData, onSubmit, submitLabel, success, error }: Revi
       />
 
       <RatingInput
-        label="Nota"
+        label={t("review.score")}
         value={formData.score}
         name="score"
         onChange={handleScoreChange}
       />
 
       <FormDateInput
-        label="Data de Leitura"
+        label={t("review.readDate")}
         name="readDate"
         value={formattedReadDate}
         onChange={handleDateChange}

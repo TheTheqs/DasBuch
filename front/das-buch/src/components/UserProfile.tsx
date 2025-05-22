@@ -4,6 +4,7 @@ import { useUser } from "../context/User";
 import { Button } from "react-bootstrap";
 import UserService from "../services/UserService";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface UserProfileProps {
   relatedUser: UserDTO;
@@ -12,6 +13,7 @@ interface UserProfileProps {
 function UserProfile({ relatedUser }: UserProfileProps) {
   const { user } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -27,21 +29,31 @@ function UserProfile({ relatedUser }: UserProfileProps) {
         textAlign: "left",
       }}
     >
-      <ProfileLine label="Name" content={relatedUser.name} />
-      <ProfileLine label="Reviews" content={String(relatedUser.reviewCount)} />
+      <ProfileLine label={t("userProfile.name")} content={relatedUser.name} />
+      <ProfileLine
+        label={t("userProfile.reviews")}
+        content={String(relatedUser.reviewCount)}
+      />
 
       {(user?.role === "ADMIN" || user?.id === relatedUser.id) && (
         <>
-          <ProfileLine label="ID" content={String(relatedUser.id)} />
-          <ProfileLine label="Email" content={relatedUser.email} />
-          <ProfileLine label="Role" content={relatedUser.role} />
+          <ProfileLine
+            label={t("userProfile.id")}
+            content={String(relatedUser.id)}
+          />
+          <ProfileLine
+            label={t("userProfile.email")}
+            content={relatedUser.email}
+          />
+          <ProfileLine
+            label={t("userProfile.role")}
+            content={relatedUser.role}
+          />
           <Button
             variant="outline-danger"
             className="d-block mx-auto mt-4"
             onClick={async () => {
-              const confirmed = window.confirm(
-                "Tem certeza que deseja deletar este usuário?"
-              );
+              const confirmed = window.confirm(t("userProfile.confirmDelete"));
               if (!confirmed) return;
 
               const message = await UserService.deleteUser(relatedUser.id);
@@ -55,7 +67,7 @@ function UserProfile({ relatedUser }: UserProfileProps) {
               }
             }}
           >
-            Deletar Perfil
+            {t("userProfile.deleteProfile")}
           </Button>
         </>
       )}

@@ -7,9 +7,11 @@ import SearchResultGrid from '../components/SearchResultsGrid';
 import PaginationBar from '../components/PaginationBar';
 import UserService from '../services/UserService';
 import { UserDTO } from '../type/UserDTO';
+import { useTranslation } from 'react-i18next';
 
 function SearchUserPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({ name: '' });
   const [results, setResults] = useState<UserDTO[]>([]);
@@ -43,16 +45,22 @@ function SearchUserPage() {
 
   return (
     <div>
-      <FormContainer title="Buscar Usuário" submitMessage="Pesquisar" onSubmit={handleSubmit}>
+      <FormContainer title={t("searchUser.title")} submitMessage={t("form.search")} onSubmit={handleSubmit}>
         <FormInput
           label=""
-          placeholder="Nome do Usuário"
+          placeholder={t("searchUser.namePlaceholder")}
           type="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
         />
       </FormContainer>
+
+      {formData.name !== "" && results.length === 0 && (
+        <div className="text-center text-muted mt-4">
+          {t("searchUser.noResults")}
+        </div>
+      )}
 
       {results.length > 0 && (
         <SearchResultGrid>

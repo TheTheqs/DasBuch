@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface DynamicInputListProps {
   label: string;
@@ -13,13 +14,13 @@ const DynamicInputList: React.FC<DynamicInputListProps> = ({
   name,
   values,
   onChange,
-  placeholder = "Digite um valor",
 }) => {
   const handleChange = (index: number, value: string) => {
     const newValues = [...values];
     newValues[index] = value;
     onChange(newValues);
   };
+  const { t } = useTranslation();
 
   const handleAddField = () => {
     onChange([...values, ""]);
@@ -40,7 +41,7 @@ const DynamicInputList: React.FC<DynamicInputListProps> = ({
             name={`${name}[${index}]`}
             value={value}
             onChange={(e) => handleChange(index, e.target.value)}
-            placeholder={`${placeholder} ${index + 1}`}
+            placeholder={`${t("dynamicInput.placeholder")} ${index + 1}`}
             className="form-control"
             required
           />
@@ -50,13 +51,17 @@ const DynamicInputList: React.FC<DynamicInputListProps> = ({
               className="btn btn-outline-danger btn-sm"
               onClick={() => handleRemoveField(index)}
             >
-              Remover
+              {t("dynamicInput.remove")}
             </button>
           )}
         </div>
       ))}
-      <button type="button" className="btn btn-outline-secondary btn-sm" onClick={handleAddField}>
-        + Adicionar
+      <button
+        type="button"
+        className="btn btn-outline-secondary btn-sm"
+        onClick={handleAddField}
+      >
+        {t("dynamicInput.add")}
       </button>
     </div>
   );

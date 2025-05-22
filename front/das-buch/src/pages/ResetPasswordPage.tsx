@@ -4,9 +4,12 @@ import FormInput from "../components/FormInput";
 import { useSearchParams } from "react-router-dom";
 import { handleApiError } from "../utils/handleApiError";
 import UserService from "../services/UserService";
+import { useTranslation } from "react-i18next";
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
+
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const token = searchParams.get("token");
@@ -26,12 +29,12 @@ export default function ResetPasswordPage() {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("As senhas não coincidem.");
+      setError(t("profile.passwordMismatch"));
       return;
     }
 
     if (!token) {
-      setError("Token de recuperação não encontrado.");
+      setError(t("resetPassword.tokenMissing"));
       return;
     }
 
@@ -45,15 +48,13 @@ export default function ResetPasswordPage() {
 
   return (
     <FormContainer
-      title="Recuperação de Senha"
-      submitMessage="Enviar"
+      title={t("resetPassword.title")}
+      submitMessage={t("form.send")}
       onSubmit={handleSubmit}
     >
-
-
       <FormInput
-        label="Senha"
-        placeholder="Digite sua senha"
+        label={t("form.password")}
+        placeholder={t("resetPassword.passwordPlaceholder")}
         type="password"
         name="password"
         value={formData.password}
@@ -61,8 +62,8 @@ export default function ResetPasswordPage() {
       />
 
       <FormInput
-        label="Confirme a Senha"
-        placeholder="Digite sua senha novamente"
+        label={t("profile.confirmPassword")}
+        placeholder={t("resetPassword.confirmPasswordPlaceholder")}
         type="password"
         name="confirmPassword"
         value={formData.confirmPassword}

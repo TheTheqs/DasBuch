@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface RecoveryRequestControlsProps {
   onShowAll: () => void;
@@ -9,13 +10,14 @@ const RecoveryRequestControls: React.FC<RecoveryRequestControlsProps> = ({
   onShowAll,
   onShowPending,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="d-flex gap-3 mb-4">
       <button className="btn btn-primary" onClick={onShowPending}>
-        Buscar Requisições Pendentes
+        {t("recovery.showPending")}
       </button>
       <button className="btn btn-secondary" onClick={onShowAll}>
-        Mostrar Todas as Requisições
+        {t("recovery.showAll")}
       </button>
     </div>
   );

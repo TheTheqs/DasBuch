@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { UserProvider } from './context/User.tsx';
+import './i18n';
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

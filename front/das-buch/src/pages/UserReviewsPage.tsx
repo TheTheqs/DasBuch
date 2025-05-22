@@ -9,6 +9,7 @@ import UserProfile from "../components/UserProfile";
 import { Spinner } from "react-bootstrap";
 import UserService from "../services/UserService";
 import { UserDTO } from "../type/UserDTO";
+import { useTranslation } from "react-i18next";
 
 function UserReviewsPage() {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ function UserReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [user, setUser] = useState<UserDTO | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,14 +37,14 @@ function UserReviewsPage() {
         });
         setUser(userResponse);
       } catch (err) {
-        setError("Erro ao carregar os dados do usuário e reviews. " + err);
+        setError(t("userReviews.fetchError") + " " + err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, t]);
 
   const handlePageChange = async (newPage: number) => {
     if (!id) return;
@@ -58,7 +60,7 @@ function UserReviewsPage() {
         totalPages: response.totalPages,
       });
     } catch (err) {
-      setError("Erro ao mudar de página." + err);
+      setError(t("userReviews.paginationError") + " " + err);
     }
   };
 
@@ -79,10 +81,12 @@ function UserReviewsPage() {
   return (
     <div className="container py-4">
       {user && <UserProfile relatedUser={user} />}
-      <h3 className="mb-4 text-center fw-bold">Reviews do Usuário</h3>
+      <h3 className="mb-4 text-center fw-bold">{t("userReviews.title")}</h3>
 
       {results.length === 0 ? (
-        <div className="text-center text-muted">Nenhum review encontrado.</div>
+        <div className="text-center text-muted">
+          {t("userReviews.noResults")}
+        </div>
       ) : (
         <SearchResultGrid>
           {results.map((review) => (

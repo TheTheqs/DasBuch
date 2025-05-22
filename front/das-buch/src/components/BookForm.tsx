@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import FormContainer from "./FormContainer";
 import FormInput from "./FormInput";
 import DynamicInputList from "./DynamicInputList";
+import { useTranslation } from "react-i18next";
 
 interface BookFormData {
   title: string;
@@ -29,6 +30,8 @@ function BookForm({
     setFormData(initialData);
   }, [initialData]);
 
+  const { t } = useTranslation();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -49,13 +52,13 @@ function BookForm({
 
   return (
     <FormContainer
-      title="Editar Livro"
+      title={t("book.edit")}
       submitMessage={submitLabel}
       onSubmit={handleFormSubmit}
     >
       <FormInput
-        label="Título"
-        placeholder="Digite o título do livro"
+        label={t("book.title")}
+        placeholder={t("book.placeholderTitle")}
         type="text"
         name="title"
         value={formData.title}
@@ -63,7 +66,7 @@ function BookForm({
       />
 
       <DynamicInputList
-        label="Autores"
+        label={t("book.authors")}
         name="authors"
         values={formData.authors}
         onChange={(newAuthors) =>

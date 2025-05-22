@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useUser } from "../context/User";
 import { useNavigate } from "react-router-dom";
 import BookService from "../services/BookService";
+import { useTranslation } from "react-i18next";
 
 interface BookCardProps {
   book: BookDTO;
@@ -11,6 +12,7 @@ interface BookCardProps {
 function BookCard({ book }: BookCardProps) {
   const { user } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -36,10 +38,11 @@ function BookCard({ book }: BookCardProps) {
       <p style={{ margin: 0, fontSize: "0.85rem", color: "#666" }}>
         {book.authors.length > 0
           ? book.authors.map((a) => a.name).join(", ")
-          : "Autor desconhecido"}
+          : t("book.unknownAuthor")}
       </p>
       <p style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>
-        {book.reviewCount} {book.reviewCount === 1 ? "review" : "reviews"}
+        {book.reviewCount}{" "}
+        {book.reviewCount === 1 ? t("book.review") : t("book.reviews")}
       </p>
 
       {user?.role === "ADMIN" && (
@@ -51,7 +54,7 @@ function BookCard({ book }: BookCardProps) {
               navigate(`/update_book/${book.id}`);
             }}
           >
-            Editar
+            {t("book.edit")}
           </Button>
 
           <Button
@@ -69,7 +72,7 @@ function BookCard({ book }: BookCardProps) {
               navigate(`/`);
             }}
           >
-            Deletar
+            {t("book.delete")}
           </Button>
         </div>
       )}

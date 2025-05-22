@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AuthorService from "../services/AuthorService";
 import { useUser } from "../context/User";
 import { AuthorDTO } from "../type/AuthorDTO";
-import { Spinner } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Spinner, Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 function AuthorPage() {
   const { id } = useParams<{ id: string }>();
-  const {user} = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [author, setAuthor] = useState<AuthorDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,13 +24,13 @@ function AuthorPage() {
         const data = await AuthorService.getAuthorById(Number(id));
         setAuthor(data);
       } catch (err) {
-        setError("Erro ao carregar os dados do autor. " + err);
+        setError(t("authorPage.loadError") + " " + err);
       } finally {
         setLoading(false);
       }
     };
     fetchAuthor();
-  }, [id]);
+  }, [id, t]);
 
   if (loading) {
     return (
@@ -42,7 +43,7 @@ function AuthorPage() {
   if (error || !author) {
     return (
       <div className="container py-5 text-center text-danger">
-        {error || "Autor não encontrado."}
+        {error || t("authorPage.notFound")}
       </div>
     );
   }
@@ -50,20 +51,23 @@ function AuthorPage() {
   return (
     <div className="container py-4">
       <div className="bg-light p-4 rounded shadow-sm mb-2">
-        <div className="mb-2 text-muted small">ID do Autor: {author.id}</div>
+        <div className="mb-2 text-muted small">
+          {t("authorPage.idLabel", { id: author.id })}
+        </div>
         <h2 className="fw-bold mb-0">{author.name}</h2>
 
         <div className="mt-3">
-          <strong>Livros:</strong>
+          <strong>{t("authorPage.books")}</strong>
           <ul className="mt-2">
             {author.books.length > 0 ? (
               author.books.map((book, index) => <li key={index}>{book}</li>)
             ) : (
-              <li>Nenhum livro associado</li>
+              <li>{t("author.noBooks")}</li>
             )}
           </ul>
         </div>
       </div>
+
       {user?.role === "ADMIN" && (
         <div className="d-flex gap-2 mt-2 justify-content-center">
           <Button
@@ -73,16 +77,14 @@ function AuthorPage() {
               navigate(`/update_author/${author.id}`);
             }}
           >
-            Editar
+            {t("authorPage.edit")}
           </Button>
 
           <Button
             variant="outline-danger"
             onClick={async (e) => {
               e.stopPropagation();
-              const confirmed = window.confirm(
-                "Tem certeza que deseja deletar este autor?"
-              );
+              const confirmed = window.confirm(t("authorPage.confirmDelete"));
               if (!confirmed) return;
 
               const message = await AuthorService.deleteAuthor(author.id);
@@ -90,7 +92,7 @@ function AuthorPage() {
               navigate(`/`);
             }}
           >
-            Deletar
+            {t("authorPage.delete")}
           </Button>
         </div>
       )}

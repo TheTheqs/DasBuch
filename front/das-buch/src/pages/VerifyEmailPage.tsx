@@ -1,22 +1,24 @@
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { handleApiError } from "../utils/handleApiError";
 import UserService from "../services/UserService";
+import { useTranslation } from "react-i18next";
 
 export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const calledRef = useRef(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const token = searchParams.get("token");
 
     if (!token) {
-        setError("Token de verificação não encontrado.");
-        return;
-      }
-    
+      setError(t("verifyEmail.tokenMissing"));
+      return;
+    }
+
     if (calledRef.current) return;
     calledRef.current = true;
 
@@ -26,14 +28,15 @@ export default function VerifyEmailPage() {
         setMessage(responseMessage);
       } catch (error) {
         setError(handleApiError(error));
-    }};
+      }
+    };
 
     verify();
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   return (
     <div style={{ padding: "2rem", textAlign: "center" }}>
-      <h1>Verificação de Email</h1>
+      <h1>{t("verifyEmail.title")}</h1>
 
       {message && <p style={{ color: "green" }}>{message}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}

@@ -5,10 +5,12 @@ import ReviewService from "../services/ReviewService";
 import ReviewForm from "../components/ReviewForm";
 import BookService from "../services/BookService";
 import { BookDTO } from "../type/BookDTO";
+import { useTranslation } from "react-i18next";
 
 function NewReviewPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -34,14 +36,14 @@ function NewReviewPage() {
           authorsNames: book.authors.map((a) => a.name),
         }));
       } catch (err) {
-        setError("Erro ao carregar dados do livro: " + handleApiError(err));
+        setError(t("newReview.loadErrorPrefix") + " " + handleApiError(err));
       } finally {
         setLoading(false);
       }
     };
 
     fetchBook();
-  }, [bookId]);
+  }, [bookId, t]);
 
   const handleCreate = async (formData: typeof initialData) => {
     setSuccess("");
@@ -56,7 +58,7 @@ function NewReviewPage() {
         score: formData.score,
         readAt: formData.readDate.toISOString().slice(0, 19),
       });
-      setSuccess("Review criado com sucesso!");
+      setSuccess(t("newReview.success"));
       navigate(`/review/${newReview.id}`);
     } catch (error) {
       setError(handleApiError(error));
@@ -66,7 +68,7 @@ function NewReviewPage() {
   if (loading) {
     return (
       <div className="container py-5 text-center">
-        <p>Carregando informações do livro...</p>
+        <p>{t("newReview.loading")}</p>
       </div>
     );
   }
@@ -75,7 +77,7 @@ function NewReviewPage() {
     <ReviewForm
       initialData={initialData}
       onSubmit={handleCreate}
-      submitLabel="Cadastrar"
+      submitLabel={t("form.create")}
       success={success}
       error={error}
     />

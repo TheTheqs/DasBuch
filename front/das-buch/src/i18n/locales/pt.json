@@ -1,0 +1,258 @@
+{
+    "author": {
+        "noBooks": "Nenhum livro associado",
+        "edit": "Editar Autor",
+        "name": "Nome",
+        "placeholderName": "Digite o nome do Autor"
+    },
+    "book": {
+        "title": "Título",
+        "placeholderTitle": "Digite o título do livro",
+        "authors": "Autores",
+        "unknownAuthor": "Autor desconhecido",
+        "review": "avaliação",
+        "reviews": "avaliações",
+        "edit": "Editar Livro",
+        "delete": "Deletar",
+        "confirmDelete": "Tem certeza que deseja deletar este livro?"
+    },
+    "cta": {
+        "welcome": "Bem-vindo ao DasBuch 📚",
+        "description": "Descubra, leia e compartilhe suas experiências literárias!",
+        "startNow": "Comece agora",
+        "login": "Fazer Login"
+    },
+    "dynamicInput": {
+        "placeholder": "Novo Autor",
+        "remove": "Remover",
+        "add": "+ Adicionar"
+    },
+    "footer": {
+        "rights": "Todos os direitos reservados."
+    },
+    "form": {
+        "submit": "Salvar",
+        "update": "Atualizar",
+        "create": "Criar",
+        "send": "Enviar",
+        "login": "Login",
+        "search": "Pesquisar",
+        "name": "Nome",
+        "namePlaceholder": "Digite seu nome",
+        "email": "Email",
+        "emailPlaceholder": "Digite seu email",
+        "confirmEmail": "Confirme o email",
+        "confirmEmailPlaceholder": "Digite seu email novamente",
+        "password": "Senha",
+        "passwordPlaceholder": "Digite sua senha",
+        "confirmPassword": "Confirme a Senha",
+        "confirmPasswordPlaceholder": "Digite sua senha novamente",
+        "emailMismatch": "Os emails não coincidem.",
+        "passwordMismatch": "As senhas não coincidem.",
+        "register": "Cadastrar",
+        "acceptTerms": "Li e concordo com os termos de uso (encontrados na página Sobre)",
+        "termsNotAccepted": "Você deve aceitar os termos de uso para continuar.",
+        "registrationData": "Crie uma conta",
+        "edit": "Editar",
+        "delete": "Deletar"
+    },
+    "main": {
+        "welcome": "Bem-vindo {{name}}! 📑",
+        "info": "Para detalhes sobre a aplicação ou entrar em contato com o desenvolvedor (Matheqs :D) visite a aba \"Sobre\".",
+        "newReview": "Novo Review",
+        "myReviews": "Meus Reviews",
+        "searchUser": "Buscar Usuário"
+    },
+    "navbar": {
+        "books": "Livros",
+        "authors": "Autores",
+        "reviews": "Reviews",
+        "about": "Sobre",
+        "signin": "Criar Conta",
+        "login": "Entrar",
+        "logout": "Sair",
+        "toggle": "Alternar navegação"
+    },
+    "recovery": {
+        "resolved": "Resolvido",
+        "pending": "Pendente",
+        "createdAt": "Criado em:",
+        "markAsResolved": "Marcar como Resolvido",
+        "delete": "Deletar",
+        "showPending": "Buscar Requisições Pendentes",
+        "showAll": "Mostrar Todas as Requisições"
+    },
+    "review": {
+        "formTitle": "Novo Review",
+        "bookTitle": "Livro",
+        "placeholderBookTitle": "Digite o título do livro",
+        "authors": "Autores",
+        "synopsis": "Sinopse",
+        "placeholderSynopsis": "Escreva a sua sinopse do livro...",
+        "comment": "Comentário",
+        "placeholderComment": "Dê a sua opinião sobre o livro...",
+        "score": "Nota",
+        "readDate": "Data de Leitura"
+    },
+    "userCard": {
+        "idLabel": "ID: {{id}}",
+        "reviewLabel": "Reviews: {{count}}"
+    },
+    "userProfile": {
+        "name": "Nome",
+        "reviews": "Reviews",
+        "id": "ID",
+        "email": "Email",
+        "role": "Função",
+        "confirmDelete": "Tem certeza que deseja deletar este usuário?",
+        "deleteProfile": "Deletar Perfil"
+    },
+    "authorPage": {
+        "loadError": "Erro ao carregar os dados do autor.",
+        "notFound": "Autor não encontrado.",
+        "idLabel": "ID do Autor: {{id}}",
+        "books": "Livros:",
+        "edit": "Editar",
+        "delete": "Deletar",
+        "confirmDelete": "Tem certeza que deseja deletar este autor?"
+    },
+    "bookPage": {
+        "loadError": "Erro ao carregar os dados do livro.",
+        "notFound": "Livro não encontrado.",
+        "idLabel": "ID do Livro: {{id}}",
+        "authors": "Autores:",
+        "unknownAuthor": "Autor desconhecido",
+        "reviewCount": "Quantidade de Reviews:",
+        "viewReviews": "Ver Reviews",
+        "createReview": "Fazer Review para este Livro"
+    },
+    "bookReviews": {
+        "loadError": "Erro ao carregar os reviews.",
+        "pageChangeError": "Erro ao mudar de página.",
+        "title": "Reviews de Livro",
+        "noResults": "Nenhum review encontrado."
+    },
+    "editAuthor": {
+        "loading": "Carregando autor...",
+        "notFound": "Autor não encontrado.",
+        "success": "Autor atualizado com sucesso!"
+    },
+    "editBook": {
+        "loading": "Carregando livro...",
+        "notFound": "Livro não encontrado.",
+        "success": "Livro atualizado com sucesso!"
+    },
+    "editReview": {
+        "loading": "Carregando review...",
+        "notFound": "Review não encontrado.",
+        "success": "Review atualizado com sucesso!"
+    },
+    "forgotPassword": {
+        "title": "Recuperar senha",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Digite seu email"
+    },
+    "login": {
+        "title": "Login",
+        "forgotPassword": "Esqueceu a senha?"
+    },
+    "newReview": {
+        "loading": "Carregando informações do livro...",
+        "loadErrorPrefix": "Erro ao carregar dados do livro:",
+        "success": "Review criado com sucesso!"
+    },
+    "profile": {
+        "title": "Meu Perfil",
+        "formTitle": "Atualizar Dados",
+        "namePlaceholder": "Digite o novo nome",
+        "passwordPlaceholder": "Digite a nova senha",
+        "confirmPassword": "Confirme a Senha",
+        "confirmPasswordPlaceholder": "Digite a nova senha novamente",
+        "passwordMismatch": "As senhas não coincidem.",
+        "success": "Dados atualizados com sucesso!"
+    },
+    "adminRecovery": {
+        "accessDeniedTitle": "Acesso restrito",
+        "accessDeniedSubtitle": "Você precisa ser um administrador para visualizar esta página.",
+        "pageTitle": "Gerenciamento de Requisições de Recuperação"
+    },
+    "resetPassword": {
+        "title": "Recuperação de Senha",
+        "passwordPlaceholder": "Digite sua senha",
+        "confirmPasswordPlaceholder": "Digite sua senha novamente",
+        "tokenMissing": "Token de recuperação não encontrado."
+    },
+    "reviewPage": {
+        "authors": "Autores",
+        "synopsis": "Sinopse",
+        "commentary": "Comentário",
+        "score": "Nota",
+        "readAt": "Lido em",
+        "by": "Review de ",
+        "reviewIdPrefix": "ID do Review: ",
+        "confirmDelete": "Tem certeza que deseja deletar este review?"
+    },
+    "searchAuthor": {
+        "title": "Buscar Autor",
+        "namePlaceholder": "Nome do Autor",
+        "noResults": "Nenhum autor encontrado."
+    },
+    "searchBook": {
+        "title": "Buscar Livro",
+        "titlePlaceholder": "Título do Livro",
+        "noResults": "Nenhum livro encontrado."
+    },
+    "searchReview": {
+        "title": "Buscar Review",
+        "noResults": "Nenhum review encontrado."
+    },
+    "searchUser": {
+        "title": "Buscar Usuário",
+        "namePlaceholder": "Nome do Usuário",
+        "noResults": "Nenhum usuário encontrado."
+    },
+    "message": {
+        "accountCreatedTitle": "Conta criada com sucesso!",
+        "accountCreatedSubtitle": "Vá para a página de login para realizar o login!",
+        "accountRecoveryRequestTitle": "Solicitação de recuperação enviada!",
+        "accountRecoveryRequestSubtitle": "Sua solicitação abriu uma chamada em nosso sistema. Fique de olho no seu e-mail para receber as instruções de como redefinir sua senha. Se demorar demais, não hesite em importunar o desenvolvedor (Matheqs) para agilizar o processo — na verdade, se eu fosse você, faria isso agora mesmo! Vá até a aba Sobre e descubra como encontrá-lo."
+    },
+    "userReviews": {
+        "title": "Reviews do Usuário",
+        "noResults": "Nenhum review encontrado.",
+        "fetchError": "Erro ao carregar os dados do usuário e reviews.",
+        "paginationError": "Erro ao mudar de página."
+    },
+    "verifyEmail": {
+        "title": "Verificação de Email",
+        "tokenMissing": "Token de verificação não encontrado."
+    },
+    "notFound": {
+        "title": "Página não encontrada",
+        "code": "404",
+        "description": "O conteúdo que você procura não existe ou foi movido.",
+        "backHome": "Voltar para a página inicial"
+    },
+    "about": {
+        "title": "Sobre o DasBuch",
+        "intro": "Olá, me chamo <1>Matheqs</1> e sou um desenvolvedor amador. O <3>DasBuch</3> é meu primeiro projeto fullstack, criado como um desafio pessoal para testar minhas habilidades em múltiplas disciplinas envolvidas no desenvolvimento de um software completo.",
+        "background": "A ideia surgiu do meu hábito de leitura, que cultivo com carinho desde a adolescência. Há anos escrevo reviews de livros de forma analógica, e decidi criar uma plataforma digital para organizar essas anotações. Ou seja, o DasBuch não é apenas um projeto de portfólio — eu realmente o utilizo no meu dia a dia, e talvez você até encontre algumas resenhas minhas por aqui.",
+        "focus": "O foco do projeto sempre foi a <1>simplicidade</1>, tanto na estética quanto na lógica da aplicação.",
+        "contactIntro": "Para mais detalhes sobre a plataforma, as ferramentas utilizadas ou qualquer outra dúvida, você pode entrar em contato comigo pelos canais abaixo:",
+        "contact": {
+            "instagram": "Instagram",
+            "email": "E-mail",
+            "linkedin": "LinkedIn"
+        },
+        "linkedinNote": "Ou procure por <1>Matheqs</1>. Serei o primeiro rapaz bonito nos resultados 😄",
+        "termsTitle": "Política de Privacidade e Termos de Uso",
+        "termsIntro": "O DasBuch é uma aplicação independente, sem fins lucrativos e de uso pessoal, que pode ser acessada por terceiros interessados. A seguir, esclareço os termos básicos de uso da plataforma:",
+        "terms": {
+            "data": "<1>Coleta e uso de dados:</1> O único dado sensível coletado pela plataforma é o endereço de e-mail fornecido no momento do cadastro. Esse dado é usado apenas para autenticação e recuperação de conta. Nenhuma informação pessoal é vendida, compartilhada ou comercializada com terceiros.",
+            "security": "<1>Segurança e responsabilidade:</1> A aplicação não possui nenhum tipo de filtro de palavras, expressões ou conteúdos. Isso significa que qualquer texto publicado, incluindo comentários, títulos ou resenhas, é de total responsabilidade do autor. O uso de linguagem ofensiva, caluniosa, de incitação ao ódio ou de conteúdo ilegal poderá ser reportado e, se necessário, removido.",
+            "storage": "<1>Armazenamento:</1> Os dados são armazenados em servidores com acesso restrito e utilizados apenas para manter o funcionamento da aplicação. Não há integração com sistemas de anúncios ou coleta de estatísticas de navegação.",
+            "consent": "<1>Consentimento:</1> Ao utilizar o DasBuch, o usuário concorda com esses termos de forma automática. Por se tratar de uma aplicação pessoal e experimental, estes termos podem ser alterados sem aviso prévio, sempre visando a transparência e o bom uso da plataforma."
+        },
+        "closing": "Caso tenha dúvidas ou sugestões sobre estes termos, entre em contato. Agradeço por utilizar o DasBuch! 💙"
+    }
+}

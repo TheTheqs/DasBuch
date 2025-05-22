@@ -23,6 +23,8 @@ import SearchAuthorPage from "./pages/SearchAuthorPage";
 import AuthorPage from "./pages/AuthorPage";
 import EditAuthorPage from "./pages/EditAuthorPage";
 import RecoveryRequestAdminPage from "./pages/RecoveryRequestAdminPage";
+import AboutPage from "./pages/AboutPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -49,9 +51,11 @@ function App() {
           <Route path="/message" element={<MessagePage />} />
           <Route path="/book/reviews/:id" element={<BookReviewsPage />}/>
           <Route path="/review" element= {<SearchReviewPage />} />
+          <Route path="/about" element= {<AboutPage />} />
           <Route path="/update_review/:id" element= {<EditReviewPage />} />
           <Route path="/update_book/:id" element= {<EditBookPage />} />
           <Route path="/update_author/:id" element= {<EditAuthorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />

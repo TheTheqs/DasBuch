@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../context/User";
 import { useNavigate } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
@@ -7,10 +6,12 @@ import FormInput from "../components/FormInput";
 import { handleApiError } from "../utils/handleApiError";
 import UserService from "../services/UserService";
 import UserProfile from "../components/UserProfile";
+import { useTranslation } from "react-i18next";
 
 function ProfilePage() {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,7 +32,7 @@ function ProfilePage() {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("As senhas não coincidem.");
+      setError(t("profile.passwordMismatch"));
       return;
     }
 
@@ -41,7 +42,7 @@ function ProfilePage() {
         formData.password
       );
       setUser(updatedUser);
-      setSuccess("Dados atualizados com sussesso!");
+      setSuccess(t("profile.success"));
     } catch (error) {
       setError(handleApiError(error));
     }
@@ -55,48 +56,47 @@ function ProfilePage() {
     }
   }, [user, navigate]);
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   return (
     <div style={{ paddingTop: "0px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-        Meu Perfil
+        {t("profile.title")}
       </h1>
 
       <UserProfile relatedUser={user} />
 
-      <FormContainer title="Atualizar Dados" submitMessage='Atualizar' onSubmit={handleSubmit}>
-      <FormInput
-        label="Nome"
-        placeholder="Digite o novo nome"
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-      />
+      <FormContainer title={t("profile.formTitle")} submitMessage={t("form.update")} onSubmit={handleSubmit}>
+        <FormInput
+          label={t("form.name")}
+          placeholder={t("profile.namePlaceholder")}
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
 
-      <FormInput
-        label="Senha"
-        placeholder="Digite a nova senha"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
-        
-      <FormInput
-        label="Confirme a Senha"
-        placeholder="Digite a nova senha novamente"
-        type="password"
-        name="confirmPassword"
-        value={formData.confirmPassword}
-        onChange={handleChange}
-      />
-      {success && <p style={{ color: "green" }}>{success}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </FormContainer>
+        <FormInput
+          label={t("form.password")}
+          placeholder={t("profile.passwordPlaceholder")}
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        <FormInput
+          label={t("profile.confirmPassword")}
+          placeholder={t("profile.confirmPasswordPlaceholder")}
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+        />
+
+        {success && <p style={{ color: "green" }}>{success}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </FormContainer>
     </div>
   );
 }

@@ -4,10 +4,12 @@ import { ReviewDTO } from "../type/ReviewDTO";
 import ReviewService from "../services/ReviewService";
 import { handleApiError } from "../utils/handleApiError";
 import ReviewForm from "../components/ReviewForm";
+import { useTranslation } from "react-i18next";
 
 function EditReviewPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [review, setReview] = useState<ReviewDTO | null>(null);
   const [success, setSuccess] = useState("");
@@ -50,15 +52,22 @@ function EditReviewPage() {
         score: formData.score,
         readAt: formData.readDate.toISOString().slice(0, 19),
       });
-      setSuccess("Review atualizado com sucesso!");
+      setSuccess(t("editReview.success"));
       navigate(`/review/${id}`);
     } catch (err) {
       setError(handleApiError(err));
     }
   };
 
-  if (loading) return <p className="text-center mt-4">Carregando review...</p>;
-  if (error || !review) return <p className="text-danger text-center mt-4">{error || "Review não encontrado."}</p>;
+  if (loading)
+    return <p className="text-center mt-4">{t("editReview.loading")}</p>;
+
+  if (error || !review)
+    return (
+      <p className="text-danger text-center mt-4">
+        {error || t("editReview.notFound")}
+      </p>
+    );
 
   const initialData = {
     title: review.book.title,
@@ -73,7 +82,7 @@ function EditReviewPage() {
     <ReviewForm
       initialData={initialData}
       onSubmit={handleUpdate}
-      submitLabel="Atualizar"
+      submitLabel={t("form.update")}
       success={success}
       error={error}
     />

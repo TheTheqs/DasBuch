@@ -1,7 +1,6 @@
 import React from "react";
 import { ReviewDTO } from "../type/ReviewDTO";
 import { useNavigate } from "react-router-dom";
-import { Star } from "lucide-react";
 
 interface ReviewCardProps {
   review: ReviewDTO;
@@ -14,23 +13,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
     navigate(`/review/${review.id}`);
   };
 
-  const renderStars = (score: number) => {
-    const totalStars = 10;
-    const filled = Math.floor(score);
-    const half = score % 1 >= 0.5 ? 1 : 0;
-    const empty = totalStars - filled - half;
-
+  const renderScore = (score: number) => {
+    const outOfFive = Math.round(score * 10) / 10; // garante precisão correta (ex: 0.5 e não 0.3)
     return (
-      <div className="d-flex gap-1">
-        {[...Array(filled)].map((_, i) => (
-          <Star key={`f-${i}`} className="text-warning" size={16} fill="currentColor" />
-        ))}
-        {half === 1 && (
-          <Star className="text-warning" size={16} fill="currentColor" stroke="#ccc" />
-        )}
-        {[...Array(empty)].map((_, i) => (
-          <Star key={`e-${i}`} className="text-secondary" size={16} />
-        ))}
+      <div className="fw-semibold text-dark">
+        {outOfFive.toFixed(1)} / 5
       </div>
     );
   };
@@ -38,7 +25,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   return (
     <div
       className="card shadow-sm border-0 mb-3"
-      style={{ cursor: "pointer", backgroundColor: "#f8f9fa" }}
+      style={{
+        cursor: "pointer",
+        backgroundColor: "#f8f9fa",
+        minWidth: "280px",
+        maxWidth: "360px",
+        width: "100%" // Responsivo dentro de grids
+      }}
       onClick={handleClick}
     >
       <div className="card-body">
@@ -47,7 +40,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         <p className="card-subtitle text-muted mb-2">
           <em>{review.book.authors.map((a) => a.name).join(", ")}</em>
         </p>
-        {renderStars(review.score)}
+        {renderScore(review.score)}
       </div>
     </div>
   );
