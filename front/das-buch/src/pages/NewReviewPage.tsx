@@ -6,6 +6,7 @@ import ReviewForm from "../components/ReviewForm";
 import BookService from "../services/BookService";
 import { BookDTO } from "../type/BookDTO";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap";
 
 function NewReviewPage() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -15,6 +16,7 @@ function NewReviewPage() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(!!bookId);
+  const [submitting, setSubmitting] = useState(false); // 👈 Novo estado
 
   const [initialData, setInitialData] = useState({
     title: "",
@@ -48,6 +50,7 @@ function NewReviewPage() {
   const handleCreate = async (formData: typeof initialData) => {
     setSuccess("");
     setError("");
+    setSubmitting(true); // 👈 inicia carregamento
 
     try {
       const newReview = await ReviewService.createReview({
@@ -62,13 +65,15 @@ function NewReviewPage() {
       navigate(`/review/${newReview.id}`);
     } catch (err) {
       setError(t(handleApiError(err)));
+    } finally {
+      setSubmitting(false); // 👈 encerra carregamento
     }
   };
 
-  if (loading) {
+  if (loading || submitting) {
     return (
       <div className="container py-5 text-center">
-        <p>{t("newReview.loading")}</p>
+        <Spinner animation="border" variant="primary" />
       </div>
     );
   }

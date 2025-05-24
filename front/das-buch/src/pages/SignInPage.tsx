@@ -5,6 +5,7 @@ import FormInput from "../components/FormInput";
 import FormContainer from "../components/FormContainer";
 import UserService from "../services/UserService";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap";
 
 function SignInPage() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function SignInPage() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // 👈 loading aqui
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,19 +34,23 @@ function SignInPage() {
     e.preventDefault();
     setSuccess("");
     setError("");
+    setLoading(true); // 👈 ativa carregamento
 
     if (!acceptedTerms) {
       setError(t("form.termsNotAccepted"));
+      setLoading(false);
       return;
     }
 
     if (formData.email !== formData.confirmEmail) {
       setError(t("form.emailMismatch"));
+      setLoading(false);
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
       setError(t("form.passwordMismatch"));
+      setLoading(false);
       return;
     }
 
@@ -58,8 +64,18 @@ function SignInPage() {
       navigate(`/message?title=${title}&subtitle=${subtitle}`);
     } catch (err) {
       setError(t(handleApiError(err)));
+    } finally {
+      setLoading(false); // 👈 desativa carregamento
     }
   };
+
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <FormContainer

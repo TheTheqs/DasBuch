@@ -7,6 +7,7 @@ import { useUser } from "../context/User";
 import { handleApiError } from "../utils/handleApiError";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap";
 
 function LogInPage() {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ function LogInPage() {
   const navigate = useNavigate();
   const { setUser } = useUser();
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false); // 👈 Adicionado
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,14 +28,26 @@ function LogInPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
+    setLoading(true); // 👈 Ativa carregamento
+
     try {
       const user = await UserService.loginUser(formData.email, formData.password);
       setUser(user);
       navigate("/");
     } catch (err) {
       setErrorMessage(t(handleApiError(err)));
+    } finally {
+      setLoading(false); // 👈 Desativa carregamento
     }
   };
+
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <div>
