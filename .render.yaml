@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dasbuch-backend
+    env: java
+    rootDir: back
+    buildCommand: ./mvnw clean install -DskipTests
+    startCommand: java -jar target/*.jar
+    plan: free
+    envVars:
+      - key: JDBC_DATABASE_URL
+        sync: false
+      - key: JDBC_DATABASE_USERNAME
+        sync: false
+      - key: JDBC_DATABASE_PASSWORD
+        sync: false
