@@ -1,32 +1,40 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import FormInput from '../components/FormInput';
-import FormContainer from '../components/FormContainer';
-import UserCard from '../components/UserCard';
-import SearchResultGrid from '../components/SearchResultsGrid';
-import PaginationBar from '../components/PaginationBar';
-import UserService from '../services/UserService';
-import { UserDTO } from '../type/UserDTO';
-import { handleApiError } from '../utils/handleApiError';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+import FormInput from "../components/FormInput";
+import FormContainer from "../components/FormContainer";
+import UserCard from "../components/UserCard";
+import SearchResultGrid from "../components/SearchResultsGrid";
+import PaginationBar from "../components/PaginationBar";
+import UserService from "../services/UserService";
+import { UserDTO } from "../type/UserDTO";
+import { handleApiError } from "../utils/handleApiError";
+import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap"; // Import extra
 
 function SearchUserPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({ name: '' });
+  const [formData, setFormData] = useState({ name: "" });
   const [results, setResults] = useState<UserDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Novo estado
 
   const search = useCallback(
     async (name: string, page: number) => {
+      setLoading(true);
       try {
         const response = await UserService.searchUsersByName(name, page, 10);
         setResults(response.content);
-        setPageInfo({ page: response.number, totalPages: response.totalPages });
+        setPageInfo({
+          page: response.number,
+          totalPages: response.totalPages,
+        });
       } catch (err) {
         setError(t(handleApiError(err)));
+      } finally {
+        setLoading(false);
       }
     },
     [t]
@@ -71,15 +79,21 @@ function SearchUserPage() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </FormContainer>
 
-      {formData.name !== "" && results.length === 0 && !error && (
+      {loading && (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )}
+
+      {!loading && formData.name !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
           {t("searchUser.noResults")}
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loading && results.length > 0 && (
         <SearchResultGrid>
-          {results.map(user => (
+          {results.map((user) => (
             <UserCard
               key={user.id}
               name={user.name}

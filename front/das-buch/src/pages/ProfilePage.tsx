@@ -7,6 +7,7 @@ import { handleApiError } from "../utils/handleApiError";
 import UserService from "../services/UserService";
 import UserProfile from "../components/UserProfile";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap";
 
 function ProfilePage() {
   const { user, setUser } = useUser();
@@ -21,6 +22,7 @@ function ProfilePage() {
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // 👈 aqui
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,9 +32,11 @@ function ProfilePage() {
     e.preventDefault();
     setSuccess("");
     setError("");
+    setIsSubmitting(true); // 👈 ativa loading
 
     if (formData.password !== formData.confirmPassword) {
       setError(t("profile.passwordMismatch"));
+      setIsSubmitting(false);
       return;
     }
 
@@ -45,6 +49,8 @@ function ProfilePage() {
       setSuccess(t("profile.success"));
     } catch (err) {
       setError(t(handleApiError(err)));
+    } finally {
+      setIsSubmitting(false); // 👈 desativa loading
     }
   };
 
@@ -58,6 +64,14 @@ function ProfilePage() {
 
   if (!user) return null;
 
+  if (isSubmitting) {
+    return (
+      <div className="container py-5 text-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
+
   return (
     <div style={{ paddingTop: "0px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
@@ -66,7 +80,11 @@ function ProfilePage() {
 
       <UserProfile relatedUser={user} />
 
-      <FormContainer title={t("profile.formTitle")} submitMessage={t("form.update")} onSubmit={handleSubmit}>
+      <FormContainer
+        title={t("profile.formTitle")}
+        submitMessage={t("form.update")}
+        onSubmit={handleSubmit}
+      >
         <FormInput
           label={t("form.name")}
           placeholder={t("profile.namePlaceholder")}

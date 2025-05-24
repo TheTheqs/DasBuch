@@ -92,7 +92,9 @@
         "comment": "Comentario",
         "placeholderComment": "Da tu opinión sobre el libro...",
         "score": "Nota",
-        "readDate": "Fecha de lectura"
+        "readDate": "Fecha de lectura",
+        "deleteSuccess": "Reseña eliminada con éxito",
+        "deleteFail": "Failed to delete review"
     },
     "userCard": {
         "idLabel": "ID: {{id}}",

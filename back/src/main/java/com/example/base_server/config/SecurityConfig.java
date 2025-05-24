@@ -44,12 +44,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // ROTAS PÚBLICAS
                         .requestMatchers(
                                 "/users/register",
                                 "/users/login",
                                 "/api/hello",
                                 "/users/verify"
                         ).permitAll()
+
+                        // LIBERANDO TODAS AS CONSULTAS (GET)
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll()
+
+                        // ROTAS RESTRITAS
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/users/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/recovery").permitAll()
@@ -62,6 +69,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/books/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/books/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/users/reset").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -9,6 +9,7 @@ import BookService from "../services/BookService";
 import { BookDTO } from "../type/BookDTO";
 import { handleApiError } from "../utils/handleApiError";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap"; // Novo import
 
 function SearchBookPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,15 +19,19 @@ function SearchBookPage() {
   const [results, setResults] = useState<BookDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Novo estado
 
   const search = useCallback(
     async (title: string, page: number) => {
+      setLoading(true); // Ativa loading
       try {
         const response = await BookService.searchBookByTitle(title, page, 10);
         setResults(response.content);
         setPageInfo({ page: response.number, totalPages: response.totalPages });
       } catch (err) {
         setError(t(handleApiError(err)));
+      } finally {
+        setLoading(false); // Finaliza loading
       }
     },
     [t]
@@ -71,13 +76,19 @@ function SearchBookPage() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </FormContainer>
 
-      {formData.title !== "" && results.length === 0 && !error && (
+      {loading && (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )}
+
+      {!loading && formData.title !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
           {t("searchBook.noResults")}
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loading && results.length > 0 && (
         <SearchResultGrid>
           {results.map((book) => (
             <BookCard key={book.id} book={book} />

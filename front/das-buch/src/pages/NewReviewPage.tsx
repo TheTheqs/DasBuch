@@ -58,7 +58,7 @@ function NewReviewPage() {
         authorsNames: formData.authorsNames,
         synopsys: formData.synopsys,
         commentary: formData.commentary,
-        score: formData.score,
+        score: formData.score * 2,
         readAt: formData.readDate.toISOString().slice(0, 19),
       });
       setSuccess(t("newReview.success"));

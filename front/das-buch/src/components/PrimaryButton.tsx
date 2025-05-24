@@ -11,7 +11,7 @@ function PrimaryButton({ to, label }: PrimaryButtonProps) {
       to={to}
       className="btn btn-darksoft btn-lg px-4 mb-4"
       style={{
-        minWidth: "200px",
+        minWidth: "240px",
         maxWidth: "320px",
         whiteSpace: "normal",
         wordBreak: "break-word",

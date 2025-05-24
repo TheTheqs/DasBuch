@@ -92,7 +92,9 @@
         "comment": "Kommentar",
         "placeholderComment": "Gib deine Meinung zum Buch ab...",
         "score": "Bewertung",
-        "readDate": "Gelesen am"
+        "readDate": "Gelesen am",
+        "deleteSuccess": "Rezension erfolgreich gelöscht",
+        "deleteFail": "Fehler beim Löschen der Rezension"
     },
     "userCard": {
         "idLabel": "ID: {{id}}",

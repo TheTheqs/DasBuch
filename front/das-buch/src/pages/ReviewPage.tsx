@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import RatingDisplay from "../components/RatingDisplay";
-import { useParams } from "react-router-dom";
-import { ReviewDTO } from "../type/ReviewDTO";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { handleApiError } from "../utils/handleApiError";
+import i18n from "../i18n";
+
+import RatingDisplay from "../components/RatingDisplay";
+import { ReviewDTO } from "../type/ReviewDTO";
 import ReviewService from "../services/ReviewService";
 import { useUser } from "../context/User";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
 
 const ReviewPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useUser();
   const [review, setReview] = useState<ReviewDTO | null>(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false); // 👈 Novo estado
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -24,14 +26,29 @@ const ReviewPage: React.FC = () => {
         const data = await ReviewService.getReviewById(Number(id));
         setReview(data);
       } catch (err) {
-        const translated = t(err as string, { defaultValue: err as string });
-        setError(t("reviewPage.loadErrorPrefix") + " " + translated);
+        setError(t("reviewPage.loadErrorPrefix") + " " + t(handleApiError(err)));
       } finally {
         setLoading(false);
       }
     };
     fetchReview();
   }, [id, t]);
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(t("reviewPage.confirmDelete"));
+    if (!confirmed) return;
+
+    setDeleting(true);
+    try {
+      const message = await ReviewService.deleteReview(review!.id);
+      alert(t(message));
+      navigate(`/user/reviews/${review!.user.id}`);
+    } catch (err) {
+      alert(t("reviewPage.deleteError")+ " " + t(handleApiError(err)));
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -99,21 +116,24 @@ const ReviewPage: React.FC = () => {
             <Button
               variant="outline-primary"
               onClick={() => navigate(`/update_review/${review.id}`)}
+              disabled={deleting}
             >
               {t("form.edit")}
             </Button>
 
             <Button
               variant="outline-danger"
-              onClick={async () => {
-                const confirmed = window.confirm(t("reviewPage.confirmDelete"));
-                if (!confirmed) return;
-
-                const message = await ReviewService.deleteReview(review.id);
-                alert(message);
-                navigate(`/user/reviews/${review.user.id}`);
-              }}
+              onClick={handleDelete}
+              disabled={deleting}
             >
+              {deleting && (
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  className="me-2"
+                />
+              )}
               {t("form.delete")}
             </Button>
           </div>

@@ -9,6 +9,7 @@ import AuthorService from "../services/AuthorService";
 import { AuthorDTO } from "../type/AuthorDTO";
 import { handleApiError } from "../utils/handleApiError";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap"; // novo import
 
 function SearchAuthorPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,15 +19,19 @@ function SearchAuthorPage() {
   const [results, setResults] = useState<AuthorDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // novo estado
 
   const search = useCallback(
     async (name: string, page: number) => {
+      setLoading(true); // ativa carregamento
       try {
         const response = await AuthorService.searchAuthorByName(name, page, 10);
         setResults(response.content);
         setPageInfo({ page: response.number, totalPages: response.totalPages });
       } catch (err) {
         setError(t(handleApiError(err)));
+      } finally {
+        setLoading(false); // desativa carregamento
       }
     },
     [t]
@@ -71,13 +76,19 @@ function SearchAuthorPage() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </FormContainer>
 
-      {formData.name !== "" && results.length === 0 && !error && (
+      {loading && (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )}
+
+      {!loading && formData.name !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
           {t("searchAuthor.noResults")}
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loading && results.length > 0 && (
         <SearchResultGrid>
           {results.map((author) => (
             <AuthorCard key={author.id} author={author} />

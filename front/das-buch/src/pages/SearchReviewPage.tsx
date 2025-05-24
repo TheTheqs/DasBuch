@@ -9,6 +9,7 @@ import ReviewService from "../services/ReviewService";
 import { ReviewDTO } from "../type/ReviewDTO";
 import { handleApiError } from "../utils/handleApiError";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "react-bootstrap"; // Novo import
 
 function SearchReviewPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,15 +19,19 @@ function SearchReviewPage() {
   const [results, setResults] = useState<ReviewDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Novo estado
 
   const search = useCallback(
     async (title: string, page: number) => {
+      setLoading(true); // Ativa o loading
       try {
         const response = await ReviewService.searchByBookTitle(title, page, 10);
         setResults(response.content);
         setPageInfo({ page: response.number, totalPages: response.totalPages });
       } catch (err) {
         setError(t(handleApiError(err)));
+      } finally {
+        setLoading(false); // Desativa o loading
       }
     },
     [t]
@@ -71,13 +76,19 @@ function SearchReviewPage() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </FormContainer>
 
-      {formData.title !== "" && results.length === 0 && !error && (
+      {loading && (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )}
+
+      {!loading && formData.title !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
           {t("searchReview.noResults")}
         </div>
       )}
 
-      {results.length > 0 && (
+      {!loading && results.length > 0 && (
         <SearchResultGrid>
           {results.map((review) => (
             <ReviewCard key={review.id} review={review} />
