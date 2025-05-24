@@ -1,5 +1,5 @@
 # Etapa 1: build (com Maven)
-FROM eclipse-temurin:17-jdk AS builder
+FROM eclipse-temurin:21-jdk AS builder
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN chmod +x mvnw
 RUN ./mvnw clean install -DskipTests
 
 # Etapa 2: runtime (imagem menor)
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /app
 
