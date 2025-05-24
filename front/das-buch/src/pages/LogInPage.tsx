@@ -30,8 +30,8 @@ function LogInPage() {
       const user = await UserService.loginUser(formData.email, formData.password);
       setUser(user);
       navigate("/");
-    } catch (error) {
-      setErrorMessage(handleApiError(error));
+    } catch (err) {
+      setErrorMessage(t(handleApiError(err)));
     }
   };
 

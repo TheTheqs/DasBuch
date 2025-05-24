@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import FormContainer from "../components/FormContainer";
@@ -19,6 +19,19 @@ function SearchAuthorPage() {
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
   const [error, setError] = useState("");
 
+  const search = useCallback(
+    async (name: string, page: number) => {
+      try {
+        const response = await AuthorService.searchAuthorByName(name, page, 10);
+        setResults(response.content);
+        setPageInfo({ page: response.number, totalPages: response.totalPages });
+      } catch (err) {
+        setError(t(handleApiError(err)));
+      }
+    },
+    [t]
+  );
+
   useEffect(() => {
     const name = searchParams.get("name") || "";
     const page = parseInt(searchParams.get("page") || "0", 10);
@@ -27,17 +40,7 @@ function SearchAuthorPage() {
       setFormData({ name });
       search(name, page);
     }
-  }, [searchParams]);
-
-  const search = async (name: string, page: number) => {
-    try {
-      const response = await AuthorService.searchAuthorByName(name, page, 10);
-      setResults(response.content);
-      setPageInfo({ page: response.number, totalPages: response.totalPages });
-    } catch (error) {
-      setError(handleApiError(error));
-    }
-  };
+  }, [searchParams, search]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

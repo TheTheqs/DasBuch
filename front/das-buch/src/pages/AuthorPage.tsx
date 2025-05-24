@@ -24,7 +24,8 @@ function AuthorPage() {
         const data = await AuthorService.getAuthorById(Number(id));
         setAuthor(data);
       } catch (err) {
-        setError(t("authorPage.loadError") + " " + err);
+        const translated = t(err as string, { defaultValue: err as string });
+        setError(t("authorPage.loadError") + " " + translated);
       } finally {
         setLoading(false);
       }

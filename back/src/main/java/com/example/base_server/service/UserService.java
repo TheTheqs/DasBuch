@@ -119,7 +119,7 @@ public class UserService {
     @Transactional
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User with ID " + id + " not found."));
+                .orElseThrow(() -> new NoSuchElementException("User not found."));
 
         bookService.removeUserReferences(user);
 

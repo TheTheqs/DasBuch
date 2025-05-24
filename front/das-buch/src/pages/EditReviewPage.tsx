@@ -22,14 +22,14 @@ function EditReviewPage() {
         const data = await ReviewService.getReviewById(Number(id));
         setReview(data);
       } catch (err) {
-        setError(handleApiError(err));
+        setError(t(handleApiError(err)));
       } finally {
         setLoading(false);
       }
     };
 
     fetchReview();
-  }, [id]);
+  }, [id, t]);
 
   const handleUpdate = async (formData: {
     title: string;
@@ -55,7 +55,7 @@ function EditReviewPage() {
       setSuccess(t("editReview.success"));
       navigate(`/review/${id}`);
     } catch (err) {
-      setError(handleApiError(err));
+      setError(t(handleApiError(err)));
     }
   };
 

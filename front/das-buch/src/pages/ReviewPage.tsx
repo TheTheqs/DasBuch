@@ -24,7 +24,8 @@ const ReviewPage: React.FC = () => {
         const data = await ReviewService.getReviewById(Number(id));
         setReview(data);
       } catch (err) {
-        setError(t("reviewPage.loadErrorPrefix") + " " + err);
+        const translated = t(err as string, { defaultValue: err as string });
+        setError(t("reviewPage.loadErrorPrefix") + " " + translated);
       } finally {
         setLoading(false);
       }

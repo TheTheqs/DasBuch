@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import FormInput from '../components/FormInput';
 import FormContainer from '../components/FormContainer';
@@ -7,6 +7,7 @@ import SearchResultGrid from '../components/SearchResultsGrid';
 import PaginationBar from '../components/PaginationBar';
 import UserService from '../services/UserService';
 import { UserDTO } from '../type/UserDTO';
+import { handleApiError } from '../utils/handleApiError';
 import { useTranslation } from 'react-i18next';
 
 function SearchUserPage() {
@@ -16,6 +17,20 @@ function SearchUserPage() {
   const [formData, setFormData] = useState({ name: '' });
   const [results, setResults] = useState<UserDTO[]>([]);
   const [pageInfo, setPageInfo] = useState({ page: 0, totalPages: 0 });
+  const [error, setError] = useState('');
+
+  const search = useCallback(
+    async (name: string, page: number) => {
+      try {
+        const response = await UserService.searchUsersByName(name, page, 10);
+        setResults(response.content);
+        setPageInfo({ page: response.number, totalPages: response.totalPages });
+      } catch (err) {
+        setError(t(handleApiError(err)));
+      }
+    },
+    [t]
+  );
 
   useEffect(() => {
     const name = searchParams.get("name") || "";
@@ -25,13 +40,7 @@ function SearchUserPage() {
       setFormData({ name });
       search(name, page);
     }
-  }, [searchParams]);
-
-  const search = async (name: string, page: number) => {
-    const response = await UserService.searchUsersByName(name, page, 10);
-    setResults(response.content);
-    setPageInfo({ page: response.number, totalPages: response.totalPages });
-  };
+  }, [searchParams, search]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,13 +48,18 @@ function SearchUserPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
     setSearchParams({ name: formData.name, page: "0" });
     search(formData.name, 0);
   };
 
   return (
     <div>
-      <FormContainer title={t("searchUser.title")} submitMessage={t("form.search")} onSubmit={handleSubmit}>
+      <FormContainer
+        title={t("searchUser.title")}
+        submitMessage={t("form.search")}
+        onSubmit={handleSubmit}
+      >
         <FormInput
           label=""
           placeholder={t("searchUser.namePlaceholder")}
@@ -54,9 +68,10 @@ function SearchUserPage() {
           value={formData.name}
           onChange={handleChange}
         />
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </FormContainer>
 
-      {formData.name !== "" && results.length === 0 && (
+      {formData.name !== "" && results.length === 0 && !error && (
         <div className="text-center text-muted mt-4">
           {t("searchUser.noResults")}
         </div>

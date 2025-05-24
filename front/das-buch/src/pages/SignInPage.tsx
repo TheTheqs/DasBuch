@@ -56,8 +56,8 @@ function SignInPage() {
       });
       setSuccess(t("form.success"));
       navigate(`/message?title=${title}&subtitle=${subtitle}`);
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError(t(handleApiError(err)));
     }
   };
 

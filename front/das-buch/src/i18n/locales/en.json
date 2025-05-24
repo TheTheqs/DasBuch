@@ -254,5 +254,8 @@
             "consent": "<1>Consent:</1> By using DasBuch, the user automatically agrees to these terms. As a personal and experimental application, these terms may change without prior notice, always aiming for transparency and responsible use of the platform."
         },
         "closing": "If you have any questions or suggestions about these terms, feel free to get in touch. Thank you for using DasBuch! 💙"
-    }
+    },
+    "Generic API error": "An error was returned by the server, but no clear message was provided.",
+    "Server unavailable": "Server unavailable. Please check your connection.",
+    "Unexpected error": "Unexpected error. Please try again."
 }

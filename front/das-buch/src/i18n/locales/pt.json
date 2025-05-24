@@ -254,5 +254,24 @@
             "consent": "<1>Consentimento:</1> Ao utilizar o DasBuch, o usuário concorda com esses termos de forma automática. Por se tratar de uma aplicação pessoal e experimental, estes termos podem ser alterados sem aviso prévio, sempre visando a transparência e o bom uso da plataforma."
         },
         "closing": "Caso tenha dúvidas ou sugestões sobre estes termos, entre em contato. Agradeço por utilizar o DasBuch! 💙"
-    }
+    },
+    "Invalid email format!": "Formato de e-mail inválido!",
+    "Email already exists!": "Este e-mail já está cadastrado!",
+    "Invalid password format!": "Formato de senha inválido!",
+    "No user found with this token.": "Nenhum usuário encontrado com este token.",
+    "No user found with this email.": "Nenhum usuário encontrado com este e-mail.",
+    "Invalid credentials. Please try again.": "Credenciais inválidas. Por favor, tente novamente.",
+    "User not found.": "Usuário não encontrado.",
+    "There is no user with the provided Id": "Não existe usuário com o ID fornecido.",
+    "You don't have permission to perform this action": "Você não tem permissão para realizar esta ação.",
+    "Review not found!": "Review não encontrado!",
+    "Error: user not found!": "Erro: usuário não encontrado!",
+    "User already reviewed this book.": "Você já fez um review para este livro.",
+    "Book not found!": "Livro não encontrado!",
+    "Author not found": "Autor não encontrado.",
+    "You need to login to access this resource.": "Você precisa estar logado para acessar este recurso.",
+    "Access denied. You do not have permission.": "Acesso negado. Você não tem permissão.",
+    "Generic API error": "Erro retornado pelo servidor, mas sem mensagem clara.",
+    "Server unavailable": "Servidor indisponível. Verifique sua conexão.",
+    "Unexpected error": "Erro inesperado. Tente novamente."
 }

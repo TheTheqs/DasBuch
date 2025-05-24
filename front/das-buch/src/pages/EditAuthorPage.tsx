@@ -22,14 +22,14 @@ function EditAuthorPage() {
         const data = await AuthorService.getAuthorById(Number(id));
         setAuthor(data);
       } catch (err) {
-        setError(handleApiError(err));
+        setError(t(handleApiError(err)));
       } finally {
         setLoading(false);
       }
     };
 
     fetchBook();
-  }, [id]);
+  }, [id, t]);
 
   const handleUpdate = async (formData: { name: string }) => {
     setSuccess("");
@@ -42,7 +42,7 @@ function EditAuthorPage() {
       setSuccess(t("editAuthor.success"));
       navigate(`/author/${id}`);
     } catch (err) {
-      setError(handleApiError(err));
+      setError(t(handleApiError(err)));
     }
   };
 

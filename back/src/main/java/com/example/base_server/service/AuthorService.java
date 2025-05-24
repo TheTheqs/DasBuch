@@ -46,7 +46,7 @@ public class AuthorService {
     @Transactional
     public Author updateAuthor(Long id, String name) {
         Author author = authorRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Author not found, id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Author not found"));
 
         String trimmed = name.trim();
         System.out.println(trimmed);

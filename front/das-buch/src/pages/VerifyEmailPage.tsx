@@ -26,8 +26,8 @@ export default function VerifyEmailPage() {
       try {
         const responseMessage = await UserService.verifyUser(token);
         setMessage(responseMessage);
-      } catch (error) {
-        setError(handleApiError(error));
+      } catch (err) {
+        setError(t(handleApiError(err)));
       }
     };
 

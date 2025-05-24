@@ -60,8 +60,8 @@ function NewReviewPage() {
       });
       setSuccess(t("newReview.success"));
       navigate(`/review/${newReview.id}`);
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError(t(handleApiError(err)));
     }
   };
 

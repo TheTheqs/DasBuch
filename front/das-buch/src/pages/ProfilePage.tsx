@@ -43,8 +43,8 @@ function ProfilePage() {
       );
       setUser(updatedUser);
       setSuccess(t("profile.success"));
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError(t(handleApiError(err)));
     }
   };
 

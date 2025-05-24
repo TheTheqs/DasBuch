@@ -48,7 +48,7 @@ public class BookService {
     //Read
     public Book getBookById(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Book not found: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Book not found!"));
     }
 
     public Page<Book> getBookListByTitle(String title, Pageable pageable) {

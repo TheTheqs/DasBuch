@@ -28,7 +28,8 @@ function BookReviewsPage() {
           totalPages: response.totalPages,
         });
       } catch (err) {
-        setError(t("bookReviews.loadError") + " " + err);
+        const translated = t(err as string, { defaultValue: err as string });
+        setError(t("bookReviews.loadError") + " " + translated);
       } finally {
         setLoading(false);
       }
@@ -50,7 +51,8 @@ function BookReviewsPage() {
         totalPages: response.totalPages,
       });
     } catch (err) {
-      setError(t("bookReviews.pageChangeError") + " " + err);
+      const translated = t(err as string, { defaultValue: err as string });
+      setError(t("bookReviews.pageChangeError") + " " + translated);
     }
   };
 

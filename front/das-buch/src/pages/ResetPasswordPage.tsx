@@ -41,8 +41,8 @@ export default function ResetPasswordPage() {
     try {
       const message = await UserService.resetPassword(token, formData.password);
       setMessage(message);
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError(t(handleApiError(err)));
     }
   };
 

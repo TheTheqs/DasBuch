@@ -21,7 +21,8 @@ function BookPage() {
         const data = await BookService.getBookById(Number(id));
         setBook(data);
       } catch (err) {
-        setError(t("bookPage.loadError") + " " + err);
+        const translated = t(err as string, { defaultValue: err as string });
+        setError(t("bookPage.loadError") + " " + translated);
       } finally {
         setLoading(false);
       }

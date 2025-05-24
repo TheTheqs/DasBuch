@@ -254,5 +254,24 @@
             "consent": "<1>Zustimmung:</1> Durch die Nutzung von DasBuch stimmt der Benutzer diesen Bedingungen automatisch zu. Da es sich um eine persönliche und experimentelle Anwendung handelt, können diese Bedingungen ohne vorherige Ankündigung geändert werden – stets mit dem Ziel der Transparenz und verantwortungsvollen Nutzung."
         },
         "closing": "Bei Fragen oder Anregungen zu diesen Bedingungen, kontaktiere mich gerne. Vielen Dank, dass du DasBuch nutzt! 💙"
-    }
+    },
+    "Invalid email format!": "Ungültiges E-Mail-Format!",
+    "Email already exists!": "E-Mail ist bereits registriert!",
+    "Invalid password format!": "Ungültiges Passwortformat!",
+    "No user found with this token.": "Kein Benutzer mit diesem Token gefunden.",
+    "No user found with this email.": "Kein Benutzer mit dieser E-Mail gefunden.",
+    "Invalid credentials. Please try again.": "Ungültige Zugangsdaten. Bitte versuche es erneut.",
+    "User not found.": "Benutzer nicht gefunden.",
+    "There is no user with the provided Id": "Kein Benutzer mit der angegebenen ID vorhanden.",
+    "You don't have permission to perform this action": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
+    "Review not found!": "Bewertung nicht gefunden!",
+    "Error: user not found!": "Fehler: Benutzer nicht gefunden!",
+    "User already reviewed this book.": "Sie haben dieses Buch bereits bewertet.",
+    "Book not found!": "Buch nicht gefunden!",
+    "Author not found": "Autor nicht gefunden.",
+    "You need to login to access this resource.": "Sie müssen sich anmelden, um auf diese Ressource zuzugreifen.",
+    "Access denied. You do not have permission.": "Zugriff verweigert. Sie haben keine Berechtigung.",
+    "Generic API error": "Der Server hat einen Fehler zurückgegeben, aber ohne klare Nachricht.",
+    "Server unavailable": "Server nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.",
+    "Unexpected error": "Unerwarteter Fehler. Bitte versuchen Sie es erneut."
 }

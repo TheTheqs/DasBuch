@@ -28,8 +28,8 @@ function ForgotPasswordPage() {
       const message = await UserService.forgotPassword(formData.email);
       setSuccess(message);
       navigate(`/message?title=${t("message.accountRecoveryRequestTitle")}&subtitle=${t("message.accountRecoveryRequestSubtitle")}`);
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError(t(handleApiError(err)));
     }
   };
 

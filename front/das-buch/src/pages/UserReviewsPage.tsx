@@ -60,7 +60,8 @@ function UserReviewsPage() {
         totalPages: response.totalPages,
       });
     } catch (err) {
-      setError(t("userReviews.paginationError") + " " + err);
+      const translated = t(err as string, { defaultValue: err as string });
+      setError(t("userReviews.paginationError") + " " + translated);
     }
   };
 

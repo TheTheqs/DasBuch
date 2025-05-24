@@ -43,7 +43,7 @@ public class ReviewService {
     //Read
     public Review getReview(Long id) {
         return reviewRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Review not found! id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Review not found!"));
     }
 
     public Page<Review> getBookReviews(Long id, Pageable pageable) {
@@ -69,7 +69,7 @@ public class ReviewService {
     //Update
     public Review updateReview(User user, Long id, Book book, String synopsys, String commentary, int score, LocalDateTime readAt) {
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Review not found! id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("Review not found!"));
         if (!review.getUser().equals(user) && user.getRole() != Role.ADMIN) {
             throw new AccessDeniedException("You don't have permission to perform this action");
         }

@@ -22,14 +22,14 @@ function EditBookPage() {
         const data = await BookService.getBookById(Number(id));
         setBook(data);
       } catch (err) {
-        setError(handleApiError(err));
+        setError(t(handleApiError(err)));
       } finally {
         setLoading(false);
       }
     };
 
     fetchBook();
-  }, [id]);
+  }, [id, t]);
 
   const handleUpdate = async (formData: {
     title: string;
@@ -46,7 +46,7 @@ function EditBookPage() {
       setSuccess(t("editBook.success"));
       navigate(`/book/${id}`);
     } catch (err) {
-      setError(handleApiError(err));
+      setError(t(handleApiError(err)));
     }
   };
 
