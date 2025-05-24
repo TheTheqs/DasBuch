@@ -1,7 +1,7 @@
 services:
   - type: web
     name: dasbuch-backend
-    env: java
+    env: docker
     rootDir: back
     buildCommand: ./mvnw clean install -DskipTests
     startCommand: java -jar target/*.jar
