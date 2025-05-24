@@ -28,7 +28,7 @@
         "add": "+ Add"
     },
     "footer": {
-        "rights": "All rights reserved."
+        "rights": "All rights reserved. DasBuch runs on free Cloud services — thank you for your patience :D"
     },
     "form": {
         "submit": "Save",
@@ -257,5 +257,8 @@
     },
     "Generic API error": "An error was returned by the server, but no clear message was provided.",
     "Server unavailable": "Server unavailable. Please check your connection.",
-    "Unexpected error": "Unexpected error. Please try again."
+    "Unexpected error": "Unexpected error. Please try again.",
+    "error.unknownMessage": "Server returned an error, but no clear message was provided.",
+    "error.serverUnavailable": "Server unavailable. Please check your connection.",
+    "error.unexpected": "Unexpected error. Please try again."
 }

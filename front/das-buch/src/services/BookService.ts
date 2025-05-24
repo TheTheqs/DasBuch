@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 
 class BookService {
   private api = axios.create({
-    baseURL: "http://localhost:8080/books",
+    baseURL: "https://das-buch-backend.onrender.com/books",
     withCredentials: true,
   });
 

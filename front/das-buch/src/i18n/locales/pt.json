@@ -28,7 +28,7 @@
         "add": "+ Adicionar"
     },
     "footer": {
-        "rights": "Todos os direitos reservados."
+        "rights": "Todos os direitos reservados. DasBuch utiliza serviços gratuitos de Cloud, tenha paciência :D"
     },
     "form": {
         "submit": "Salvar",
@@ -273,5 +273,8 @@
     "Access denied. You do not have permission.": "Acesso negado. Você não tem permissão.",
     "Generic API error": "Erro retornado pelo servidor, mas sem mensagem clara.",
     "Server unavailable": "Servidor indisponível. Verifique sua conexão.",
-    "Unexpected error": "Erro inesperado. Tente novamente."
+    "Unexpected error": "Erro inesperado. Tente novamente.",
+    "error.unknownMessage": "Erro retornado pelo servidor, mas sem mensagem clara.",
+    "error.serverUnavailable": "Servidor indisponível. Verifique sua conexão.",
+    "error.unexpected": "Erro inesperado. Tente novamente."
 }

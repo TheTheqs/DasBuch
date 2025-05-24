@@ -17,13 +17,13 @@ export function handleApiError(error: unknown): string {
         return data;
       }
 
-      return "Erro retornado pelo servidor, mas sem mensagem clara.";
+      return "error.unknownMessage";
     }
 
     // Se foi erro de conexão, DNS ou algo do tipo
-    return "Servidor indisponível. Verifique sua conexão.";
+    return "error.serverUnavailable";
   }
 
   // Erros fora do Axios (problemas internos)
-  return "Erro inesperado. Tente novamente.";
+  return "error.unexpected";
 }

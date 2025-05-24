@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 import { clearUser } from "../context/User";
 
 class UserService {
-  private BASE_URL = "http://localhost:8080/users";
+  private BASE_URL = "https://das-buch-backend.onrender.com/users";
   //Register User
   async registerUser(user: {
     name: string;
@@ -87,7 +87,7 @@ class UserService {
   }
   //Logout
   async logout(): Promise<void> {
-    await axios.get("http://localhost:8080/users/logout", {
+    await axios.get(`${this.BASE_URL}/logout`, {
       withCredentials: true,
     });
     clearUser();

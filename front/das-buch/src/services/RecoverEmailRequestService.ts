@@ -3,7 +3,7 @@ import { RecoveryRequest } from "../components/RecoveryRequestItem";
 
 class RecoverEmailRequestService {
   private api = axios.create({
-    baseURL: "http://localhost:8080/api/recovery",
+    baseURL: "https://das-buch-backend.onrender.com/api/recovery",
     withCredentials: true,
   });
 

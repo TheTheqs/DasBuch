@@ -28,7 +28,7 @@
         "add": "+ Hinzufügen"
     },
     "footer": {
-        "rights": "Alle Rechte vorbehalten."
+        "rights": "Alle Rechte vorbehalten. DasBuch nutzt kostenlose Cloud-Dienste - bitte hab etwas Geduld :D"
     },
     "form": {
         "submit": "Speichern",
@@ -273,5 +273,8 @@
     "Access denied. You do not have permission.": "Zugriff verweigert. Sie haben keine Berechtigung.",
     "Generic API error": "Der Server hat einen Fehler zurückgegeben, aber ohne klare Nachricht.",
     "Server unavailable": "Server nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.",
-    "Unexpected error": "Unerwarteter Fehler. Bitte versuchen Sie es erneut."
+    "Unexpected error": "Unerwarteter Fehler. Bitte versuchen Sie es erneut.",
+    "error.unknownMessage": "Server hat einen Fehler zurückgegeben, aber ohne klare Nachricht.",
+    "error.serverUnavailable": "Server nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.",
+    "error.unexpected": "Unerwarteter Fehler. Bitte versuchen Sie es erneut."
 }
