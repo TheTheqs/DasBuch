@@ -3,9 +3,10 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY . .
 
-# 🔽 COPIA A VARIÁVEL DE AMBIENTE PRA O BUILD
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
+# COPIA .env local para dentro do container
+# (se preferir, pode usar echo pra criar na hora também)
+COPY .env .env
+
 RUN npm install
 RUN npm run build
 
