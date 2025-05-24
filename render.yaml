@@ -1,7 +1,6 @@
 services:
   - type: web
     name: dasbuch-backend
-    env: docker
     rootDir: back
     buildCommand: ./mvnw clean install -DskipTests
     startCommand: java -jar target/*.jar
@@ -13,3 +12,10 @@ services:
         sync: false
       - key: JDBC_DATABASE_PASSWORD
         sync: false
+
+  - type: static
+    name: dasbuch-frontend
+    rootDir: front
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
