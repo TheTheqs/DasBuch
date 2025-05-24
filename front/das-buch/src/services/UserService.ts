@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 import { clearUser } from "../context/User";
 
 class UserService {
-  private BASE_URL = "https://das-buch-backend.onrender.com/users";
+  private BASE_URL = `${import.meta.env.VITE_API_URL}/users`;
   //Register User
   async registerUser(user: {
     name: string;

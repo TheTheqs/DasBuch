@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 
 class BookService {
   private api = axios.create({
-    baseURL: "https://das-buch-backend.onrender.com/books",
+    baseURL: `${import.meta.env.VITE_API_URL}/books`,
     withCredentials: true,
   });
 

@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 
 class ReviewService {
   private api = axios.create({
-    baseURL: "https://das-buch-backend.onrender.com/reviews",
+    baseURL: `${import.meta.env.VITE_API_URL}/reviews`,
     withCredentials: true,
   });
 

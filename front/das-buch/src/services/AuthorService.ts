@@ -4,7 +4,7 @@ import { PagedResponse } from "../type/PagedResponse";
 
 class AuthorService {
   private api = axios.create({
-    baseURL: "https://das-buch-backend.onrender.com/authors",
+    baseURL: `${import.meta.env.VITE_API_URL}/authors`,
     withCredentials: true,
   });
   //No create function - this is internal
