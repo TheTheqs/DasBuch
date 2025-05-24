@@ -12,10 +12,3 @@ services:
         sync: false
       - key: JDBC_DATABASE_PASSWORD
         sync: false
-
-  - type: static
-    name: dasbuch-frontend
-    rootDir: front
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    plan: free
